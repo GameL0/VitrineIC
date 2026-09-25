@@ -1,0 +1,10 @@
+{
+  "description": "Streamline access to the VitrineIC platform with a unified entry point for students and companies, featuring clear navigation and a focus on functionality.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
