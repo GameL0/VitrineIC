@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StatusBadge } from "./StatusBadge";
 import { Input, Label, Tag } from "./ui";
 import { SAMPLE_PROJECTS, STATUS_CONFIG } from "@/data/projects";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 export function Lab() {
   const [projects, setProjects] = useState(SAMPLE_PROJECTS);
@@ -39,7 +39,7 @@ export function Lab() {
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Laboratório
@@ -72,7 +72,7 @@ export function Lab() {
           >
             <span
               className="text-[10px] tracking-[0.2em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               Novo projeto
             </span>
@@ -140,9 +140,9 @@ export function Lab() {
       )}
 
       {/* Project list */}
-      <div className="flex flex-col">
+      <ul className="flex flex-col" style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {projects.map((p, i) => (
-          <div
+          <li
             key={p.id}
             className="group transition-all cursor-pointer"
             style={{
@@ -160,7 +160,7 @@ export function Lab() {
                 <div className="md:col-span-1 pt-1">
                   <span
                     className="text-[11px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.6 }}
+                    style={{ fontFamily: "Space Mono, monospace", color: RED }}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -176,7 +176,7 @@ export function Lab() {
                   </h3>
                   <p
                     className="text-[13px] leading-relaxed mb-4"
-                    style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300, maxWidth: "540px" }}
+                    style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300, maxWidth: "540px" }}
                   >
                     {p.description}
                   </p>
@@ -187,9 +187,8 @@ export function Lab() {
                         className="px-2 py-1 text-[9px] tracking-[0.14em] uppercase"
                         style={{
                           fontFamily: "Space Mono, monospace",
-                          color: NAVY,
+                          color: NAVY_MUTED,
                           border: `1px solid ${NAVY}25`,
-                          opacity: 0.65,
                         }}
                       >
                         {tech}
@@ -205,9 +204,9 @@ export function Lab() {
                     href={`https://${p.repo}`}
                     onClick={(e) => e.preventDefault()}
                     className="flex items-center gap-1.5 transition-opacity hover:opacity-80"
-                    style={{ color: NAVY, opacity: 0.4 }}
+                    style={{ color: NAVY_MUTED }}
                   >
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
                       <rect x="1" y="2" width="7" height="8" rx="0.5" stroke="currentColor" strokeWidth="1" />
                       <path d="M5 1h5v5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                       <path d="M5 7l5-5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
@@ -221,16 +220,16 @@ export function Lab() {
                   </a>
                   <span
                     className="text-[9px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
+                    style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                   >
                     Atualizado {p.updated}
                   </span>
                 </div>
               </div>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {projects.length === 0 && (
         <div
@@ -239,7 +238,7 @@ export function Lab() {
         >
           <span
             className="text-[10px] tracking-[0.18em] uppercase"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             Nenhum projeto adicionado
           </span>

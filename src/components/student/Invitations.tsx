@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Rule, Tag } from "./ui";
 import { DEMANDS } from "@/data/demands";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Invitation } from "@/types";
 
 const MONO = "Space Mono, monospace";
@@ -48,6 +48,8 @@ function InvitationCard({
         onClick={() => setOpen(!open)}
         className="w-full text-left px-1 py-6 transition-colors"
         onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}04`)}
+        onFocus={(e) => (e.currentTarget.style.background = `${NAVY}04`)}
+        onBlur={(e) => (e.currentTarget.style.background = "transparent")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <div className="flex items-start justify-between gap-6">
@@ -70,7 +72,7 @@ function InvitationCard({
               </span>
               <span
                 className="text-[9px] tracking-[0.14em] uppercase"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 {demand.company} · {invitation.sentAt}
               </span>
@@ -83,7 +85,7 @@ function InvitationCard({
             </h3>
             <p
               className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+              style={{ fontFamily: MONO, color: NAVY_MUTED }}
             >
               {demand.id} · {demand.area} · prazo {demand.deadline}
             </p>
@@ -106,7 +108,7 @@ function InvitationCard({
             <div>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mb-3"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 Descrição do problema
               </p>
@@ -118,7 +120,7 @@ function InvitationCard({
               </p>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mb-3"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 Requisitos técnicos
               </p>
@@ -127,7 +129,7 @@ function InvitationCard({
                   <span
                     key={s}
                     className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
-                    style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.7 }}
+                    style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
                   >
                     {s}
                   </span>
@@ -138,7 +140,7 @@ function InvitationCard({
             <div>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mb-3"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 Por que você foi indicado
               </p>
@@ -154,7 +156,7 @@ function InvitationCard({
                 </p>
                 <p
                   className="text-[9px] tracking-[0.14em] uppercase mt-3"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: MONO, color: NAVY_MUTED }}
                 >
                   — Curadoria do IC
                 </p>
@@ -164,7 +166,7 @@ function InvitationCard({
                 <>
                   <p
                     className="text-[9px] tracking-[0.16em] uppercase mb-3"
-                    style={{ fontFamily: MONO, color: RED, opacity: 0.8 }}
+                    style={{ fontFamily: MONO, color: RED }}
                   >
                     Responda em até {invitation.deadline}
                   </p>
@@ -174,21 +176,23 @@ function InvitationCard({
                       className="px-7 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity"
                       style={{ background: NAVY, color: OFFWHITE, fontFamily: SANS }}
                       onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+                      onFocus={(e) => (e.currentTarget.style.opacity = "0.88")}
+                      onBlur={(e) => (e.currentTarget.style.opacity = "1")}
                       onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
                     >
                       Aceitar convite
                     </button>
                     <button
                       onClick={onDecline}
-                      className="px-5 py-3 text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-45"
-                      style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}30` }}
+                      className="px-5 py-3 text-[10px] tracking-[0.18em] uppercase transition-colors"
+                      style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}30` }}
                     >
                       Recusar
                     </button>
                   </div>
                   <p
                     className="text-[10px] mt-4 leading-relaxed"
-                    style={{ fontFamily: SANS, color: NAVY, opacity: 0.4 }}
+                    style={{ fontFamily: SANS, color: NAVY_MUTED }}
                   >
                     Ao aceitar, seus dados de contato são enviados ao solicitante e o
                     projeto segue para formalização.
@@ -197,7 +201,7 @@ function InvitationCard({
               ) : (
                 <p
                   className="text-[11px] tracking-[0.14em] uppercase"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+                  style={{ fontFamily: MONO, color: NAVY_MUTED }}
                 >
                   {invitation.status === "aceito"
                     ? "Você aceitou este convite."
@@ -236,7 +240,7 @@ export function Invitations({
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Caixa de convites
@@ -253,7 +257,7 @@ export function Invitations({
               </p>
               <p
                 className="text-[9px] tracking-[0.14em] uppercase mt-1.5"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 {k === "pendente" ? "Pendentes" : k === "aceito" ? "Aceitos" : "Recusados"}
               </p>
@@ -262,7 +266,7 @@ export function Invitations({
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-2">
+      <div className="flex flex-wrap gap-2 mb-2" role="group" aria-label="Filtrar convites por situação">
         {(["todos", "pendente", "aceito", "recusado"] as const).map((k) => (
           <Tag key={k} active={filter === k} accent={k === "pendente"} onClick={() => setFilter(k)}>
             {k}
@@ -275,22 +279,23 @@ export function Invitations({
       {shown.length === 0 ? (
         <p
           className="py-16 text-center text-[11px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: MONO, color: NAVY_MUTED }}
         >
           Nenhum convite nesta categoria
         </p>
       ) : (
-        <div>
+        <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {shown.map((inv) => (
-            <InvitationCard
-              key={inv.id}
-              invitation={inv}
-              onAccept={() => onAccept(inv.id)}
-              onDecline={() => onDecline(inv.id)}
-            />
+            <li key={inv.id}>
+              <InvitationCard
+                invitation={inv}
+                onAccept={() => onAccept(inv.id)}
+                onDecline={() => onDecline(inv.id)}
+              />
+            </li>
           ))}
-          <div style={{ borderTop: `1px solid ${NAVY}18` }} />
-        </div>
+          <li style={{ borderTop: `1px solid ${NAVY}18` }} aria-hidden="true" />
+        </ul>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
 import { Step3 } from "./Step3";
 import { StepIndicator } from "./StepIndicator";
-import { NAVY, OFFWHITE } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE } from "@/styles/tokens";
 
 export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) {
   const [step, setStep] = useState(0);
@@ -35,13 +35,13 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
         </span>
         <span
           className="text-[9px] tracking-[0.18em] uppercase ml-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
         >
           · Configuração inicial
         </span>
       </div>
 
-      <div className="flex-1 px-8 md:px-16 py-14 max-w-4xl w-full mx-auto">
+      <main id="conteudo" tabIndex={-1} className="flex-1 px-8 md:px-16 py-14 max-w-4xl w-full mx-auto">
         <StepIndicator current={step} />
 
         <div className="min-h-[420px]">
@@ -68,11 +68,11 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
         <div className="flex items-center justify-between mt-12 pt-6" style={{ borderTop: `1px solid ${NAVY}15` }}>
           <button
             onClick={() => setStep(Math.max(0, step - 1))}
-            className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+            className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-colors"
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             disabled={step === 0}
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
             Anterior
@@ -81,7 +81,7 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
           <div className="flex items-center gap-3">
             <span
               className="text-[9px] tracking-[0.14em]"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               {step + 1} / 3
             </span>
@@ -91,13 +91,13 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
               style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
             >
               {step === 2 ? "Concluir" : "Próximo"}
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               </svg>
             </button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

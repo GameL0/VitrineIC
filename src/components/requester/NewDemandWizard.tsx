@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input, Label, Rule, SelectField } from "./ui";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 export const WIZARD_STEPS = [
   { n: "01", label: "Descrição" },
@@ -11,15 +11,18 @@ export const WIZARD_STEPS = [
 
 export function WizardStepIndicator({ current }: { current: number }) {
   return (
-    <div className="flex items-center mb-14">
+    <ol
+      className="flex items-center mb-14"
+      style={{ listStyle: "none", margin: 0, padding: 0, marginBottom: "3.5rem" }}
+    >
       {WIZARD_STEPS.map((s, i) => (
-        <div key={i} className="flex items-center">
+        <li key={i} className="flex items-center" aria-current={i === current ? "step" : undefined}>
           <div className="flex flex-col items-center gap-1.5">
             <span
               className="text-[20px] leading-none transition-all"
               style={{
                 fontFamily: "DM Serif Display, Georgia, serif",
-                color: i < current ? RED : i === current ? NAVY : `${NAVY}28`,
+                color: i < current ? RED : i === current ? NAVY : NAVY_MUTED,
               }}
             >
               {s.n}
@@ -28,7 +31,7 @@ export function WizardStepIndicator({ current }: { current: number }) {
               className="text-[9px] tracking-[0.14em] uppercase whitespace-nowrap"
               style={{
                 fontFamily: "Space Mono, monospace",
-                color: i === current ? NAVY : `${NAVY}30`,
+                color: i === current ? NAVY : NAVY_MUTED,
               }}
             >
               {s.label}
@@ -45,9 +48,9 @@ export function WizardStepIndicator({ current }: { current: number }) {
               }}
             />
           )}
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
@@ -96,7 +99,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
       <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
         Descrição do Problema
       </h2>
-      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
         Descreva o desafio que sua organização enfrenta com clareza e objetividade.
       </p>
       <Input
@@ -134,7 +137,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
       <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
         Escopo & Prazos
       </h2>
-      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
         Defina o tamanho do projeto, cronograma e recursos disponíveis.
       </p>
       <div className="grid md:grid-cols-2 gap-5">
@@ -182,7 +185,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
       <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
         Requisitos Técnicos
       </h2>
-      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
         Liste as tecnologias, habilidades e pré-requisitos desejados.
       </p>
       <Input
@@ -210,13 +213,13 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         className="flex items-start gap-4 p-4"
         style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03` }}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.3, flexShrink: 0, marginTop: 2 }}>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY_MUTED, flexShrink: 0, marginTop: 2 }}>
           <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.1" />
           <path d="M8 5v4M8 11v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
         <p
           className="text-[11px] leading-relaxed"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.45, fontWeight: 300 }}
+          style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
         >
           Após submissão, a equipe de curadoria do IC revisará a demanda em até 5 dias úteis.
           Você receberá notificação por e-mail ao ser aprovada e quando houver match com estudantes.
@@ -229,7 +232,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
       <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
         Revisão Final
       </h2>
-      <p className="text-sm mb-8" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-8" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
         Confirme os dados antes de enviar a demanda.
       </p>
       <div style={{ border: `1px solid ${NAVY}18` }}>
@@ -252,7 +255,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           >
             <span
               className="text-[9px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               {r.label}
             </span>
@@ -271,7 +274,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           <Label>Descrição do problema</Label>
           <p
             className="text-[13px] leading-relaxed mt-2"
-            style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.6, fontWeight: 300 }}
+            style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
           >
             {form.problem}
           </p>
@@ -281,7 +284,14 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
   ];
 
   return (
-    <div className="px-8 md:px-16 py-14 max-w-4xl mx-auto">
+    <form
+      className="px-8 md:px-16 py-14 max-w-4xl mx-auto"
+      onSubmit={(e) => {
+        e.preventDefault();
+        next();
+      }}
+    >
+      <h1 className="sr-only">Nova demanda — passo {step + 1} de 4</h1>
       <WizardStepIndicator current={step} />
       <div className="min-h-[440px]">{fieldsBystep[step]}</div>
       <div
@@ -289,12 +299,13 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         style={{ borderTop: `1px solid ${NAVY}15` }}
       >
         <button
+          type="button"
           onClick={() => setStep(Math.max(0, step - 1))}
           disabled={step === 0}
           className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: step === 0 ? 0.2 : 0.5 }}
+          style={{ fontFamily: "Space Mono, monospace", color: step === 0 ? `${NAVY}40` : NAVY_MUTED }}
         >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
             <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
           Anterior
@@ -302,22 +313,22 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         <div className="flex items-center gap-3">
           <span
             className="text-[9px] tracking-[0.14em]"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             {step + 1} / 4
           </span>
           <button
-            onClick={next}
+            type="submit"
             className="flex items-center gap-3 px-8 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-88"
             style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
           >
             {step === 3 ? "Enviar Demanda" : "Próximo"}
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

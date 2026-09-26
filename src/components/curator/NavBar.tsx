@@ -1,5 +1,5 @@
 import { Mono } from "./ui";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function NavBar({
@@ -24,40 +24,46 @@ export function NavBar({
         <span className="text-[12px] tracking-[0.2em] uppercase font-semibold" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>
           VitrineIC
         </span>
-        <span className="text-[9px] tracking-[0.18em] uppercase ml-2" style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.7 }}>
+        <span className="text-[9px] tracking-[0.18em] uppercase ml-2" style={{ fontFamily: "Space Mono, monospace", color: RED }}>
           · Admin — Curadoria
         </span>
       </div>
-      <div className="hidden md:flex items-center gap-1">
+      <ul className="flex items-center gap-1" style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {[
           { id: "triage", label: "Triagem", badge: newCount > 0 ? newCount : null },
         ].map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setView("triage")}
-            className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all flex items-center gap-2"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              color: NAVY,
-              background: view === item.id || view === "matchmaking" || view === "confirmed" ? `${NAVY}08` : "transparent",
-              borderBottom: view === item.id || view === "matchmaking" || view === "confirmed" ? `2px solid ${RED}` : "2px solid transparent",
-            }}
-          >
-            Demandas & Match
-            {item.badge && (
-              <span className="px-1.5 py-0.5 text-[8px]" style={{ background: RED, color: OFFWHITE, fontFamily: "Space Mono, monospace" }}>
-                {item.badge}
-              </span>
-            )}
-          </button>
+          <li key={item.id}>
+            <button
+              type="button"
+              aria-current={
+                view === item.id || view === "matchmaking" || view === "confirmed" ? "page" : undefined
+              }
+              onClick={() => setView("triage")}
+              className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all flex items-center gap-2"
+              style={{
+                fontFamily: "Inter, sans-serif",
+                color: NAVY,
+                background: view === item.id || view === "matchmaking" || view === "confirmed" ? `${NAVY}08` : "transparent",
+                borderBottom: view === item.id || view === "matchmaking" || view === "confirmed" ? `2px solid ${RED}` : "2px solid transparent",
+              }}
+            >
+              Demandas & Match
+              {item.badge && (
+                <span className="px-1.5 py-0.5 text-[8px]" style={{ background: RED, color: OFFWHITE, fontFamily: "Space Mono, monospace" }}>
+                  {item.badge}
+                </span>
+              )}
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
       <button
+        type="button"
         onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-40 flex items-center gap-2"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+        className="text-[9px] tracking-[0.16em] uppercase transition-colors flex items-center gap-2"
+        style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
       >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
           <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
         </svg>
         Sair

@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useModal } from "@/lib/useModal";
 import { Label, Mono, Rule, SkillTag } from "./ui";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function ConfirmModal({
@@ -17,6 +18,7 @@ export function ConfirmModal({
   onConfirm: () => void;
 }) {
   const [note, setNote] = useState("");
+  const dialogRef = useModal(onClose);
   const score = scoreStudent(student, demand);
   const matchedSkills = student.skills.filter((s) =>
     demand.skills.some((ds) => ds.toLowerCase() === s.toLowerCase())
@@ -29,6 +31,11 @@ export function ConfirmModal({
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirm-modal-titulo"
+        tabIndex={-1}
         className="w-full max-w-2xl"
         style={{
           background: OFFWHITE,
@@ -39,19 +46,21 @@ export function ConfirmModal({
       >
         {/* Modal header */}
         <div className="flex items-center justify-between px-8 py-5" style={{ borderBottom: `1px solid ${NAVY}15` }}>
-          <p className="text-[10px] tracking-[0.2em] uppercase flex items-center gap-3"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
-            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+          <h2 id="confirm-modal-titulo" className="text-[10px] tracking-[0.2em] uppercase flex items-center gap-3"
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true">
               <rect x="0.5" y="0.5" width="7" height="7" fill={RED} />
             </svg>
             Confirmação de Match
-          </p>
+          </h2>
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Fechar"
             className="w-7 h-7 flex items-center justify-center"
-            style={{ color: NAVY, opacity: 0.3 }}
+            style={{ color: NAVY_MUTED }}
           >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
             </svg>
           </button>
@@ -120,7 +129,7 @@ export function ConfirmModal({
               <div className="flex flex-col gap-1.5 mt-2">
                 {student.projects.map((p) => (
                   <div key={p.title} className="flex items-center justify-between px-3 py-2" style={{ border: `1px solid ${NAVY}10` }}>
-                    <span className="text-[12px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65 }}>
+                    <span className="text-[12px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED }}>
                       {p.title}
                     </span>
                     <div className="flex gap-1">
@@ -136,13 +145,16 @@ export function ConfirmModal({
 
           {/* Justification note */}
           <div>
-            <Label>Nota de justificativa interna <span style={{ opacity: 0.5 }}>(opcional)</span></Label>
+            <Label htmlFor="nota-justificativa">
+              Nota de justificativa interna (opcional)
+            </Label>
             <textarea
+              id="nota-justificativa"
               rows={3}
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="Registre o motivo técnico da seleção, critérios adicionais considerados..."
-              className="w-full px-3 py-2.5 text-[11px] outline-none transition-colors"
+              className="w-full px-3 py-2.5 text-[11px] transition-colors"
               style={{
                 fontFamily: "Space Mono, monospace",
                 color: NAVY,
@@ -169,13 +181,13 @@ export function ConfirmModal({
             </button>
             <button
               onClick={onClose}
-              className="px-6 py-4 text-[10px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-60 opacity-40"
-              style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Inter, sans-serif" }}
+              className="px-6 py-4 text-[10px] tracking-[0.18em] uppercase font-medium transition-colors"
+              style={{ border: `1px solid ${NAVY}40`, color: NAVY_MUTED, fontFamily: "Inter, sans-serif" }}
             >
               Cancelar
             </button>
           </div>
-          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
+          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
             O solicitante e o estudante receberão notificação automática por e-mail.
           </p>
         </div>

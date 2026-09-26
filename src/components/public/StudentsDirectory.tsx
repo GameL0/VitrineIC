@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { STUDENTS } from "@/data/students";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 const MONO = "Space Mono, monospace";
 const SANS = "Inter, sans-serif";
@@ -25,7 +25,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
         <div>
           <p
             className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
             Diretório
@@ -38,7 +38,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
           </h1>
           <p
             className="text-base leading-[1.7] max-w-xl"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.65, fontWeight: 300 }}
+            style={{ fontFamily: SANS, color: NAVY_MUTED, fontWeight: 300 }}
           >
             Quem está construindo no Instituto de Computação, com suas
             competências, projetos e disponibilidade.
@@ -47,16 +47,19 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
 
         <div style={{ minWidth: "240px" }}>
           <label
+            htmlFor="busca-estudantes"
             className="block text-[9px] tracking-[0.18em] uppercase mb-1.5"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Buscar por nome, curso ou skill
           </label>
           <input
+            id="busca-estudantes"
+            type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="ex.: Python, robótica…"
-            className="w-full px-3 py-2.5 text-sm bg-transparent outline-none transition-colors"
+            className="w-full px-3 py-2.5 text-sm bg-transparent transition-colors"
             style={{ border: `1px solid ${NAVY}44`, borderRadius: 0, fontFamily: SANS, color: NAVY }}
             onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
             onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}44`)}
@@ -67,72 +70,73 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
       {shown.length === 0 ? (
         <p
           className="py-20 text-center text-[11px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: MONO, color: NAVY_MUTED }}
         >
           Nenhum estudante encontrado
         </p>
       ) : (
-        <div>
+        <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {shown.map((student) => (
-            <button
-              key={student.id}
-              onClick={() => onOpenProfile(student.id)}
-              className="w-full text-left flex items-start gap-6 py-7 px-1 transition-colors"
-              style={{ borderTop: `1px solid ${NAVY}18` }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}04`)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-            >
-              <div
-                className="flex items-center justify-center flex-shrink-0"
-                style={{ width: "44px", height: "44px", background: NAVY }}
+            <li key={student.id}>
+              <button
+                onClick={() => onOpenProfile(student.id)}
+                className="w-full text-left flex items-start gap-6 py-7 px-1 transition-colors"
+                style={{ borderTop: `1px solid ${NAVY}18` }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}04`)}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
               >
-                <span
-                  className="text-[12px] tracking-[0.1em]"
-                  style={{ fontFamily: MONO, color: OFFWHITE }}
+                <div
+                  className="flex items-center justify-center flex-shrink-0"
+                  style={{ width: "44px", height: "44px", background: NAVY }}
                 >
-                  {student.initials}
-                </span>
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <h2 className="text-xl leading-snug" style={{ fontFamily: SERIF, color: NAVY }}>
-                  {student.name}
-                </h2>
-                <p
-                  className="text-[10px] tracking-[0.14em] uppercase mb-3"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
-                >
-                  {student.course} · {student.semester} · {student.projects.length}{" "}
-                  {student.projects.length === 1 ? "projeto" : "projetos"}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {student.skills.slice(0, 6).map((s) => (
-                    <span
-                      key={s}
-                      className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
-                      style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.55 }}
-                    >
-                      {s}
-                    </span>
-                  ))}
+                  <span
+                    className="text-[12px] tracking-[0.1em]"
+                    style={{ fontFamily: MONO, color: OFFWHITE }}
+                  >
+                    {student.initials}
+                  </span>
                 </div>
-              </div>
 
-              <div className="hidden md:block text-right flex-shrink-0">
-                <p
-                  className="text-[9px] tracking-[0.16em] uppercase mb-1"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
-                >
-                  Disponibilidade
-                </p>
-                <p className="text-[12px]" style={{ fontFamily: SANS, color: NAVY, opacity: 0.6 }}>
-                  {student.availability}
-                </p>
-              </div>
-            </button>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-xl leading-snug" style={{ fontFamily: SERIF, color: NAVY }}>
+                    {student.name}
+                  </h2>
+                  <p
+                    className="text-[10px] tracking-[0.14em] uppercase mb-3"
+                    style={{ fontFamily: MONO, color: NAVY_MUTED }}
+                  >
+                    {student.course} · {student.semester} · {student.projects.length}{" "}
+                    {student.projects.length === 1 ? "projeto" : "projetos"}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {student.skills.slice(0, 6).map((s) => (
+                      <span
+                        key={s}
+                        className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
+                        style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}20` }}
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="hidden md:block text-right flex-shrink-0">
+                  <p
+                    className="text-[9px] tracking-[0.16em] uppercase mb-1"
+                    style={{ fontFamily: MONO, color: NAVY_MUTED }}
+                  >
+                    Disponibilidade
+                  </p>
+                  <p className="text-[12px]" style={{ fontFamily: SANS, color: NAVY_MUTED }}>
+                    {student.availability}
+                  </p>
+                </div>
+              </button>
+            </li>
           ))}
-          <div style={{ borderTop: `1px solid ${NAVY}18` }} />
-        </div>
+          <li style={{ borderTop: `1px solid ${NAVY}18` }} aria-hidden="true" />
+        </ul>
       )}
     </div>
   );

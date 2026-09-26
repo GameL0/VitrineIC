@@ -11,7 +11,7 @@ import {
   searchSkills,
   suggestedFor,
 } from "@/data/skills";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { SkillLevel, StudentSkill } from "@/types";
 
 const MONO = "Space Mono, monospace";
@@ -122,9 +122,11 @@ export function SkillPicker({
     if (e.key === "Escape") setQuery("");
   };
 
+  const listaAberta = Boolean(query) && (results.length > 0 || canAddCustom);
+
   return (
     <div className="max-w-3xl">
-      <Label>Competências</Label>
+      <Label htmlFor="campo-skills">Competências</Label>
 
       {/* ── Campo de tokens ── */}
       <div
@@ -152,10 +154,10 @@ export function SkillPicker({
                 remove(s.name);
               }}
               aria-label={`Remover ${s.name}`}
-              className="w-3.5 h-3.5 flex items-center justify-center transition-opacity hover:opacity-100 opacity-40"
-              style={{ color: NAVY }}
+              className="w-3.5 h-3.5 flex items-center justify-center transition-colors"
+              style={{ color: NAVY_MUTED }}
             >
-              <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+              <svg aria-hidden="true" width="8" height="8" viewBox="0 0 8 8" fill="none">
                 <line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" strokeWidth="1.4" />
                 <line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" strokeWidth="1.4" />
               </svg>
@@ -165,6 +167,15 @@ export function SkillPicker({
 
         <input
           ref={inputRef}
+          id="campo-skills"
+          role="combobox"
+          aria-expanded={listaAberta}
+          aria-controls="lista-skills"
+          aria-autocomplete="list"
+          aria-activedescendant={
+            listaAberta && results[highlight] ? `skill-opcao-${highlight}` : undefined
+          }
+          autoComplete="off"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -172,18 +183,27 @@ export function SkillPicker({
           }}
           onKeyDown={onKeyDown}
           placeholder={value.length === 0 ? "Digite uma competência e pressione Enter…" : ""}
-          className="flex-1 min-w-[180px] px-1 py-1 text-sm bg-transparent outline-none"
+          className="flex-1 min-w-[180px] px-1 py-1 text-sm bg-transparent"
           style={{ fontFamily: SANS, color: NAVY }}
         />
       </div>
 
+      <p className="sr-only" role="status">
+        {listaAberta
+          ? `${results.length} ${results.length === 1 ? "sugestão" : "sugestões"} de competência`
+          : ""}
+      </p>
+
       {/* ── Sugestões da busca: no máximo oito, sem rolagem ── */}
-      {query && (results.length > 0 || canAddCustom) && (
-        <div style={{ border: `1px solid ${NAVY}25`, borderTop: "none" }}>
+      {listaAberta && (
+        <div id="lista-skills" role="listbox" style={{ border: `1px solid ${NAVY}25`, borderTop: "none" }}>
           {results.map((s, i) => (
             <button
               key={s.name}
               type="button"
+              id={`skill-opcao-${i}`}
+              role="option"
+              aria-selected={i === highlight}
               onMouseEnter={() => setHighlight(i)}
               onClick={() => add(s.name)}
               className="w-full flex items-center justify-between gap-3 px-3 py-2 text-left transition-colors"
@@ -197,7 +217,7 @@ export function SkillPicker({
               </span>
               <span
                 className="text-[9px] tracking-[0.12em] uppercase flex-shrink-0"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.3 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 {s.cat}
               </span>
@@ -216,7 +236,7 @@ export function SkillPicker({
               </span>
               <span
                 className="text-[9px] tracking-[0.12em] uppercase flex-shrink-0"
-                style={{ fontFamily: MONO, color: RED, opacity: 0.8 }}
+                style={{ fontFamily: MONO, color: RED }}
               >
                 fora do catálogo
               </span>
@@ -230,7 +250,7 @@ export function SkillPicker({
         <div className="mt-5">
           <p
             className="text-[9px] tracking-[0.18em] uppercase mb-2.5"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             {course ? `Comuns em ${course}` : "Mais declaradas"}
           </p>
@@ -266,7 +286,7 @@ export function SkillPicker({
             <Label>Nível de proficiência</Label>
             <span
               className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: MONO, color: NAVY_MUTED }}
             >
               {value.length} {value.length === 1 ? "competência" : "competências"}
             </span>
@@ -287,7 +307,7 @@ export function SkillPicker({
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <span
                     className="hidden sm:inline text-[9px] tracking-[0.1em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                    style={{ fontFamily: MONO, color: NAVY_MUTED }}
                   >
                     {LEVELS[s.level - 1]}
                   </span>
@@ -308,8 +328,8 @@ export function SkillPicker({
         <button
           type="button"
           onClick={() => setShowCatalog(!showCatalog)}
-          className="text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-45"
-          style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
+          className="text-[10px] tracking-[0.16em] uppercase transition-colors"
+          style={{ fontFamily: MONO, color: NAVY_MUTED, borderBottom: `1px solid ${NAVY}` }}
         >
           {showCatalog ? "Ocultar catálogo" : `Ver catálogo completo (${ALL_SKILLS.length})`}
         </button>
@@ -323,7 +343,7 @@ export function SkillPicker({
                 <div key={cat}>
                   <span
                     className="text-[9px] tracking-[0.18em] uppercase block mb-2"
-                    style={{ fontFamily: MONO, color: RED, opacity: 0.7 }}
+                    style={{ fontFamily: MONO, color: RED }}
                   >
                     {cat}
                   </span>
@@ -337,11 +357,12 @@ export function SkillPicker({
                         style={{
                           fontFamily: MONO,
                           border: `1px solid ${NAVY}25`,
-                          color: NAVY,
-                          opacity: 0.6,
+                          color: NAVY_MUTED,
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = NAVY)}
+                        onFocus={(e) => (e.currentTarget.style.color = NAVY)}
+                        onBlur={(e) => (e.currentTarget.style.color = NAVY_MUTED)}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = NAVY_MUTED)}
                       >
                         {s.name}
                       </button>
@@ -354,7 +375,7 @@ export function SkillPicker({
         )}
       </div>
 
-      <p className="text-[10px] mt-6" style={{ fontFamily: SANS, color: NAVY, opacity: 0.4 }}>
+      <p className="text-[10px] mt-6" style={{ fontFamily: SANS, color: NAVY_MUTED }}>
         Não achou? Digite o nome e pressione Enter — a competência entra marcada
         como fora do catálogo. Backspace remove a última.
       </p>

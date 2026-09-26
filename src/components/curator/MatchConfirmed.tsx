@@ -1,7 +1,7 @@
 import { Label, Mono, SkillTag } from "./ui";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function MatchConfirmed({
@@ -20,7 +20,7 @@ export function MatchConfirmed({
     <div className="px-8 md:px-16 py-16 max-w-screen-lg mx-auto">
       <div className="mb-12">
         <p className="text-[9px] tracking-[0.25em] uppercase mb-5 flex items-center gap-3"
-          style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.85 }}>
+          style={{ fontFamily: "Space Mono, monospace", color: RED }}>
           <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
           Match efetivado
         </p>
@@ -30,7 +30,7 @@ export function MatchConfirmed({
           <em className="not-italic" style={{ color: RED }}>confirmada.</em>
         </h1>
         <div className="inline-flex items-center gap-4 px-5 py-3" style={{ border: `1px solid ${NAVY}22`, background: `${NAVY}04` }}>
-          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
             Protocolo
           </span>
           <span className="text-xl font-bold" style={{ fontFamily: "Space Mono, monospace", color: NAVY }}>
@@ -70,7 +70,7 @@ export function MatchConfirmed({
             <span className="text-2xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: RED }}>
               {score}%
             </span>
-            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
+            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
               compatibilidade técnica
             </span>
           </div>
@@ -92,7 +92,7 @@ export function MatchConfirmed({
               style={{ border: `1px solid ${item.done ? NAVY : `${NAVY}25`}`, background: item.done ? NAVY : "transparent" }}
             >
               {item.done && (
-                <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                <svg aria-hidden="true" width="8" height="8" viewBox="0 0 8 8" fill="none">
                   <path d="M1.5 4l2 2 3-3.5" stroke={OFFWHITE} strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               )}
@@ -111,7 +111,7 @@ export function MatchConfirmed({
           style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
         >
           Voltar à Fila
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
         </button>

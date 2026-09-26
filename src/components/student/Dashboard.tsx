@@ -1,7 +1,7 @@
 import { Label } from "./ui";
 import { notifications } from "@/data/notifications";
 import { INSTITUTION } from "@/data/institution";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, OFFWHITE_MUTED, RED } from "@/styles/tokens";
 
 export function Dashboard({
   profile,
@@ -26,7 +26,7 @@ export function Dashboard({
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Dashboard
@@ -40,7 +40,7 @@ export function Dashboard({
         </div>
         <span
           className="text-[10px] tracking-[0.14em]"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
         >
           {new Date().toLocaleDateString("pt-BR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
         </span>
@@ -71,7 +71,7 @@ export function Dashboard({
                 </p>
                 <p
                   className="text-[11px] mt-0.5"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.45 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                 >
                   {course} · {semester}
                 </p>
@@ -80,7 +80,7 @@ export function Dashboard({
             <div style={{ height: "1px", background: `${NAVY}10`, margin: "0 0 16px" }} />
             <p
               className="text-[12px] leading-relaxed"
-              style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
+              style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
             >
               {profile?.bio || "Estudante de graduação com interesse em IA aplicada e sistemas distribuídos. Buscando projetos de iniciação científica."}
             </p>
@@ -120,7 +120,7 @@ export function Dashboard({
               <div className="w-2 h-2 rounded-full" style={{ background: "#22c55e" }} />
               <span
                 className="text-[11px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
               >
                 {INSTITUTION.showcaseDomain}/u/{name.split(" ")[0].toLowerCase()}
               </span>
@@ -150,71 +150,81 @@ export function Dashboard({
             </div>
             <button
               className="text-[9px] tracking-[0.14em] uppercase transition-opacity hover:opacity-80"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               Marcar lidas
             </button>
           </div>
-          <div>
-            {notifications.map((n, i) => (
-              <div
-                key={i}
-                onClick={n.type === "CONVITE" ? onOpenInvitations : undefined}
-                className="px-6 py-4 transition-colors cursor-pointer"
-                style={{
-                  borderBottom: i < notifications.length - 1 ? `1px solid ${NAVY}08` : "none",
-                  background: n.unread ? `${NAVY}04` : "transparent",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}07`)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = n.unread ? `${NAVY}04` : "transparent")}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3">
-                    {n.unread && (
-                      <div
-                        className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                        style={{ background: RED }}
-                      />
-                    )}
-                    {!n.unread && <div className="w-1.5 flex-shrink-0" />}
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span
-                          className="text-[9px] tracking-[0.16em] uppercase px-1.5 py-0.5"
-                          style={{
-                            fontFamily: "Space Mono, monospace",
-                            color: n.type === "CONVITE" ? RED : NAVY,
-                            border: `1px solid ${n.type === "CONVITE" ? RED : `${NAVY}25`}`,
-                            opacity: n.type === "CONVITE" ? 1 : 0.6,
-                          }}
+          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            {notifications.map((n, i) => {
+              // Só a notificação de convite leva a algum lugar; as demais são
+              // texto. Por isso o item vira <button> apenas quando é acionável.
+              const clicavel = n.type === "CONVITE";
+              const Item = clicavel ? "button" : "div";
+              return (
+              <li key={i}>
+                <Item
+                  {...(clicavel
+                    ? { type: "button" as const, onClick: onOpenInvitations }
+                    : {})}
+                  className={`w-full text-left px-6 py-4 transition-colors${clicavel ? " cursor-pointer" : ""}`}
+                  style={{
+                    border: "none",
+                    borderBottom: i < notifications.length - 1 ? `1px solid ${NAVY}08` : "none",
+                    background: n.unread ? `${NAVY}04` : "transparent",
+                    font: "inherit",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}07`)}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = n.unread ? `${NAVY}04` : "transparent")}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3">
+                      {n.unread && (
+                        <div
+                          className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                          style={{ background: RED }}
+                        />
+                      )}
+                      {!n.unread && <div className="w-1.5 flex-shrink-0" />}
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span
+                            className="text-[9px] tracking-[0.16em] uppercase px-1.5 py-0.5"
+                            style={{
+                              fontFamily: "Space Mono, monospace",
+                              color: n.type === "CONVITE" ? RED : NAVY_MUTED,
+                              border: `1px solid ${n.type === "CONVITE" ? RED : `${NAVY}25`}`,
+                            }}
+                          >
+                            {n.type}
+                          </span>
+                        </div>
+                        <p
+                          className="text-[12px] font-medium"
+                          style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
                         >
-                          {n.type}
-                        </span>
+                          {n.project}
+                        </p>
+                        <p
+                          className="text-[11px] mt-0.5"
+                          style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED }}
+                        >
+                          {n.from}
+                        </p>
                       </div>
-                      <p
-                        className="text-[12px] font-medium"
-                        style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
-                      >
-                        {n.project}
-                      </p>
-                      <p
-                        className="text-[11px] mt-0.5"
-                        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.45 }}
-                      >
-                        {n.from}
-                      </p>
                     </div>
+                    <span
+                      className="text-[9px] flex-shrink-0 mt-0.5"
+                      style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
+                    >
+                      {n.time}
+                    </span>
                   </div>
-                  <span
-                    className="text-[9px] flex-shrink-0 mt-0.5"
-                    style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
-                  >
-                    {n.time}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+                </Item>
+              </li>
+              );
+            })}
+          </ul>
         </div>
 
         {/* Public preview */}
@@ -224,7 +234,7 @@ export function Dashboard({
             style={{ borderBottom: `1px solid ${NAVY}12`, background: NAVY }}
           >
             <Label>
-              <span style={{ color: OFFWHITE, opacity: 0.5 }}>Preview público</span>
+              <span style={{ color: OFFWHITE_MUTED }}>Preview público</span>
             </Label>
           </div>
           <div className="p-5" style={{ background: `${NAVY}04` }}>
@@ -238,7 +248,7 @@ export function Dashboard({
                 </div>
                 <div>
                   <p className="text-[11px] font-semibold" style={{ fontFamily: "Inter", color: NAVY }}>{name}</p>
-                  <p className="text-[9px]" style={{ fontFamily: "Space Mono", color: NAVY, opacity: 0.4 }}>{course}</p>
+                  <p className="text-[9px]" style={{ fontFamily: "Space Mono", color: NAVY_MUTED }}>{course}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 mb-3">
@@ -246,14 +256,14 @@ export function Dashboard({
                   <span
                     key={s.name}
                     className="text-[8px] px-1.5 py-0.5 tracking-wide"
-                    style={{ fontFamily: "Space Mono", color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.7 }}
+                    style={{ fontFamily: "Space Mono", color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
                   >
                     {s.name}
                   </span>
                 ))}
               </div>
               <div style={{ height: "1px", background: `${NAVY}10` }} className="mb-2" />
-              <p className="text-[8px]" style={{ fontFamily: "Space Mono", color: NAVY, opacity: 0.3 }}>
+              <p className="text-[8px]" style={{ fontFamily: "Space Mono", color: NAVY_MUTED }}>
                 {INSTITUTION.showcaseDomain}/u/{name.split(" ")[0].toLowerCase()}
               </p>
             </div>
@@ -262,7 +272,7 @@ export function Dashboard({
                 <Label>Visibilidade</Label>
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <div className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} />
-                  <span className="text-[9px]" style={{ fontFamily: "Space Mono", color: NAVY, opacity: 0.5 }}>Público</span>
+                  <span className="text-[9px]" style={{ fontFamily: "Space Mono", color: NAVY_MUTED }}>Público</span>
                 </div>
               </div>
               {[
@@ -271,7 +281,7 @@ export function Dashboard({
                 { label: "Buscas", val: "12" },
               ].map((m) => (
                 <div key={m.label} className="flex items-center justify-between py-1.5" style={{ borderTop: `1px solid ${NAVY}10` }}>
-                  <span className="text-[9px]" style={{ fontFamily: "Space Mono", color: NAVY, opacity: 0.4 }}>{m.label}</span>
+                  <span className="text-[9px]" style={{ fontFamily: "Space Mono", color: NAVY_MUTED }}>{m.label}</span>
                   <span className="text-[11px] font-bold" style={{ fontFamily: "DM Serif Display", color: NAVY }}>{m.val}</span>
                 </div>
               ))}

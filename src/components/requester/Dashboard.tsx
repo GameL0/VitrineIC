@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StatusBadge } from "./StatusBadge";
 import { Label } from "./ui";
 import { DEMANDS } from "@/data/requester-demands";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMatch: () => void }) {
   const [selected, setSelected] = useState<string | null>(null);
@@ -16,7 +16,7 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Painel do Solicitante
@@ -44,7 +44,7 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 </p>
                 <p
                   className="text-[9px] mt-1"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                 >
                   {s.label}
                 </p>
@@ -76,7 +76,7 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
             <span
               key={h}
               className="text-[9px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               {h}
             </span>
@@ -104,12 +104,16 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
               className="px-6 py-4 md:grid md:items-center gap-4"
               style={{ gridTemplateColumns: "180px 1fr 120px 120px 160px 80px" }}
             >
-              <span
-                className="block text-[11px] mb-1 md:mb-0"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              <button
+                type="button"
+                aria-expanded={selected === d.id}
+                aria-label={`${selected === d.id ? "Recolher" : "Expandir"} detalhes da demanda ${d.id}`}
+                onClick={(e) => { e.stopPropagation(); setSelected(selected === d.id ? null : d.id); }}
+                className="block text-left text-[11px] mb-1 md:mb-0"
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED, background: "transparent", border: "none" }}
               >
                 {d.id}
-              </span>
+              </button>
               <span
                 className="block text-[14px] font-medium mb-1 md:mb-0"
                 style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
@@ -118,13 +122,13 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
               </span>
               <span
                 className="hidden md:block text-[10px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
               >
                 {d.area}
               </span>
               <span
                 className="hidden md:block text-[10px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
               >
                 {d.deadline}
               </span>
@@ -147,7 +151,7 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 ) : (
                   <span
                     className="text-[10px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
+                    style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                   >
                     {d.applicants > 0 ? `${d.applicants} concl.` : "—"}
                   </span>
@@ -163,24 +167,23 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
               >
                 <div className="md:col-span-1">
                   <Label>Registrado em</Label>
-                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>{d.date}</p>
+                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>{d.date}</p>
                 </div>
                 <div className="md:col-span-1">
                   <Label>Prazo final</Label>
-                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>{d.deadline}</p>
+                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>{d.deadline}</p>
                 </div>
                 <div className="md:col-span-1">
                   <Label>Candidatos</Label>
-                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>{d.applicants}</p>
+                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>{d.applicants}</p>
                 </div>
                 <div className="md:col-span-1 flex items-end">
                   <button
                     className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-75"
                     style={{
                       fontFamily: "Space Mono, monospace",
-                      color: NAVY,
+                      color: NAVY_MUTED,
                       borderBottom: `1px solid ${NAVY}40`,
-                      opacity: 0.45,
                     }}
                   >
                     Editar demanda

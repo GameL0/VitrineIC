@@ -5,6 +5,8 @@
   --color-navy: #1C2B4A;
   --color-red: #c1121f;
   --color-offwhite: #F5F4F0;
+  --color-navy-muted: #5C6780;
+  --color-offwhite-muted: #B4B8C2;
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
@@ -34,4 +36,68 @@ body {
 /* Modal scroll lock */
 body.modal-open {
   overflow: hidden;
+}
+
+/* ── Foco de teclado ──────────────────────────────────────────────────────
+   O protótipo remove o outline nativo em vários campos. Este bloco devolve
+   um indicador consistente para quem navega por Tab, sem exibi-lo no clique
+   de mouse (por isso :focus-visible, não :focus). */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+/* Sobre superfícies navy o vermelho tem contraste insuficiente: inverte. */
+:where(.on-navy) :where(a, button, input, select, textarea, [tabindex]):focus-visible,
+:where(a, button, input, select, textarea, [tabindex]).on-navy:focus-visible {
+  outline-color: var(--color-offwhite);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Skip link ────────────────────────────────────────────────────────────
+   Primeiro da ordem de tabulação, invisível até receber foco. */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 60;
+  padding: 0.5rem 1rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--color-navy);
+  color: var(--color-offwhite);
+  transition: top 0.15s;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* O <main> recebe foco via skip link, mas não precisa de anel próprio. */
+main:focus {
+  outline: none;
+}
+
+/* Texto só para leitor de tela. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

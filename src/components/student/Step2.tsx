@@ -1,6 +1,6 @@
 import { LanguagePicker } from "./LanguagePicker";
 import { SkillPicker } from "./SkillPicker";
-import { NAVY, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, RED } from "@/styles/tokens";
 import type { StudentLanguage, StudentSkill } from "@/types";
 
 const MONO = "Space Mono, monospace";
@@ -9,7 +9,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
     <p
       className="text-[9px] tracking-[0.22em] uppercase mb-4 flex items-center gap-2"
-      style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+      style={{ fontFamily: MONO, color: NAVY_MUTED }}
     >
       <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
       {children}
@@ -29,15 +29,15 @@ export function Step2({
 
   return (
     <div>
-      <h2
+      <h1
         className="text-3xl mb-2"
         style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
       >
         Competências
-      </h2>
+      </h1>
       <p
         className="text-sm mb-10"
-        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
+        style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
       >
         Digite para buscar ou use os atalhos. As competências técnicas são o
         principal critério do match com as demandas.

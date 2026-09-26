@@ -1,6 +1,6 @@
 import { findProject } from "@/data/students";
 import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, OFFWHITE_MUTED, RED } from "@/styles/tokens";
 
 const MONO = "Space Mono, monospace";
 const SANS = "Inter, sans-serif";
@@ -24,7 +24,7 @@ export function ProjectDetail({
       <div className="px-8 md:px-16 py-24 max-w-screen-xl mx-auto text-center">
         <p
           className="text-[11px] tracking-[0.16em] uppercase mb-6"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: MONO, color: NAVY_MUTED }}
         >
           Projeto não encontrado
         </p>
@@ -46,10 +46,10 @@ export function ProjectDetail({
     <div className="px-8 md:px-16 py-10 max-w-screen-lg mx-auto">
       <button
         onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-40 flex items-center gap-2 mb-10"
-        style={{ fontFamily: MONO, color: NAVY }}
+        className="text-[9px] tracking-[0.16em] uppercase transition-colors flex items-center gap-2 mb-10"
+        style={{ fontFamily: MONO, color: NAVY_MUTED }}
       >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
           <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
         </svg>
         Projetos
@@ -59,21 +59,21 @@ export function ProjectDetail({
         <div className="flex items-center gap-3 mb-5">
           <span
             className="text-[9px] tracking-[0.16em] uppercase px-2 py-1"
-            style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.6 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
           >
             {project.area}
           </span>
           {status && (
             <span
               className="text-[9px] tracking-[0.16em] uppercase"
-              style={{ fontFamily: MONO, color: RED, opacity: 0.8 }}
+              style={{ fontFamily: MONO, color: RED }}
             >
               {status.label}
             </span>
           )}
           <span
             className="text-[9px] tracking-[0.14em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.3 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             {project.year} · {project.id}
           </span>
@@ -98,7 +98,7 @@ export function ProjectDetail({
         <div className="p-6 md:col-span-2" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Stack técnica
           </p>
@@ -107,7 +107,7 @@ export function ProjectDetail({
               <span
                 key={t}
                 className="text-[10px] tracking-[0.12em] uppercase px-2.5 py-1.5"
-                style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.75 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
               >
                 {t}
               </span>
@@ -118,7 +118,7 @@ export function ProjectDetail({
         <div className="p-6" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Disponibilidade
           </p>
@@ -131,7 +131,7 @@ export function ProjectDetail({
       {/* Autoria */}
       <p
         className="text-[9px] tracking-[0.2em] uppercase mb-4"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+        style={{ fontFamily: MONO, color: NAVY_MUTED }}
       >
         Desenvolvido por
       </p>
@@ -140,6 +140,8 @@ export function ProjectDetail({
         className="w-full text-left flex items-start gap-5 p-6 transition-colors"
         style={{ border: `1px solid ${NAVY}18` }}
         onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}05`)}
+        onFocus={(e) => (e.currentTarget.style.background = `${NAVY}05`)}
+        onBlur={(e) => (e.currentTarget.style.background = "transparent")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <div
@@ -159,36 +161,36 @@ export function ProjectDetail({
           </h3>
           <p
             className="text-[11px] mb-3"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: SANS, color: NAVY_MUTED }}
           >
             {student.course} · {student.semester}
           </p>
           <p
             className="text-[12px] leading-relaxed"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.6 }}
+            style={{ fontFamily: SANS, color: NAVY_MUTED }}
           >
             {student.bio}
           </p>
         </div>
-        <svg
+        <svg aria-hidden="true"
           width="14"
           height="14"
           viewBox="0 0 14 14"
           fill="none"
-          style={{ color: NAVY, opacity: 0.3, flexShrink: 0, marginTop: "4px" }}
+          style={{ color: NAVY_MUTED, flexShrink: 0, marginTop: "4px" }}
         >
           <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
       </button>
 
       <div
-        className="mt-12 p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
+        className="on-navy mt-12 p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
         style={{ background: NAVY }}
       >
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2"
-            style={{ fontFamily: MONO, color: OFFWHITE, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: OFFWHITE_MUTED }}
           >
             Interessado neste projeto?
           </p>
@@ -201,6 +203,8 @@ export function ProjectDetail({
           className="flex-shrink-0 px-7 py-3.5 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity"
           style={{ background: OFFWHITE, color: NAVY, fontFamily: SANS }}
           onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+          onFocus={(e) => (e.currentTarget.style.opacity = "0.9")}
+          onBlur={(e) => (e.currentTarget.style.opacity = "1")}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
         >
           Acessar Plataforma

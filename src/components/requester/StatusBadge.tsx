@@ -1,4 +1,4 @@
-import { NAVY, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, RED } from "@/styles/tokens";
 import type { StatusKey } from "@/types";
 
 export const STATUS_MAP: Record<StatusKey, { label: string; color: string; shape: "circle" | "square" | "diamond" }> = {
@@ -14,7 +14,7 @@ export function StatusBadge({ status }: { status: StatusKey }) {
   const s = 8;
   return (
     <div className="flex items-center gap-2 whitespace-nowrap">
-      <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{ flexShrink: 0 }}>
+      <svg aria-hidden="true" width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{ flexShrink: 0 }}>
         {cfg.shape === "circle" && (
           <circle cx={s / 2} cy={s / 2} r={s / 2 - 0.5} fill={cfg.color} />
         )}
@@ -32,8 +32,12 @@ export function StatusBadge({ status }: { status: StatusKey }) {
         className="text-[9px] tracking-[0.14em] uppercase"
         style={{
           fontFamily: "Space Mono, monospace",
-          color: cfg.shape === "square" || cfg.shape === "circle" ? cfg.color : NAVY,
-          opacity: cfg.shape === "diamond" && status === "cancelado" ? 0.45 : 1,
+          color:
+            cfg.shape === "square" || cfg.shape === "circle"
+              ? cfg.color
+              : cfg.shape === "diamond" && status === "cancelado"
+                ? NAVY_MUTED
+                : NAVY,
         }}
       >
         {cfg.label}

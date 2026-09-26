@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Label } from "./ui";
 import { MATCHED_STUDENTS } from "@/data/matched-students";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) {
   const [expanded, setExpanded] = useState(false);
@@ -11,7 +11,8 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
       style={{ border: `1px solid ${NAVY}20` }}
       className="transition-all"
     >
-      {/* Card header */}
+      {/* Card header. O clique aqui é conveniência de mouse: o controle
+          acessível por teclado é o botão "Ver perfil" no fim do cabeçalho. */}
       <div
         className="grid px-6 py-6 gap-6 cursor-pointer"
         style={{ gridTemplateColumns: "64px 1fr auto" }}
@@ -54,7 +55,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
           </div>
           <p
             className="text-[11px] mb-3"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             {student.course} · {student.semester} · {student.university}
           </p>
@@ -65,9 +66,8 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
                 className="px-2 py-0.5 text-[9px] tracking-[0.12em] uppercase"
                 style={{
                   fontFamily: "Space Mono, monospace",
-                  color: NAVY,
+                  color: NAVY_MUTED,
                   border: `1px solid ${NAVY}22`,
-                  opacity: 0.65,
                 }}
               >
                 {s}
@@ -81,7 +81,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
           <div className="flex flex-col items-end gap-1">
             <span
               className="text-[9px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               Compatibilidade
             </span>
@@ -99,11 +99,14 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
             </div>
           </div>
           <button
+            type="button"
+            aria-expanded={expanded}
+            onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
             className="text-[9px] tracking-[0.14em] uppercase flex items-center gap-1.5 mt-4 transition-opacity hover:opacity-70"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             {expanded ? "Recolher" : "Ver perfil"}
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
               <path
                 d={expanded ? "M2 7l3-4 3 4" : "M2 3l3 4 3-4"}
                 stroke="currentColor"
@@ -124,19 +127,19 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
               <Label>Sobre o estudante</Label>
               <p
                 className="text-[12px] leading-relaxed mt-2"
-                style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
+                style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
               >
                 {student.bio}
               </p>
               <div className="flex items-center gap-2 mt-4">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
+                <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: NAVY_MUTED }}>
                   <rect x="1" y="2" width="7" height="8" rx="0.5" stroke="currentColor" strokeWidth="1" />
                   <path d="M5 1h5v5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                   <path d="M5 7l5-5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                 </svg>
                 <span
                   className="text-[10px]"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                 >
                   {student.github}
                 </span>
@@ -160,13 +163,13 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
                   >
                     <span
                       className="text-[9px] uppercase tracking-wider"
-                      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+                      style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                     >
                       {m.label}
                     </span>
                     <span
                       className="text-[11px]"
-                      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}
+                      style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                     >
                       {m.val}
                     </span>
@@ -185,9 +188,11 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
               className="flex-1 flex items-center justify-center gap-3 px-6 py-3.5 text-[10px] tracking-[0.18em] uppercase font-semibold transition-all"
               style={{ background: RED, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+              onFocus={(e) => (e.currentTarget.style.opacity = "0.88")}
+              onBlur={(e) => (e.currentTarget.style.opacity = "1")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <rect x="1" y="3" width="12" height="9" rx="0.5" stroke="currentColor" strokeWidth="1.2" />
                 <path d="M1 4l6 5 6-5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               </svg>
@@ -197,16 +202,18 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
               className="flex-1 flex items-center justify-center gap-3 px-6 py-3.5 text-[10px] tracking-[0.18em] uppercase font-semibold transition-all"
               style={{ border: `1.5px solid ${RED}`, color: RED, background: "transparent", fontFamily: "Inter, sans-serif" }}
               onMouseEnter={(e) => { e.currentTarget.style.background = `${RED}08`; }}
+              onFocus={(e) => { e.currentTarget.style.background = `${RED}08`; }}
+              onBlur={(e) => { e.currentTarget.style.background = "transparent"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M2 2.5C2 2.5 4 2 5.5 4.5C5.5 4.5 6 6 4.5 7.5C4.5 7.5 6 10.5 9.5 11.5C9.5 11.5 11 10 12 10.5C12 10.5 13.5 12 12 13C12 13 8 14 2.5 7.5C2.5 7.5 1 2.5 2 2.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               </svg>
               Abrir WhatsApp
             </button>
             <button
-              className="flex items-center justify-center gap-2 px-5 py-3.5 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-60 opacity-40"
-              style={{ border: `1px solid ${NAVY}30`, color: NAVY, fontFamily: "Space Mono, monospace" }}
+              className="flex items-center justify-center gap-2 px-5 py-3.5 text-[9px] tracking-[0.16em] uppercase transition-colors"
+              style={{ border: `1px solid ${NAVY}30`, color: NAVY_MUTED, fontFamily: "Space Mono, monospace" }}
             >
               Ver perfil completo
             </button>
@@ -223,7 +230,7 @@ export function MatchScreen() {
       <div className="mb-10">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
         >
           <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
           Matches ativos
@@ -236,7 +243,7 @@ export function MatchScreen() {
         </h1>
         <p
           className="text-[13px] max-w-xl"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.45, fontWeight: 300 }}
+          style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
         >
           Estes estudantes foram selecionados pela curadoria do IC com base nos requisitos
           das suas demandas ativas.
@@ -262,7 +269,7 @@ export function MatchScreen() {
             </span>
             <span
               className="text-[9px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               {s.label}
             </span>
@@ -280,13 +287,13 @@ export function MatchScreen() {
         className="mt-8 px-6 py-5 flex items-center gap-4"
         style={{ border: `1px dashed ${NAVY}20` }}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0 }}>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY_MUTED, flexShrink: 0 }}>
           <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.1" />
           <path d="M8 5v4M8 11v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
         <p
           className="text-[11px] leading-relaxed"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.35, fontWeight: 300 }}
+          style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
         >
           Novos matches são notificados por e-mail. Após confirmar interesse, o estudante
           receberá seus dados de contato e o projeto poderá ser formalizado.

@@ -3,7 +3,7 @@ import { Label, Mono, Rule, SkillTag } from "./ui";
 import { LANGUAGE_LEVELS } from "@/data/languages";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function StudentMatchCard({
@@ -29,7 +29,7 @@ export function StudentMatchCard({
         <div className="flex items-start gap-4">
           <div
             className="w-10 h-10 flex items-center justify-center flex-shrink-0"
-            style={{ background: score >= 60 ? NAVY : `${NAVY}30` }}
+            style={{ background: score >= 60 ? NAVY : NAVY_MUTED }}
           >
             <span className="text-[11px]" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: OFFWHITE }}>
               {student.initials}
@@ -44,16 +44,15 @@ export function StudentMatchCard({
                 className="text-[9px] px-1.5 py-0.5 tracking-[0.12em] uppercase flex-shrink-0"
                 style={{
                   fontFamily: "Space Mono, monospace",
-                  color: score >= 70 ? RED : NAVY,
+                  color: score >= 70 ? RED : NAVY_MUTED,
                   border: `1px solid ${score >= 70 ? RED : `${NAVY}30`}`,
                   background: score >= 70 ? `${RED}08` : "transparent",
-                  opacity: score >= 70 ? 1 : 0.5,
                 }}
               >
                 {score}% match
               </span>
             </div>
-            <p className="text-[10px] mb-2" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+            <p className="text-[10px] mb-2" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
               {student.course} · {student.semester} · IRA {student.gpa}
             </p>
             {/* Skill cross-reference */}
@@ -67,11 +66,11 @@ export function StudentMatchCard({
             {/* Idiomas */}
             {student.languages.length > 0 && (
               <div className="flex items-center gap-2 mt-1.5">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0 }}>
+                <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ color: NAVY_MUTED, flexShrink: 0 }}>
                   <circle cx="5" cy="5" r="4.2" stroke="currentColor" strokeWidth="0.8" />
                   <path d="M0.8 5h8.4M5 0.8c1.2 1.3 1.2 6.9 0 8.4M5 0.8C3.8 2.1 3.8 7.7 5 9.2" stroke="currentColor" strokeWidth="0.8" />
                 </svg>
-                <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
+                <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
                   {student.languages
                     .map((l) => `${l.name} · ${LANGUAGE_LEVELS[l.level - 1]}`)
                     .join("   ")}
@@ -81,11 +80,11 @@ export function StudentMatchCard({
             {/* Projects preview */}
             {student.projects.slice(0, 1).map((p) => (
               <div key={p.title} className="flex items-center gap-2 mt-1">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0 }}>
+                <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ color: NAVY_MUTED, flexShrink: 0 }}>
                   <rect x="0.5" y="0.5" width="9" height="9" rx="0.5" stroke="currentColor" strokeWidth="0.8" />
                   <path d="M2.5 3h5M2.5 5h5M2.5 7h3" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
                 </svg>
-                <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
+                <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
                   {p.title}
                 </span>
               </div>
@@ -104,7 +103,7 @@ export function StudentMatchCard({
                 />
               ))}
             </div>
-            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
+            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
               {student.availability}
             </span>
           </div>
@@ -112,19 +111,21 @@ export function StudentMatchCard({
       </div>
       <div style={{ borderTop: `1px solid ${NAVY}10` }}>
         <button
+          type="button"
           onClick={onSelect}
           className="w-full py-2.5 text-[9px] tracking-[0.16em] uppercase font-semibold transition-all flex items-center justify-center gap-2"
           style={{
             fontFamily: "Inter, sans-serif",
-            color: score >= 60 ? OFFWHITE : NAVY,
+            color: score >= 60 ? OFFWHITE : NAVY_MUTED,
             background: score >= 60 ? NAVY : "transparent",
-            opacity: score >= 60 ? 1 : 0.4,
           }}
           onMouseEnter={(e) => score >= 60 && (e.currentTarget.style.opacity = "0.85")}
           onMouseLeave={(e) => score >= 60 && (e.currentTarget.style.opacity = "1")}
+          onFocus={(e) => score >= 60 && (e.currentTarget.style.opacity = "0.85")}
+          onBlur={(e) => score >= 60 && (e.currentTarget.style.opacity = "1")}
         >
           Selecionar para match
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none">
             <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
           </svg>
         </button>
@@ -158,14 +159,14 @@ export function Matchmaking({
         style={{ borderRight: `1px solid ${NAVY}18` }}
       >
         <p className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
           <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
           Demanda selecionada
         </p>
-        <h2 className="text-3xl leading-tight mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+        <h1 className="text-3xl leading-tight mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
           {demand.title}
-        </h2>
-        <p className="text-[11px] mb-6" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+        </h1>
+        <p className="text-[11px] mb-6" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
           {demand.id} · {demand.company}
         </p>
 
@@ -193,7 +194,7 @@ export function Matchmaking({
         </div>
 
         <Label>Descrição do problema</Label>
-        <p className="text-[12px] leading-relaxed mt-1" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}>
+        <p className="text-[12px] leading-relaxed mt-1" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
           {demand.description}
         </p>
 
@@ -203,11 +204,11 @@ export function Matchmaking({
           className="px-4 py-4 flex items-start gap-3"
           style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03` }}
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0, marginTop: 2 }}>
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY_MUTED, flexShrink: 0, marginTop: 2 }}>
             <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1" />
             <path d="M7 4v4M7 9.5v1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
-          <p className="text-[10px] leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.4, fontWeight: 300 }}>
+          <p className="text-[10px] leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
             O sistema de cross-reference destaca em vermelho as skills do estudante que coincidem com esta demanda.
             Priorize estudantes com ≥ 60% de match e projetos ativos relacionados.
           </p>
@@ -219,7 +220,7 @@ export function Matchmaking({
         <div className="flex items-center justify-between mb-6">
           <div>
             <p className="text-[9px] tracking-[0.22em] uppercase mb-1"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
               Candidatos — {sorted.length} encontrados
             </p>
             <div className="flex items-center gap-3">
@@ -228,10 +229,12 @@ export function Matchmaking({
             </div>
           </div>
           <input
+            type="search"
+            aria-label="Filtrar candidatos por nome ou competência"
             placeholder="Filtrar..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="px-3 py-1.5 text-[11px] w-36 outline-none"
+            className="px-3 py-1.5 text-[11px] w-36"
             style={{
               fontFamily: "Space Mono, monospace",
               border: `1px solid ${NAVY}30`,
@@ -243,16 +246,17 @@ export function Matchmaking({
             onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}30`)}
           />
         </div>
-        <div className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-3" style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {sorted.map((s) => (
-            <StudentMatchCard
-              key={s.id}
-              student={s}
-              demand={demand}
-              onSelect={() => onConfirm(s)}
-            />
+            <li key={s.id}>
+              <StudentMatchCard
+                student={s}
+                demand={demand}
+                onSelect={() => onConfirm(s)}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

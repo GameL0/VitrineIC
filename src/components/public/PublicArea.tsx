@@ -5,6 +5,7 @@ import { PublicNav } from "./PublicNav";
 import { PublicProfile } from "./PublicProfile";
 import { StudentsDirectory } from "./StudentsDirectory";
 import { navSection, type PublicRoute } from "./routes";
+import { SkipLink } from "@/components/SkipLink";
 import { OFFWHITE } from "@/styles/tokens";
 
 /** Casca das páginas públicas: nav fixa mais a tela da rota atual. */
@@ -21,6 +22,7 @@ export default function PublicArea({
 }) {
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
+      <SkipLink />
       <PublicNav
         view={navSection(route)}
         onNavigate={(view) => onNavigate({ view })}
@@ -28,34 +30,36 @@ export default function PublicArea({
         onSignIn={onSignIn}
       />
 
-      {route.view === "projects" && (
-        <ProjectsCatalog onOpenProject={(id) => onNavigate({ view: "project", id })} />
-      )}
+      <main id="conteudo" tabIndex={-1}>
+        {route.view === "projects" && (
+          <ProjectsCatalog onOpenProject={(id) => onNavigate({ view: "project", id })} />
+        )}
 
-      {route.view === "project" && (
-        <ProjectDetail
-          id={route.id}
-          onBack={() => onNavigate({ view: "projects" })}
-          onOpenProfile={(id) => onNavigate({ view: "profile", id })}
-          onSignIn={onSignIn}
-        />
-      )}
+        {route.view === "project" && (
+          <ProjectDetail
+            id={route.id}
+            onBack={() => onNavigate({ view: "projects" })}
+            onOpenProfile={(id) => onNavigate({ view: "profile", id })}
+            onSignIn={onSignIn}
+          />
+        )}
 
-      {route.view === "students" && (
-        <StudentsDirectory onOpenProfile={(id) => onNavigate({ view: "profile", id })} />
-      )}
+        {route.view === "students" && (
+          <StudentsDirectory onOpenProfile={(id) => onNavigate({ view: "profile", id })} />
+        )}
 
-      {route.view === "profile" && (
-        <PublicProfile
-          id={route.id}
-          onBack={() => onNavigate({ view: "students" })}
-          onOpenProject={(id) => onNavigate({ view: "project", id })}
-        />
-      )}
+        {route.view === "profile" && (
+          <PublicProfile
+            id={route.id}
+            onBack={() => onNavigate({ view: "students" })}
+            onOpenProject={(id) => onNavigate({ view: "project", id })}
+          />
+        )}
 
-      {route.view === "impact" && (
-        <Impact onOpenProjects={() => onNavigate({ view: "projects" })} />
-      )}
+        {route.view === "impact" && (
+          <Impact onOpenProjects={() => onNavigate({ view: "projects" })} />
+        )}
+      </main>
     </div>
   );
 }

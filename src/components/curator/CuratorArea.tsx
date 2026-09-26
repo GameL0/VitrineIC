@@ -5,9 +5,10 @@ import { Matchmaking } from "./Matchmaking";
 import { NavBar } from "./NavBar";
 import { Triage } from "./Triage";
 import { Mono } from "./ui";
+import { SkipLink } from "@/components/SkipLink";
 import { DEMANDS } from "@/data/demands";
 import { STUDENTS } from "@/data/students";
-import { NAVY, OFFWHITE } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export default function CuratorArea({ onBack }: { onBack: () => void }) {
@@ -35,70 +36,73 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
 
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <SkipLink />
       <NavBar view={view} setView={setView} onBack={onBack} demands={demands} />
 
-      {view === "triage" && (
-        <Triage
-          demands={demands}
-          setDemands={setDemands}
-          onMatch={goToMatch}
-        />
-      )}
+      <main id="conteudo" tabIndex={-1} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        {view === "triage" && (
+          <Triage
+            demands={demands}
+            setDemands={setDemands}
+            onMatch={goToMatch}
+          />
+        )}
 
-      {view === "matchmaking" && selectedDemand && (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", height: "calc(100vh - 57px)" }}>
-          {/* Sub-header */}
-          <div
-            className="flex items-center justify-between px-8 py-3 flex-shrink-0"
-            style={{ borderBottom: `1px solid ${NAVY}12` }}
-          >
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setView("triage")}
-                className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-40"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
-              >
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M8 5H2M4.5 2.5L2 5l2.5 2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
-                </svg>
-                Triagem
-              </button>
-              <span style={{ color: NAVY, opacity: 0.2, fontSize: 12 }}>/</span>
-              <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>
-                Matchmaking
-              </span>
+        {view === "matchmaking" && selectedDemand && (
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", height: "calc(100vh - 57px)" }}>
+            {/* Sub-header */}
+            <div
+              className="flex items-center justify-between px-8 py-3 flex-shrink-0"
+              style={{ borderBottom: `1px solid ${NAVY}12` }}
+            >
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setView("triage")}
+                  className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-colors"
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
+                >
+                  <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M8 5H2M4.5 2.5L2 5l2.5 2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+                  </svg>
+                  Triagem
+                </button>
+                <span style={{ color: NAVY_MUTED, fontSize: 12 }}>/</span>
+                <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
+                  Matchmaking
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}>
+                  {selectedDemand.id}
+                </span>
+                <span className="text-[9px] px-2 py-0.5" style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED, border: `1px solid ${NAVY}20` }}>
+                  {selectedDemand.skills.length} requisitos
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
-                {selectedDemand.id}
-              </span>
-              <span className="text-[9px] px-2 py-0.5" style={{ fontFamily: "Space Mono, monospace", color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.5 }}>
-                {selectedDemand.skills.length} requisitos
-              </span>
+            <div style={{ flex: 1, overflow: "hidden" }}>
+              <Matchmaking demand={selectedDemand} onConfirm={goToConfirm} />
             </div>
           </div>
-          <div style={{ flex: 1, overflow: "hidden" }}>
-            <Matchmaking demand={selectedDemand} onConfirm={goToConfirm} />
-          </div>
-        </div>
-      )}
+        )}
 
-      {view === "confirmed" && selectedDemand && selectedStudent && (
-        <MatchConfirmed
-          demand={selectedDemand}
-          student={selectedStudent}
-          onBack={() => setView("triage")}
-        />
-      )}
+        {view === "confirmed" && selectedDemand && selectedStudent && (
+          <MatchConfirmed
+            demand={selectedDemand}
+            student={selectedStudent}
+            onBack={() => setView("triage")}
+          />
+        )}
 
-      {view === "confirm" && selectedDemand && selectedStudent && (
-        <ConfirmModal
-          demand={selectedDemand}
-          student={selectedStudent}
-          onClose={() => setView("matchmaking")}
-          onConfirm={doConfirm}
-        />
-      )}
+        {view === "confirm" && selectedDemand && selectedStudent && (
+          <ConfirmModal
+            demand={selectedDemand}
+            student={selectedStudent}
+            onClose={() => setView("matchmaking")}
+            onConfirm={doConfirm}
+          />
+        )}
+      </main>
     </div>
   );
 }

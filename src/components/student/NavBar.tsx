@@ -1,4 +1,5 @@
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { MobileMenu } from "@/components/MobileMenu";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 export function NavBar({
   view,
@@ -32,46 +33,59 @@ export function NavBar({
         </span>
         <span
           className="text-[9px] tracking-[0.18em] uppercase ml-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
         >
           · Área do Estudante
         </span>
       </div>
-      <div className="hidden md:flex items-center gap-1">
+      <ul className="hidden md:flex items-center gap-1" style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setView(item.id)}
-            className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              color: NAVY,
-              background: view === item.id ? `${NAVY}08` : "transparent",
-              borderBottom: view === item.id ? `2px solid ${RED}` : "2px solid transparent",
-            }}
-          >
-            {item.label}
-            {item.id === "invitations" && pendingInvites > 0 && (
-              <span
-                className="ml-2 px-1.5 py-0.5 text-[8px]"
-                style={{ fontFamily: "Space Mono, monospace", background: RED, color: OFFWHITE }}
-              >
-                {pendingInvites}
-              </span>
-            )}
-          </button>
+          <li key={item.id}>
+            <button
+              type="button"
+              aria-current={view === item.id ? "page" : undefined}
+              onClick={() => setView(item.id)}
+              className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all"
+              style={{
+                fontFamily: "Inter, sans-serif",
+                color: NAVY,
+                background: view === item.id ? `${NAVY}08` : "transparent",
+                borderBottom: view === item.id ? `2px solid ${RED}` : "2px solid transparent",
+              }}
+            >
+              {item.label}
+              {item.id === "invitations" && pendingInvites > 0 && (
+                <span
+                  className="ml-2 px-1.5 py-0.5 text-[8px]"
+                  style={{ fontFamily: "Space Mono, monospace", background: RED, color: OFFWHITE }}
+                >
+                  {pendingInvites}
+                </span>
+              )}
+            </button>
+          </li>
         ))}
+      </ul>
+
+      <div className="flex items-center gap-3">
+        <MobileMenu
+          items={navItems.map((i) => ({ ...i, badge: i.id === "invitations" ? pendingInvites : undefined }))}
+          current={view}
+          onSelect={setView}
+          label="Navegação da área do estudante"
+        />
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-[9px] tracking-[0.16em] uppercase transition-colors flex items-center gap-2"
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+          Sair
+        </button>
       </div>
-      <button
-        onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-40 flex items-center gap-2"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
-      >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
-        Sair
-      </button>
     </nav>
   );
 }

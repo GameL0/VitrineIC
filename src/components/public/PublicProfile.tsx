@@ -1,7 +1,7 @@
 import { findStudent } from "@/data/students";
 import { LANGUAGE_LEVELS } from "@/data/languages";
 import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 const MONO = "Space Mono, monospace";
 const SANS = "Inter, sans-serif";
@@ -24,7 +24,7 @@ export function PublicProfile({
       <div className="px-8 md:px-16 py-24 max-w-screen-xl mx-auto text-center">
         <p
           className="text-[11px] tracking-[0.16em] uppercase mb-6"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: MONO, color: NAVY_MUTED }}
         >
           Estudante não encontrado
         </p>
@@ -43,10 +43,10 @@ export function PublicProfile({
     <div className="px-8 md:px-16 py-10 max-w-screen-lg mx-auto">
       <button
         onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-40 flex items-center gap-2 mb-10"
-        style={{ fontFamily: MONO, color: NAVY }}
+        className="text-[9px] tracking-[0.16em] uppercase transition-colors flex items-center gap-2 mb-10"
+        style={{ fontFamily: MONO, color: NAVY_MUTED }}
       >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
           <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
         </svg>
         Estudantes
@@ -67,7 +67,7 @@ export function PublicProfile({
         <div className="flex-1">
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Perfil público
@@ -80,7 +80,7 @@ export function PublicProfile({
           </h1>
           <p
             className="text-[11px] tracking-[0.14em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             {student.course} · {student.semester} · {student.id}
           </p>
@@ -98,7 +98,7 @@ export function PublicProfile({
         <div className="p-6 md:col-span-2" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Competências
           </p>
@@ -107,7 +107,7 @@ export function PublicProfile({
               <span
                 key={s}
                 className="text-[10px] tracking-[0.12em] uppercase px-2.5 py-1.5"
-                style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.75 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
               >
                 {s}
               </span>
@@ -118,7 +118,7 @@ export function PublicProfile({
             <>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mt-6 mb-4"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 Idiomas
               </p>
@@ -132,7 +132,7 @@ export function PublicProfile({
                     {l.name}
                     <span
                       className="ml-2 text-[9px] tracking-[0.12em] uppercase"
-                      style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+                      style={{ fontFamily: MONO, color: NAVY_MUTED }}
                     >
                       {LANGUAGE_LEVELS[l.level - 1]}
                     </span>
@@ -144,7 +144,7 @@ export function PublicProfile({
 
           <p
             className="text-[9px] tracking-[0.2em] uppercase mt-6 mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Áreas de interesse
           </p>
@@ -153,7 +153,7 @@ export function PublicProfile({
               <span
                 key={s}
                 className="text-[10px] tracking-[0.12em] uppercase px-2.5 py-1.5"
-                style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.55 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}20` }}
               >
                 {s}
               </span>
@@ -165,7 +165,7 @@ export function PublicProfile({
           <div>
             <p
               className="text-[9px] tracking-[0.2em] uppercase mb-2"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: MONO, color: NAVY_MUTED }}
             >
               Disponibilidade
             </p>
@@ -176,11 +176,11 @@ export function PublicProfile({
           <div>
             <p
               className="text-[9px] tracking-[0.2em] uppercase mb-2"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: MONO, color: NAVY_MUTED }}
             >
               Repositório
             </p>
-            <p className="text-[11px]" style={{ fontFamily: MONO, color: NAVY, opacity: 0.65 }}>
+            <p className="text-[11px]" style={{ fontFamily: MONO, color: NAVY_MUTED }}>
               {student.github}
             </p>
           </div>
@@ -189,7 +189,7 @@ export function PublicProfile({
 
       <p
         className="text-[9px] tracking-[0.2em] uppercase mb-5"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+        style={{ fontFamily: MONO, color: NAVY_MUTED }}
       >
         Projetos na vitrine
       </p>
@@ -210,14 +210,14 @@ export function PublicProfile({
                   <div className="flex items-center gap-3 mb-2">
                     <span
                       className="text-[9px] tracking-[0.16em] uppercase px-2 py-1"
-                      style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.6 }}
+                      style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
                     >
                       {project.area}
                     </span>
                     {status && (
                       <span
                         className="text-[9px] tracking-[0.14em] uppercase"
-                        style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                        style={{ fontFamily: MONO, color: NAVY_MUTED }}
                       >
                         {status.label} · {project.year}
                       </span>
@@ -228,17 +228,17 @@ export function PublicProfile({
                   </h2>
                   <p
                     className="text-[12px] leading-relaxed"
-                    style={{ fontFamily: SANS, color: NAVY, opacity: 0.55 }}
+                    style={{ fontFamily: SANS, color: NAVY_MUTED }}
                   >
                     {project.description}
                   </p>
                 </div>
-                <svg
+                <svg aria-hidden="true"
                   width="14"
                   height="14"
                   viewBox="0 0 14 14"
                   fill="none"
-                  style={{ color: NAVY, opacity: 0.3, flexShrink: 0, marginTop: "6px" }}
+                  style={{ color: NAVY_MUTED, flexShrink: 0, marginTop: "6px" }}
                 >
                   <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
                 </svg>

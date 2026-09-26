@@ -87,6 +87,9 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Tarefa | Arquivo |
 |---|---|
 | Algoritmo de match | `src/lib/match.ts` |
+| Diálogo modal (foco, Escape, trap) | `src/lib/useModal.ts` |
+| Menu de navegação abaixo de 768px | `src/components/MobileMenu.tsx` |
+| Link "pular para o conteúdo" | `src/components/SkipLink.tsx` |
 | Convites gerados pela curadoria | `src/data/invitations.ts` |
 | Base de estudantes e projetos | `src/data/students.ts` |
 | Insumos do painel de impacto | `src/data/impact.ts` |
@@ -132,6 +135,30 @@ funciona. **Em código novo, prefira as utilities** (`text-navy`, `font-serif`).
 
 Identidade: navy `#1C2B4A`, vermelho `#c1121f`, off-white `#F5F4F0`; DM Serif
 Display (títulos), Inter (corpo), Space Mono (rótulos em caixa alta).
+
+Para **texto secundário** use `NAVY_MUTED` (`text-navy-muted`), nunca
+`color: NAVY` com `opacity` — a opacidade derrubava o contraste para 2–3:1,
+abaixo dos 4,5:1 da WCAG AA. Sobre superfície navy valem `OFFWHITE_MUTED` e,
+para o vermelho, `RED_ON_NAVY`. Opacidade continua livre em traços, bordas e
+fundos, onde não há requisito de contraste.
+
+## Acessibilidade
+
+O alvo é WCAG 2.1 AA e o que já está feito não deve regredir:
+
+- Foco visível vem do bloco `:focus-visible` em `src/index.css`. Não use
+  `outline: none` nem `outline-none`; dentro de uma superfície navy, marque o
+  contêiner com a classe `on-navy` para o anel inverter para off-white.
+- Todo campo tem rótulo associado. Os `Input`/`Select` dos três `ui.tsx` geram
+  o `id` com `useId()`; campo sem rótulo visível recebe `ariaLabel`.
+- Interação só em elemento focável. Não coloque `onClick` em `div` ou `span` —
+  se precisar de clique na área inteira, mantenha um `<button>` real como
+  controle e trate o `div` como conveniência de mouse.
+- Cada tela tem um `<h1>`, um `<main id="conteudo">` e um `<SkipLink />`;
+  coleções são `<ul>/<li>`; aba ativa leva `aria-current="page"`.
+- Ícone decorativo leva `aria-hidden="true"`; botão só com ícone leva
+  `aria-label`.
+- Ao mexer numa `NavBar`, verifique as irmãs e o `MobileMenu`.
 
 ## Cuidados
 

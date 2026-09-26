@@ -1,12 +1,12 @@
 import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, RED } from "@/styles/tokens";
 
 export function StatusBadge({ status }: { status: string }) {
   const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.ideation;
   const size = 8;
   return (
     <div className="flex items-center gap-2">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+      <svg aria-hidden="true" width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {cfg.shape === "circle" && (
           <circle cx={size / 2} cy={size / 2} r={size / 2 - 0.5} fill={NAVY} opacity={0.5} />
         )}
@@ -19,7 +19,10 @@ export function StatusBadge({ status }: { status: string }) {
       </svg>
       <span
         className="text-[9px] tracking-[0.16em] uppercase"
-        style={{ fontFamily: "Space Mono, monospace", color: cfg.shape === "square" && status === "coding" ? RED : NAVY, opacity: cfg.shape === "square" && status === "coding" ? 0.85 : 0.55 }}
+        style={{
+          fontFamily: "Space Mono, monospace",
+          color: cfg.shape === "square" && status === "coding" ? RED : NAVY_MUTED,
+        }}
       >
         {cfg.label}
       </span>

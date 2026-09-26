@@ -1,4 +1,4 @@
-import { NAVY, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, RED } from "@/styles/tokens";
 
 export function StepIndicator({ current }: { current: number }) {
   const steps = [
@@ -7,16 +7,19 @@ export function StepIndicator({ current }: { current: number }) {
     { n: "03", label: "Portfólio" },
   ];
   return (
-    <div className="flex items-center gap-0 mb-14">
+    <ol
+      className="flex items-center gap-0 mb-14"
+      style={{ listStyle: "none", margin: 0, padding: 0, marginBottom: "3.5rem" }}
+    >
       {steps.map((s, i) => (
-        <div key={i} className="flex items-center">
+        <li key={i} className="flex items-center" aria-current={i === current ? "step" : undefined}>
           <div className="flex flex-col items-center gap-2">
             <div className="flex items-center gap-2">
               <span
                 className="text-[22px] leading-none transition-all"
                 style={{
                   fontFamily: "DM Serif Display, Georgia, serif",
-                  color: i < current ? RED : i === current ? NAVY : `${NAVY}30`,
+                  color: i < current ? RED : i === current ? NAVY : NAVY_MUTED,
                 }}
               >
                 {s.n}
@@ -26,7 +29,7 @@ export function StepIndicator({ current }: { current: number }) {
               className="text-[9px] tracking-[0.16em] uppercase whitespace-nowrap"
               style={{
                 fontFamily: "Space Mono, monospace",
-                color: i === current ? NAVY : `${NAVY}30`,
+                color: i === current ? NAVY : NAVY_MUTED,
               }}
             >
               {s.label}
@@ -43,8 +46,8 @@ export function StepIndicator({ current }: { current: number }) {
               }}
             />
           )}
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }

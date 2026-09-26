@@ -6,8 +6,9 @@ import { Lab } from "./Lab";
 import { NavBar } from "./NavBar";
 import { Onboarding } from "./Onboarding";
 import { Input } from "./ui";
+import { SkipLink } from "@/components/SkipLink";
 import { CURRENT_STUDENT_ID, INVITATIONS } from "@/data/invitations";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Invitation } from "@/types";
 
 export default function StudentArea({ onBack }: { onBack: () => void }) {
@@ -40,6 +41,7 @@ export default function StudentArea({ onBack }: { onBack: () => void }) {
 
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
+      <SkipLink />
       <NavBar
         view={view}
         setView={(v) => {
@@ -50,58 +52,60 @@ export default function StudentArea({ onBack }: { onBack: () => void }) {
         pendingInvites={pendingCount}
       />
 
-      {view === "dashboard" && (
-        <Dashboard profile={profile} onOpenInvitations={() => setView("invitations")} />
-      )}
+      <main id="conteudo" tabIndex={-1}>
+        {view === "dashboard" && (
+          <Dashboard profile={profile} onOpenInvitations={() => setView("invitations")} />
+        )}
 
-      {view === "invitations" &&
-        (accepted ? (
-          <ConnectionEstablished
-            invitation={accepted}
-            onInvitations={() => setAccepted(null)}
-          />
-        ) : (
-          <Invitations
-            invitations={invitations}
-            onAccept={(id) => setAccepted(setStatus(id, "aceito"))}
-            onDecline={(id) => setStatus(id, "recusado")}
-          />
-        ))}
+        {view === "invitations" &&
+          (accepted ? (
+            <ConnectionEstablished
+              invitation={accepted}
+              onInvitations={() => setAccepted(null)}
+            />
+          ) : (
+            <Invitations
+              invitations={invitations}
+              onAccept={(id) => setAccepted(setStatus(id, "aceito"))}
+              onDecline={(id) => setStatus(id, "recusado")}
+            />
+          ))}
 
-      {view === "lab" && <Lab />}
+        {view === "lab" && <Lab />}
 
-      {view === "profile" && (
-        <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-          <div className="mb-10">
-            <p
-              className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
-            >
-              <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
-              Perfil
-            </p>
-            <h1
-              className="text-4xl"
-              style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
-            >
-              Meu Perfil
-            </h1>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="flex flex-col gap-5">
-              <Input label="Nome completo" value={profile?.name || ""} onChange={() => {}} />
-              <Input label="Curso" value={profile?.course || ""} onChange={() => {}} />
-              <Input label="Semestre" value={profile?.semester || ""} mono onChange={() => {}} />
-              <Input label="Bio" value={profile?.bio || ""} textarea onChange={() => {}} />
+        {view === "profile" && (
+          <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
+            <div className="mb-10">
+              <p
+                className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
+              >
+                <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
+                Perfil
+              </p>
+              <h1
+                className="text-4xl"
+                style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+              >
+                Meu Perfil
+              </h1>
             </div>
-            <div className="flex flex-col gap-5">
-              <Input label="GitHub" value={profile?.github || ""} mono onChange={() => {}} />
-              <Input label="LinkedIn" value={profile?.linkedin || ""} mono onChange={() => {}} />
-              <Input label="Lattes" value={profile?.lattes || ""} mono onChange={() => {}} />
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="flex flex-col gap-5">
+                <Input label="Nome completo" value={profile?.name || ""} onChange={() => {}} />
+                <Input label="Curso" value={profile?.course || ""} onChange={() => {}} />
+                <Input label="Semestre" value={profile?.semester || ""} mono onChange={() => {}} />
+                <Input label="Bio" value={profile?.bio || ""} textarea onChange={() => {}} />
+              </div>
+              <div className="flex flex-col gap-5">
+                <Input label="GitHub" value={profile?.github || ""} mono onChange={() => {}} />
+                <Input label="LinkedIn" value={profile?.linkedin || ""} mono onChange={() => {}} />
+                <Input label="Lattes" value={profile?.lattes || ""} mono onChange={() => {}} />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </main>
     </div>
   );
 }

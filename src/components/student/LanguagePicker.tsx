@@ -1,7 +1,7 @@
 import { LevelPicker } from "./LevelPicker";
 import { Label } from "./ui";
 import { LANGUAGES, LANGUAGE_LEVELS } from "@/data/languages";
-import { NAVY, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, RED } from "@/styles/tokens";
 import type { SkillLevel, StudentLanguage } from "@/types";
 
 const MONO = "Space Mono, monospace";
@@ -44,7 +44,7 @@ export function LanguagePicker({
         {value.length > 0 && (
           <span
             className="text-[10px] tracking-[0.14em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             {value.length} {value.length === 1 ? "idioma" : "idiomas"}
           </span>
@@ -65,7 +65,7 @@ export function LanguagePicker({
               <div className="flex items-center gap-3 flex-shrink-0">
                 <span
                   className="hidden sm:inline text-[9px] tracking-[0.1em] uppercase"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: MONO, color: NAVY_MUTED }}
                 >
                   {LANGUAGE_LEVELS[l.level - 1]}
                 </span>
@@ -80,10 +80,10 @@ export function LanguagePicker({
                   type="button"
                   onClick={() => remove(l.name)}
                   aria-label={`Remover ${l.name}`}
-                  className="w-6 h-6 flex items-center justify-center transition-opacity hover:opacity-100 opacity-30"
-                  style={{ color: NAVY }}
+                  className="w-6 h-6 flex items-center justify-center transition-colors"
+                  style={{ color: NAVY_MUTED }}
                 >
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none">
                     <line x1="1" y1="1" x2="9" y2="9" stroke="currentColor" strokeWidth="1.4" />
                     <line x1="9" y1="1" x2="1" y2="9" stroke="currentColor" strokeWidth="1.4" />
                   </svg>
@@ -119,7 +119,7 @@ export function LanguagePicker({
         </div>
       )}
 
-      <p className="text-[10px] mt-4" style={{ fontFamily: SANS, color: NAVY, opacity: 0.4 }}>
+      <p className="text-[10px] mt-4" style={{ fontFamily: SANS, color: NAVY_MUTED }}>
         Conta para demandas com bibliografia estrangeira, colaboração
         internacional e projetos de acessibilidade.
       </p>

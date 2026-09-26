@@ -1,4 +1,4 @@
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 export const PIPELINE_STEPS = [
   { n: "01", label: "Análise",   desc: "Equipe de curadoria revisa a demanda e valida escopo técnico." },
@@ -13,7 +13,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
       <div className="mb-16">
         <p
           className="text-[9px] tracking-[0.25em] uppercase mb-6 flex items-center gap-3"
-          style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.8 }}
+          style={{ fontFamily: "Space Mono, monospace", color: RED }}
         >
           <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
           Demanda enviada
@@ -30,7 +30,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
         >
           <span
             className="text-[9px] tracking-[0.18em] uppercase"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
           >
             Protocolo
           </span>
@@ -43,7 +43,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
         </div>
         <p
           className="text-[13px] mt-6 max-w-lg leading-relaxed"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
+          style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}
         >
           Sua demanda foi registrada e está em fila de análise. Você receberá atualizações
           por e-mail conforme o processo avança.
@@ -54,7 +54,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
       <div className="mb-16">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-8"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
         >
           Próximas etapas
         </p>
@@ -157,7 +157,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
           style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
         >
           Ver Demandas
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
           </svg>
         </button>

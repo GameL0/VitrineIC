@@ -1,19 +1,19 @@
 import { useRef } from "react";
 import { Input, Label } from "./ui";
-import { NAVY } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED } from "@/styles/tokens";
 
 export function Step3({ data, setData }: { data: any; setData: (d: any) => void }) {
   const fileRef = useRef<HTMLInputElement>(null);
 
   return (
     <div>
-      <h2
+      <h1
         className="text-3xl mb-2"
         style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
       >
         Portfólio
-      </h2>
-      <p className="text-sm mb-10" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      </h1>
+      <p className="text-sm mb-10" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
         Vincule seus repositórios e trabalhos anteriores.
       </p>
 
@@ -59,7 +59,7 @@ export function Step3({ data, setData }: { data: any; setData: (d: any) => void 
                 style={{ border: `1px solid ${NAVY}20` }}
               >
                 <div className="flex items-center gap-3">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY, opacity: 0.5 }}>
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY_MUTED }}>
                     <rect x="1.5" y="1" width="9" height="12" rx="0.5" stroke="currentColor" strokeWidth="1.1" />
                     <path d="M4 4.5h5M4 7h5M4 9.5h3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
                   </svg>
@@ -74,10 +74,10 @@ export function Step3({ data, setData }: { data: any; setData: (d: any) => void 
                   onClick={() =>
                     setData({ ...data, docs: (data.docs || []).filter((_: any, j: number) => j !== i) })
                   }
-                  style={{ color: NAVY, opacity: 0.3 }}
+                  style={{ color: NAVY_MUTED }}
                   className="hover:opacity-70 transition-opacity"
                 >
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                   </svg>
                 </button>
@@ -92,19 +92,19 @@ export function Step3({ data, setData }: { data: any; setData: (d: any) => void 
             onMouseEnter={(e) => (e.currentTarget.style.borderColor = NAVY)}
             onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${NAVY}30`)}
           >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
+            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ color: NAVY_MUTED }}>
               <path d="M11 14V4M7 8l4-4 4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               <path d="M4 17h14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
             </svg>
             <span
               className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               Adicionar documento
             </span>
             <span
               className="text-[10px]"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
             >
               PDF, DOCX, ZIP · máx. 20 MB
             </span>

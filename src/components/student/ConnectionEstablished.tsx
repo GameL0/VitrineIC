@@ -1,5 +1,5 @@
 import { DEMANDS } from "@/data/demands";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 import type { Invitation } from "@/types";
 
 const MONO = "Space Mono, monospace";
@@ -42,7 +42,7 @@ export function ConnectionEstablished({
       <div className="mb-12">
         <p
           className="text-[9px] tracking-[0.25em] uppercase mb-5 flex items-center gap-3"
-          style={{ fontFamily: MONO, color: RED, opacity: 0.85 }}
+          style={{ fontFamily: MONO, color: RED }}
         >
           <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
           Convite aceito
@@ -60,7 +60,7 @@ export function ConnectionEstablished({
         >
           <span
             className="text-[9px] tracking-[0.18em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Protocolo
           </span>
@@ -74,7 +74,7 @@ export function ConnectionEstablished({
         <div className="p-6" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Projeto
           </p>
@@ -83,7 +83,7 @@ export function ConnectionEstablished({
           </h2>
           <p
             className="text-[10px] tracking-[0.14em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             {demand.id} · {demand.scope} · prazo {demand.deadline}
           </p>
@@ -92,7 +92,7 @@ export function ConnectionEstablished({
               <span
                 key={s}
                 className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
-                style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.7 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED, border: `1px solid ${NAVY}25` }}
               >
                 {s}
               </span>
@@ -103,7 +103,7 @@ export function ConnectionEstablished({
         <div className="p-6" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             Contato liberado
           </p>
@@ -112,15 +112,15 @@ export function ConnectionEstablished({
           </h2>
           <p
             className="text-[11px] mb-4"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: SANS, color: NAVY_MUTED }}
           >
             Responsável pela demanda · {demand.area}
           </p>
           <div className="flex flex-col gap-2">
-            <span className="text-[11px]" style={{ fontFamily: MONO, color: NAVY, opacity: 0.65 }}>
+            <span className="text-[11px]" style={{ fontFamily: MONO, color: NAVY_MUTED }}>
               contato@{slug(demand.company)}.com.br
             </span>
-            <span className="text-[11px]" style={{ fontFamily: MONO, color: NAVY, opacity: 0.65 }}>
+            <span className="text-[11px]" style={{ fontFamily: MONO, color: NAVY_MUTED }}>
               Compatibilidade técnica · {invitation.score}%
             </span>
           </div>
@@ -130,7 +130,7 @@ export function ConnectionEstablished({
       <div className="mb-12">
         <p
           className="text-[9px] tracking-[0.2em] uppercase mb-5"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: MONO, color: NAVY_MUTED }}
         >
           Próximos passos
         </p>
@@ -147,7 +147,7 @@ export function ConnectionEstablished({
                 }}
               >
                 {step.done && (
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <svg aria-hidden="true" width="8" height="8" viewBox="0 0 8 8" fill="none">
                     <path d="M1 4l2 2 4-4" stroke={OFFWHITE} strokeWidth="1.4" strokeLinecap="round" />
                   </svg>
                 )}
@@ -168,6 +168,8 @@ export function ConnectionEstablished({
         className="px-7 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity"
         style={{ background: NAVY, color: OFFWHITE, fontFamily: SANS }}
         onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+        onFocus={(e) => (e.currentTarget.style.opacity = "0.88")}
+        onBlur={(e) => (e.currentTarget.style.opacity = "1")}
         onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
       >
         Voltar aos convites

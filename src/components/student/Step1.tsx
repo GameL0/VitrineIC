@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Input, Label, Rule, Tag, Select } from "./ui";
 import { COURSES, INSTITUTION } from "@/data/institution";
-import { NAVY } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED } from "@/styles/tokens";
 
 export function Step1({
   data,
@@ -26,13 +26,13 @@ export function Step1({
 
   return (
     <div>
-      <h2
+      <h1
         className="text-3xl mb-2"
         style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
       >
         Perfil & Interesses
-      </h2>
-      <p className="text-sm mb-10" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      </h1>
+      <p className="text-sm mb-10" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED, fontWeight: 300 }}>
         Configure sua identidade na plataforma.
       </p>
 
@@ -55,13 +55,13 @@ export function Step1({
               />
             ) : (
               <>
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
+                <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" fill="none" style={{ color: NAVY_MUTED }}>
                   <circle cx="14" cy="11" r="5" stroke="currentColor" strokeWidth="1.2" />
                   <path d="M4 22c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                 </svg>
                 <span
                   className="text-[9px] tracking-[0.14em] uppercase text-center"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY_MUTED }}
                 >
                   Carregar foto
                 </span>
@@ -118,7 +118,7 @@ export function Step1({
 
       <div>
         <Label>Áreas de interesse</Label>
-        <p className="text-[11px] mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.4 }}>
+        <p className="text-[11px] mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY_MUTED }}>
           Selecione todas que se aplicam
         </p>
         <div className="flex flex-wrap gap-2">

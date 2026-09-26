@@ -2,7 +2,7 @@ import { ALL_PROJECTS, STUDENTS } from "@/data/students";
 import { DEMANDS } from "@/data/demands";
 import { INVITATIONS } from "@/data/invitations";
 import { IMPACT_PERIOD, TARGETS, TESTIMONIALS } from "@/data/impact";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, NAVY_MUTED, OFFWHITE, RED } from "@/styles/tokens";
 
 const MONO = "Space Mono, monospace";
 const SANS = "Inter, sans-serif";
@@ -53,7 +53,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
       <div className="mb-12">
         <p
           className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+          style={{ fontFamily: MONO, color: NAVY_MUTED }}
         >
           <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
           Atividade Curricular de Extensão · ACE 1
@@ -66,7 +66,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
         </h1>
         <p
           className="text-base leading-[1.7] max-w-2xl"
-          style={{ fontFamily: SANS, color: NAVY, opacity: 0.65, fontWeight: 300 }}
+          style={{ fontFamily: SANS, color: NAVY_MUTED, fontWeight: 300 }}
         >
           Números da plataforma no período de {IMPACT_PERIOD}. Todos os
           indicadores são apurados diretamente da base da plataforma.
@@ -94,7 +94,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
               </p>
               <p
                 className="text-[10px] tracking-[0.14em] uppercase mb-4"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 {m.label}
               </p>
@@ -103,7 +103,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
               </div>
               <p
                 className="text-[9px] tracking-[0.14em] uppercase mt-2"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 {pct}% da meta ({m.target})
               </p>
@@ -117,7 +117,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
         <div>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Funil da curadoria
@@ -134,7 +134,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
                   <div className="flex items-baseline justify-between mb-2">
                     <span
                       className="text-[11px] tracking-[0.12em] uppercase"
-                      style={{ fontFamily: MONO, color: NAVY, opacity: 0.55 }}
+                      style={{ fontFamily: MONO, color: NAVY_MUTED }}
                     >
                       {step.label}
                     </span>
@@ -160,7 +160,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
           </div>
           <p
             className="text-[10px] leading-relaxed mt-5"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: SANS, color: NAVY_MUTED }}
           >
             Cada demanda passa por revisão humana antes de virar contato. O funil
             mede quanto do que entra chega a uma conexão efetivada.
@@ -171,7 +171,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
         <div>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY_MUTED }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Projetos por área
@@ -182,13 +182,13 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
                 <div className="flex items-baseline justify-between mb-1.5">
                   <span
                     className="text-[11px] tracking-[0.12em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.55 }}
+                    style={{ fontFamily: MONO, color: NAVY_MUTED }}
                   >
                     {area}
                   </span>
                   <span
                     className="text-[11px]"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                    style={{ fontFamily: MONO, color: NAVY_MUTED }}
                   >
                     {n}
                   </span>
@@ -203,8 +203,8 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
           </div>
           <button
             onClick={onOpenProjects}
-            className="text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-45 mt-6"
-            style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
+            className="text-[10px] tracking-[0.18em] uppercase transition-colors mt-6"
+            style={{ fontFamily: MONO, color: NAVY_MUTED, borderBottom: `1px solid ${NAVY}` }}
           >
             Ver catálogo completo
           </button>
@@ -214,7 +214,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
       {/* Depoimentos */}
       <p
         className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+        style={{ fontFamily: MONO, color: NAVY_MUTED }}
       >
         <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
         Depoimentos
@@ -234,7 +234,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
               </p>
               <p
                 className="text-[10px] tracking-[0.14em] uppercase mt-0.5"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY_MUTED }}
               >
                 {t.role}
               </p>
