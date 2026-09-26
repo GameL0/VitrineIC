@@ -76,9 +76,23 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Cores | `src/styles/tokens.ts` e `src/index.css` |
 | Conteúdo exibido (fictício) | `src/data/` |
 
-Documentação do projeto em `docs/`. A análise do front-end — telas, fluxograma,
-modelo de dados e aderência ao escopo — está em `docs/analise-frontend.md`;
-leia antes de propor mudanças estruturais.
+## Contexto
+
+`context/` reúne o contexto do projeto em arquivos curtos e temáticos. Comece
+por `context/README.md`, que diz qual ler para cada tipo de tarefa:
+
+| Arquivo | Assunto |
+|---|---|
+| `context/01-produto.md` | o que é o VitrineIC, usuários, escopo inegociável |
+| `context/02-arquitetura.md` | stack, navegação, estrutura, dívida estrutural |
+| `context/03-dominio.md` | entidades, status, algoritmo de match, dados |
+| `context/04-design-system.md` | cores, tipografia, padrões visuais |
+| `context/05-convencoes.md` | convenções de código |
+| `context/06-estado-atual.md` | o que funciona de verdade e o que é fachada |
+| `context/07-glossario.md` | termos do produto e siglas acadêmicas |
+
+Análise longa do front-end — 14 telas, fluxograma, modelo de dados — em
+`docs/analise-frontend.md`. Material original da equipe também em `docs/`.
 
 ## Convenções
 
