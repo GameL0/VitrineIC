@@ -28,6 +28,18 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Campo, divisor, botão SSO | `src/components/landing/ui.tsx` |
 | Roteamento entre áreas | `src/App.tsx` |
 
+### Páginas públicas — `src/components/public/`
+
+| Tarefa | Arquivo |
+|---|---|
+| Casca e navegação pública | `PublicArea.tsx`, `PublicNav.tsx` |
+| Catálogo de projetos (vitrine pública) | `ProjectsCatalog.tsx` |
+| Página de um projeto | `ProjectDetail.tsx` |
+| Diretório de estudantes | `StudentsDirectory.tsx` |
+| Perfil público do estudante | `PublicProfile.tsx` |
+| Indicadores da ACE1 | `Impact.tsx` |
+| Tipos das rotas públicas | `routes.ts` |
+
 ### Área do estudante — `src/components/student/`
 
 | Tarefa | Arquivo |
@@ -37,6 +49,8 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Onboarding: perfil / skills / portfólio | `Step1.tsx`, `Step2.tsx`, `Step3.tsx` |
 | Barras de proficiência | `ProficiencyBars.tsx` |
 | Dashboard e notificações | `Dashboard.tsx` |
+| Convites recebidos (aceitar/recusar) | `Invitations.tsx` |
+| Conexão estabelecida | `ConnectionEstablished.tsx` |
 | Laboratório (vitrine de projetos) | `Lab.tsx`, `StatusBadge.tsx` |
 | Barra de navegação da área | `NavBar.tsx` |
 | Label, Input, Rule, Tag | `ui.tsx` |
@@ -72,6 +86,9 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Tarefa | Arquivo |
 |---|---|
 | Algoritmo de match | `src/lib/match.ts` |
+| Convites gerados pela curadoria | `src/data/invitations.ts` |
+| Base de estudantes e projetos | `src/data/students.ts` |
+| Insumos do painel de impacto | `src/data/impact.ts` |
 | Tipos do domínio | `src/types/index.ts` |
 | Cores | `src/styles/tokens.ts` e `src/index.css` |
 | Conteúdo exibido (fictício) | `src/data/` |
@@ -122,4 +139,10 @@ Display (títulos), Inter (corpo), Space Mono (rótulos em caixa alta).
   status em `src/types/index.ts`. Unificá-las é a prioridade estrutural.
 - Cada área tem seu próprio `ui.tsx` e `NavBar.tsx`, com implementações
   parecidas mas não idênticas. Ao mexer em uma, verifique as irmãs.
+- `src/data/students.ts` é a **fonte única** de estudante e projeto: alimenta o
+  matchmaking, o catálogo público e os perfis. Enriqueça esse arquivo em vez de
+  criar outra base.
+- Os números do painel de impacto são **derivados** das bases em tempo de
+  render. Não digite indicadores em `data/impact.ts` — só o que não dá para
+  derivar (depoimentos, metas) mora lá.
 - Não há roteamento por URL, persistência, backend nem testes.

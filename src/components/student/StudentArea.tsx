@@ -1,15 +1,31 @@
 import { useState } from "react";
+import { ConnectionEstablished } from "./ConnectionEstablished";
 import { Dashboard } from "./Dashboard";
+import { Invitations } from "./Invitations";
 import { Lab } from "./Lab";
 import { NavBar } from "./NavBar";
 import { Onboarding } from "./Onboarding";
 import { Input } from "./ui";
+import { CURRENT_STUDENT_ID, INVITATIONS } from "@/data/invitations";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import type { Invitation } from "@/types";
 
 export default function StudentArea({ onBack }: { onBack: () => void }) {
   const [onboarded, setOnboarded] = useState(false);
   const [profile, setProfile] = useState<any>(null);
   const [view, setView] = useState("dashboard");
+  const [invitations, setInvitations] = useState<Invitation[]>(
+    INVITATIONS.filter((i) => i.studentId === CURRENT_STUDENT_ID),
+  );
+  const [accepted, setAccepted] = useState<Invitation | null>(null);
+
+  const pendingCount = invitations.filter((i) => i.status === "pendente").length;
+
+  const setStatus = (id: string, status: Invitation["status"]) => {
+    const next = invitations.map((i) => (i.id === id ? { ...i, status } : i));
+    setInvitations(next);
+    return next.find((i) => i.id === id) ?? null;
+  };
 
   if (!onboarded) {
     return (
@@ -24,9 +40,36 @@ export default function StudentArea({ onBack }: { onBack: () => void }) {
 
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
-      <NavBar view={view} setView={setView} onBack={onBack} />
-      {view === "dashboard" && <Dashboard profile={profile} />}
+      <NavBar
+        view={view}
+        setView={(v) => {
+          setAccepted(null);
+          setView(v);
+        }}
+        onBack={onBack}
+        pendingInvites={pendingCount}
+      />
+
+      {view === "dashboard" && (
+        <Dashboard profile={profile} onOpenInvitations={() => setView("invitations")} />
+      )}
+
+      {view === "invitations" &&
+        (accepted ? (
+          <ConnectionEstablished
+            invitation={accepted}
+            onInvitations={() => setAccepted(null)}
+          />
+        ) : (
+          <Invitations
+            invitations={invitations}
+            onAccept={(id) => setAccepted(setStatus(id, "aceito"))}
+            onDecline={(id) => setStatus(id, "recusado")}
+          />
+        ))}
+
       {view === "lab" && <Lab />}
+
       {view === "profile" && (
         <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
           <div className="mb-10">

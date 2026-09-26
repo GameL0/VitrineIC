@@ -7,11 +7,11 @@ reorganização de `src/`. Análise completa em `docs/analise-frontend.md`.
 
 | | |
 |---|---|
-| Linhas em `src/` | ~4.700 |
-| Arquivos | 48 |
-| Telas | 14 |
-| Maior arquivo | `LandingPage.tsx`, 352 linhas |
-| Bundle | ~308 kB (82 kB gzip) |
+| Linhas em `src/` | ~6600 |
+| Arquivos | 60 |
+| Telas | 20 |
+| Maior arquivo | `LandingPage.tsx (371 linhas)` |
+| Bundle | ~349 kB (90 kB gzip) |
 
 ## Maturidade por fluxo
 
@@ -21,17 +21,19 @@ O que separa "tela pintada" de "funcionalidade":
 |---|---|
 | Triagem e match (curadoria) | **Funcional** — muda estado, decisão persiste na sessão |
 | Cadastro de projeto (laboratório) | **Funcional** — a lista cresce de verdade |
+| Convites do estudante (aceitar/recusar) | **Funcional** — muda estado, badge e contadores |
+| Catálogo público, perfis e impacto | **Funcional** — derivados de `data/students.ts` |
 | Onboarding do estudante | **Navegável** — os 3 passos avançam; o digitado não alimenta o perfil |
 | Nova demanda (wizard) | **Navegável** — 4 passos e protocolo, sem gravar na lista |
 | Matches do solicitante | **Estático** — lista fixa, não vem da curadoria |
 | Notificações | **Estático** |
 | Autenticação | **Fachada** — "Acessar" entra sem validar; SSO decorativo |
-| Nav pública (Projetos, Estudantes, Sobre) | **Fachada** — sem destino |
+| Nav pública (Projetos, Estudantes, Impacto) | **Funcional** — levam às páginas públicas |
 
-**A curadoria é o único lugar onde o software faz algo.** As outras áreas são
-superfícies de apresentação sobre dados fixos. Isso é coerente com a prioridade
-do produto — o crivo humano é o coração — e indica que a equipe atacou primeiro
-a parte conceitualmente mais difícil.
+**O eixo curadoria → convite → conexão funciona ponta a ponta**, assim como o
+catálogo público. O que segue estático é o lado do solicitante: o wizard de
+demanda não grava e a tela de matches não vem da curadoria — porque `requester`
+lê uma base própria (ver `03-dominio.md`).
 
 Ao receber uma tarefa, confira nessa tabela o que já existe: pedir para "salvar
 a demanda" pode significar implementar persistência do zero, não ajustar um
@@ -45,7 +47,10 @@ formulário.
 | Mural de demandas | ✅ `requester/Dashboard.tsx` |
 | Match apontando 1 pessoa | ✅ `curator/Matchmaking.tsx` |
 | Crivo humano | ✅ triagem + confirmação com justificativa |
-| Avisos de demandas compatíveis | ⚠️ notificações existem, estáticas |
+| Contato após o match | ✅ convite, aceite e conexão estabelecida |
+| Vitrine pública (sem login) | ✅ catálogo, projeto e perfil público |
+| Indicadores para a ACE1 | ✅ `public/Impact.tsx`, derivados da base |
+| Avisos de demandas compatíveis | ⚠️ notificações abrem os convites, mas são fixas |
 | Persistência | ❌ tudo em memória |
 | Autenticação | ⚠️ só UI |
 

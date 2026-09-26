@@ -1,7 +1,23 @@
 import { featuredStudents, stats } from "@/data/showcase";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import type { PublicRoute, PublicView } from "@/components/public/routes";
 
-export default function LandingPage({ onSignIn, onAdmin }: { onSignIn: () => void; onAdmin: () => void }) {
+const NAV_ITEMS: { label: string; view: PublicView }[] = [
+  { label: "Projetos", view: "projects" },
+  { label: "Estudantes", view: "students" },
+  { label: "Impacto", view: "impact" },
+];
+
+
+export default function LandingPage({
+  onSignIn,
+  onAdmin,
+  onNavigate,
+}: {
+  onSignIn: () => void;
+  onAdmin: () => void;
+  onNavigate: (route: PublicRoute) => void;
+}) {
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
       {/* ── Nav ── */}
@@ -22,13 +38,14 @@ export default function LandingPage({ onSignIn, onAdmin }: { onSignIn: () => voi
           </span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          {["Projetos", "Estudantes", "Empresas", "Sobre"].map((item) => (
+          {NAV_ITEMS.map((item) => (
             <button
-              key={item}
+              key={item.label}
+              onClick={() => onNavigate({ view: item.view })}
               className="text-[11px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50"
               style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
             >
-              {item}
+              {item.label}
             </button>
           ))}
           <button
@@ -102,6 +119,7 @@ export default function LandingPage({ onSignIn, onAdmin }: { onSignIn: () => voi
                 </svg>
               </button>
               <button
+                onClick={() => onNavigate({ view: "projects" })}
                 className="inline-flex items-center gap-2 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-medium transition-opacity hover:opacity-70"
                 style={{ border: `1px solid ${NAVY}44`, color: NAVY, fontFamily: "Inter, sans-serif" }}
               >
@@ -193,6 +211,7 @@ export default function LandingPage({ onSignIn, onAdmin }: { onSignIn: () => voi
             </h2>
           </div>
           <button
+            onClick={() => onNavigate({ view: "projects" })}
             className="hidden md:block text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-40 pb-1"
             style={{
               fontFamily: "Space Mono, monospace",

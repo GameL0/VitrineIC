@@ -2,7 +2,13 @@ import { Label } from "./ui";
 import { notifications } from "@/data/notifications";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
-export function Dashboard({ profile }: { profile: any }) {
+export function Dashboard({
+  profile,
+  onOpenInvitations,
+}: {
+  profile: any;
+  onOpenInvitations?: () => void;
+}) {
   const name = profile?.name || "Ana C. Ferreira";
   const course = profile?.course || "Eng. de Computação";
   const semester = profile?.semester || "4º semestre";
@@ -152,6 +158,7 @@ export function Dashboard({ profile }: { profile: any }) {
             {notifications.map((n, i) => (
               <div
                 key={i}
+                onClick={n.type === "CONVITE" ? onOpenInvitations : undefined}
                 className="px-6 py-4 transition-colors cursor-pointer"
                 style={{
                   borderBottom: i < notifications.length - 1 ? `1px solid ${NAVY}08` : "none",

@@ -1,17 +1,19 @@
-import { Dashboard } from "./Dashboard";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
 export function NavBar({
   view,
   setView,
   onBack,
+  pendingInvites = 0,
 }: {
   view: string;
   setView: (v: string) => void;
   onBack: () => void;
+  pendingInvites?: number;
 }) {
   const navItems = [
     { id: "dashboard", label: "Dashboard" },
+    { id: "invitations", label: "Convites" },
     { id: "lab", label: "Laboratório" },
     { id: "profile", label: "Perfil" },
   ];
@@ -49,6 +51,14 @@ export function NavBar({
             }}
           >
             {item.label}
+            {item.id === "invitations" && pendingInvites > 0 && (
+              <span
+                className="ml-2 px-1.5 py-0.5 text-[8px]"
+                style={{ fontFamily: "Space Mono, monospace", background: RED, color: OFFWHITE }}
+              >
+                {pendingInvites}
+              </span>
+            )}
           </button>
         ))}
       </div>
