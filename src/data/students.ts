@@ -1,0 +1,75 @@
+/** DADOS FICTÍCIOS — base de estudantes usada no matchmaking. */
+
+export const STUDENTS = [
+  {
+    id: "STU-001",
+    name: "Rafael Moreira Santos",
+    initials: "RM",
+    course: "Ciência da Computação",
+    semester: "5º sem",
+    gpa: "9.1",
+    skills: ["Python", "PyTorch", "Docker", "PostgreSQL", "Node.js", "scikit-learn", "MQTT"],
+    projects: [
+      { title: "Detecção de Anomalias em Redes", stack: ["Python", "PyTorch"], status: "coding" },
+      { title: "DSL para Análise Genômica", stack: ["Rust", "LLVM"], status: "ideation" },
+    ],
+    github: "github.com/rafaelms",
+    availability: "Imediata",
+  },
+  {
+    id: "STU-002",
+    name: "Isadora Lima Costa",
+    initials: "IL",
+    course: "Engenharia de Computação",
+    semester: "6º sem",
+    gpa: "8.7",
+    skills: ["Python", "React", "AWS", "PostgreSQL", "scikit-learn", "Pandas", "SQL"],
+    projects: [
+      { title: "Dashboard ESG para PMEs", stack: ["React", "Node.js", "D3.js"], status: "review" },
+    ],
+    github: "github.com/isadoralc",
+    availability: "Imediata",
+  },
+  {
+    id: "STU-003",
+    name: "Bruno Takashi Yamamoto",
+    initials: "BT",
+    course: "Eng. de Software",
+    semester: "4º sem",
+    gpa: "8.3",
+    skills: ["Python", "FastAPI", "Docker", "PostgreSQL", "React", "TypeScript"],
+    projects: [
+      { title: "Compilador para Linguagem Educacional", stack: ["Python", "LLVM"], status: "coding" },
+    ],
+    github: "github.com/brunoty",
+    availability: "Após 15/out",
+  },
+  {
+    id: "STU-004",
+    name: "Fernanda Oliveira Braga",
+    initials: "FO",
+    course: "Ciência da Computação",
+    semester: "5º sem",
+    gpa: "9.4",
+    skills: ["Python", "OpenCV", "PyTorch", "FastAPI", "Docker", "C++"],
+    projects: [
+      { title: "Robótica Assistiva", stack: ["Python", "OpenCV", "ROS"], status: "coding" },
+    ],
+    github: "github.com/fernandaob",
+    availability: "Imediata",
+  },
+  {
+    id: "STU-005",
+    name: "Lucas Henrique Pinto",
+    initials: "LP",
+    course: "Eng. de Computação",
+    semester: "3º sem",
+    gpa: "7.9",
+    skills: ["Python", "SQL", "Pandas", "scikit-learn", "React"],
+    projects: [
+      { title: "Análise Preditiva de Falhas", stack: ["Python", "Pandas"], status: "ideation" },
+    ],
+    github: "github.com/lucashp",
+    availability: "Imediata",
+  },
+];
