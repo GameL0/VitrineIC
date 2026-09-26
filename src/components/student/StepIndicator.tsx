@@ -3,7 +3,7 @@ import { NAVY, RED } from "@/styles/tokens";
 export function StepIndicator({ current }: { current: number }) {
   const steps = [
     { n: "01", label: "Perfil & Interesses" },
-    { n: "02", label: "Hard Skills" },
+    { n: "02", label: "Competências" },
     { n: "03", label: "Portfólio" },
   ];
   return (

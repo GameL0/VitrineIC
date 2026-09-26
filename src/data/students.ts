@@ -16,6 +16,7 @@ export const STUDENTS: Student[] = [
     gpa: "9.1",
     bio: "Interesse em sistemas distribuídos e aprendizado de máquina aplicado a infraestrutura. Busco projetos de iniciação científica em detecção de anomalias.",
     interests: ["Inteligência Artificial", "Redes & Sistemas", "Banco de Dados"],
+    languages: [{ name: "Inglês", level: 3 }, { name: "Espanhol", level: 2 }],
     skills: ["Python", "PyTorch", "Docker", "PostgreSQL", "Node.js", "scikit-learn", "MQTT"],
     projects: [
       {
@@ -49,6 +50,7 @@ export const STUDENTS: Student[] = [
     gpa: "8.7",
     bio: "Foco em visualização de dados e sustentabilidade. Já trabalhei com métricas ESG para pequenas empresas e quero seguir em dados aplicados a impacto social.",
     interests: ["Banco de Dados", "Sistemas Web", "HCI & Design"],
+    languages: [{ name: "Inglês", level: 4 }, { name: "Francês", level: 2 }],
     skills: ["Python", "React", "AWS", "PostgreSQL", "scikit-learn", "Pandas", "SQL"],
     projects: [
       {
@@ -73,6 +75,7 @@ export const STUDENTS: Student[] = [
     gpa: "8.3",
     bio: "Gosto de compiladores e de ensino de programação. Meu projeto atual nasceu de monitoria: queria uma linguagem que desse mensagens de erro compreensíveis para calouros.",
     interests: ["Engenharia de Software", "Linguagens", "Sistemas Web"],
+    languages: [{ name: "Inglês", level: 3 }, { name: "Japonês", level: 3 }],
     skills: ["Python", "FastAPI", "Docker", "PostgreSQL", "React", "TypeScript"],
     projects: [
       {
@@ -97,6 +100,7 @@ export const STUDENTS: Student[] = [
     gpa: "9.4",
     bio: "Trabalho com visão computacional aplicada a reabilitação motora, em parceria com o laboratório de robótica. Procuro demandas na área de saúde.",
     interests: ["Inteligência Artificial", "Sistemas Embarcados", "Computação Gráfica"],
+    languages: [{ name: "Inglês", level: 4 }, { name: "Libras", level: 3 }],
     skills: ["Python", "OpenCV", "PyTorch", "FastAPI", "Docker", "C++"],
     projects: [
       {
@@ -121,6 +125,7 @@ export const STUDENTS: Student[] = [
     gpa: "7.9",
     bio: "Começando em ciência de dados. Estou montando um projeto de manutenção preditiva e procuro alguém mais experiente para orientar.",
     interests: ["Banco de Dados", "Redes & Sistemas", "Inteligência Artificial"],
+    languages: [{ name: "Inglês", level: 2 }],
     skills: ["Python", "SQL", "Pandas", "scikit-learn", "React"],
     projects: [
       {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Label, Mono, Rule, SkillTag } from "./ui";
+import { LANGUAGE_LEVELS } from "@/data/languages";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
@@ -63,6 +64,20 @@ export function StudentMatchCard({
                 </SkillTag>
               ))}
             </div>
+            {/* Idiomas */}
+            {student.languages.length > 0 && (
+              <div className="flex items-center gap-2 mt-1.5">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0 }}>
+                  <circle cx="5" cy="5" r="4.2" stroke="currentColor" strokeWidth="0.8" />
+                  <path d="M0.8 5h8.4M5 0.8c1.2 1.3 1.2 6.9 0 8.4M5 0.8C3.8 2.1 3.8 7.7 5 9.2" stroke="currentColor" strokeWidth="0.8" />
+                </svg>
+                <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
+                  {student.languages
+                    .map((l) => `${l.name} · ${LANGUAGE_LEVELS[l.level - 1]}`)
+                    .join("   ")}
+                </span>
+              </div>
+            )}
             {/* Projects preview */}
             {student.projects.slice(0, 1).map((p) => (
               <div key={p.title} className="flex items-center gap-2 mt-1">

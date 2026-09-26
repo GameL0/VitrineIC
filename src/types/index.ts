@@ -32,6 +32,11 @@ export interface StudentSkill {
   level: SkillLevel;
 }
 
+export interface StudentLanguage {
+  name: string;
+  level: SkillLevel;
+}
+
 /** Estágio de um projeto na vitrine do estudante. */
 export type ProjectStatus = "ideation" | "coding" | "review" | "done";
 
@@ -55,6 +60,7 @@ export interface Student {
   bio: string;
   interests: string[];
   skills: string[];
+  languages: StudentLanguage[];
   projects: StudentProject[];
   github: string;
   availability: string;

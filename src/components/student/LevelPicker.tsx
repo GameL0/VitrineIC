@@ -17,10 +17,15 @@ export function LevelPicker({
   value,
   onChange,
   name,
+  labels = LEVELS,
+  short = LEVEL_SHORT,
 }: {
   value: SkillLevel;
   onChange: (level: SkillLevel) => void;
   name: string;
+  /** Rótulos alternativos — idiomas usam "Fluente" no lugar de "Especialista". */
+  labels?: readonly string[];
+  short?: Record<SkillLevel, string>;
 }) {
   return (
     <div
@@ -49,7 +54,7 @@ export function LevelPicker({
             role="radio"
             aria-checked={active}
             tabIndex={active ? 0 : -1}
-            title={LEVELS[step - 1]}
+            title={labels[step - 1]}
             onClick={() => onChange(step)}
             className="px-2.5 py-1.5 text-[9px] tracking-[0.12em] uppercase transition-all"
             style={{
@@ -61,7 +66,7 @@ export function LevelPicker({
               opacity: active ? 1 : filled ? 0.8 : 0.45,
             }}
           >
-            {LEVEL_SHORT[step]}
+            {short[step]}
           </button>
         );
       })}

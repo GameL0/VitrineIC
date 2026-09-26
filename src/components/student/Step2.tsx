@@ -1,6 +1,21 @@
+import { LanguagePicker } from "./LanguagePicker";
 import { SkillPicker } from "./SkillPicker";
-import { NAVY } from "@/styles/tokens";
-import type { StudentSkill } from "@/types";
+import { NAVY, RED } from "@/styles/tokens";
+import type { StudentLanguage, StudentSkill } from "@/types";
+
+const MONO = "Space Mono, monospace";
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <p
+      className="text-[9px] tracking-[0.22em] uppercase mb-4 flex items-center gap-2"
+      style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+    >
+      <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
+      {children}
+    </p>
+  );
+}
 
 export function Step2({
   data,
@@ -10,6 +25,7 @@ export function Step2({
   setData: (d: any) => void;
 }) {
   const skills: StudentSkill[] = data.skills || [];
+  const languages: StudentLanguage[] = data.languages || [];
 
   return (
     <div>
@@ -17,20 +33,29 @@ export function Step2({
         className="text-3xl mb-2"
         style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
       >
-        Hard Skills
+        Competências
       </h2>
       <p
         className="text-sm mb-10"
         style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
       >
-        Digite para buscar ou use os atalhos abaixo. Elas são o principal
-        critério do match com as demandas.
+        Digite para buscar ou use os atalhos. As competências técnicas são o
+        principal critério do match com as demandas.
       </p>
 
+      <SectionTitle>Técnicas</SectionTitle>
       <SkillPicker
         value={skills}
         course={data.course}
         onChange={(s) => setData({ ...data, skills: s })}
+      />
+
+      <div className="max-w-3xl my-10" style={{ height: "1px", background: `${NAVY}15` }} />
+
+      <SectionTitle>Idiomas</SectionTitle>
+      <LanguagePicker
+        value={languages}
+        onChange={(l) => setData({ ...data, languages: l })}
       />
     </div>
   );

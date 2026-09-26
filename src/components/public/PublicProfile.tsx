@@ -1,4 +1,5 @@
 import { findStudent } from "@/data/students";
+import { LANGUAGE_LEVELS } from "@/data/languages";
 import { STATUS_CONFIG } from "@/data/projects";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
@@ -112,6 +113,34 @@ export function PublicProfile({
               </span>
             ))}
           </div>
+
+          {student.languages.length > 0 && (
+            <>
+              <p
+                className="text-[9px] tracking-[0.2em] uppercase mt-6 mb-4"
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+              >
+                Idiomas
+              </p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                {student.languages.map((l) => (
+                  <span
+                    key={l.name}
+                    className="text-[11px]"
+                    style={{ fontFamily: SANS, color: NAVY, opacity: 0.7 }}
+                  >
+                    {l.name}
+                    <span
+                      className="ml-2 text-[9px] tracking-[0.12em] uppercase"
+                      style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+                    >
+                      {LANGUAGE_LEVELS[l.level - 1]}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
 
           <p
             className="text-[9px] tracking-[0.2em] uppercase mt-6 mb-4"
