@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import StudentArea from "./StudentArea";
+import RequesterArea from "./RequesterArea";
+import CuratorArea from "./CuratorArea";
 
 const NAVY = "#1C2B4A";
 const RED = "#c1121f";
@@ -59,7 +62,7 @@ const featuredStudents = [
 
 // ─── Modal ───────────────────────────────────────────────────────────────────
 
-function AuthModal({ onClose }: { onClose: () => void }) {
+function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose: () => void; onEnterStudent: () => void; onEnterCompany: () => void }) {
   const [role, setRole] = useState<"student" | "company">("student");
 
   useEffect(() => {
@@ -159,7 +162,7 @@ function AuthModal({ onClose }: { onClose: () => void }) {
 
         {/* Form area */}
         <div className="px-8 pt-6 pb-8">
-          {role === "student" ? <StudentForm /> : <CompanyForm />}
+          {role === "student" ? <StudentForm onEnter={onEnterStudent} /> : <CompanyForm onEnter={onEnterCompany} />}
         </div>
       </div>
     </div>
@@ -247,7 +250,7 @@ function SSOButton({
   );
 }
 
-function StudentForm() {
+function StudentForm({ onEnter }: { onEnter: () => void }) {
   return (
     <div>
       <p
@@ -282,6 +285,7 @@ function StudentForm() {
       <InputField label="E-mail acadêmico" type="email" placeholder="seu@universidade.edu.br" />
       <InputField label="Senha" type="password" placeholder="••••••••" />
       <button
+        onClick={onEnter}
         className="w-full py-3 text-[11px] tracking-[0.18em] uppercase font-semibold transition-all mt-1"
         style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
         onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
@@ -302,7 +306,7 @@ function StudentForm() {
   );
 }
 
-function CompanyForm() {
+function CompanyForm({ onEnter }: { onEnter: () => void }) {
   return (
     <div>
       <p
@@ -348,6 +352,7 @@ function CompanyForm() {
       <InputField label="E-mail corporativo" type="email" placeholder="nome@empresa.com.br" />
       <InputField label="Senha" type="password" placeholder="••••••••" />
       <button
+        onClick={onEnter}
         className="w-full py-3 text-[11px] tracking-[0.18em] uppercase font-semibold transition-all mt-1"
         style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
         onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
@@ -372,6 +377,13 @@ function CompanyForm() {
 
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
+  const [inStudentArea, setInStudentArea] = useState(false);
+  const [inRequesterArea, setInRequesterArea] = useState(false);
+  const [inCuratorArea, setInCuratorArea] = useState(false);
+
+  if (inStudentArea) return <StudentArea onBack={() => setInStudentArea(false)} />;
+  if (inRequesterArea) return <RequesterArea onBack={() => setInRequesterArea(false)} />;
+  if (inCuratorArea) return <CuratorArea onBack={() => setInCuratorArea(false)} />;
 
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
@@ -402,6 +414,16 @@ export default function App() {
               {item}
             </button>
           ))}
+          <button
+            onClick={() => setInCuratorArea(true)}
+            className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-25 flex items-center gap-1.5"
+            style={{ fontFamily: "Space Mono, monospace", color: RED }}
+          >
+            <svg width="7" height="7" viewBox="0 0 7 7" fill="none">
+              <rect x="0.5" y="0.5" width="6" height="6" fill={RED} />
+            </svg>
+            Admin
+          </button>
         </div>
         <button
           onClick={() => setModalOpen(true)}
@@ -710,7 +732,13 @@ export default function App() {
       </footer>
 
       {/* ── Modal ── */}
-      {modalOpen && <AuthModal onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <AuthModal
+          onClose={() => setModalOpen(false)}
+          onEnterStudent={() => { setModalOpen(false); setInStudentArea(true); }}
+          onEnterCompany={() => { setModalOpen(false); setInRequesterArea(true); }}
+        />
+      )}
     </div>
   );
 }
