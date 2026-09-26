@@ -89,6 +89,7 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Convites gerados pela curadoria | `src/data/invitations.ts` |
 | Base de estudantes e projetos | `src/data/students.ts` |
 | Insumos do painel de impacto | `src/data/impact.ts` |
+| Universidade, domínios e cursos | `src/data/institution.ts` |
 | Tipos do domínio | `src/types/index.ts` |
 | Cores | `src/styles/tokens.ts` e `src/index.css` |
 | Conteúdo exibido (fictício) | `src/data/` |
@@ -139,6 +140,10 @@ Display (títulos), Inter (corpo), Space Mono (rótulos em caixa alta).
   status em `src/types/index.ts`. Unificá-las é a prioridade estrutural.
 - Cada área tem seu próprio `ui.tsx` e `NavBar.tsx`, com implementações
   parecidas mas não idênticas. Ao mexer em uma, verifique as irmãs.
+- O alvo é o **IC/UFAL**, com três cursos: Ciência da Computação, Engenharia
+  da Computação e Inteligência Artificial. Nome da universidade, domínios e a
+  lista de cursos vivem em `src/data/institution.ts`; o tipo `Course` restringe
+  o campo. Não escreva "UFAL" nem nome de curso direto no componente.
 - `src/data/students.ts` é a **fonte única** de estudante e projeto: alimenta o
   matchmaking, o catálogo público e os perfis. Enriqueça esse arquivo em vez de
   criar outra base.

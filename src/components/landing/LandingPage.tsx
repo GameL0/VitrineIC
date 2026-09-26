@@ -1,4 +1,5 @@
 import { featuredStudents, stats } from "@/data/showcase";
+import { INSTITUTION } from "@/data/institution";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { PublicRoute, PublicView } from "@/components/public/routes";
 
@@ -138,9 +139,9 @@ export default function LandingPage({
               className="text-[10px] tracking-[0.18em] uppercase leading-relaxed"
               style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
             >
-              Instituto de Computação<br />
-              Universidade Estadual de Campinas<br />
-              São Paulo — Brasil
+              {INSTITUTION.unit}<br />
+              {INSTITUTION.university}<br />
+              {INSTITUTION.city} — {INSTITUTION.state}
             </p>
             <div
               className="w-full h-px mt-8"
@@ -275,7 +276,7 @@ export default function LandingPage({
                 className="text-[10px] mt-0.5"
                 style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
               >
-                {student.course}
+                {student.course} · {student.semester}
               </p>
               <div
                 className="mt-5 h-px transition-all"
@@ -351,7 +352,7 @@ export default function LandingPage({
             className="text-[11px] tracking-[0.2em] uppercase"
             style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
           >
-            VitrineIC — IC · Unicamp · 2026
+            VitrineIC — {INSTITUTION.unitShort} · {INSTITUTION.universityShort} · 2026
           </span>
         </div>
         <div className="flex gap-6">

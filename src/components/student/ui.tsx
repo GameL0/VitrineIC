@@ -72,6 +72,48 @@ export function Input({
   );
 }
 
+export function Select({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label?: string;
+  options: readonly string[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      {label && <Label>{label}</Label>}
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        style={{
+          fontFamily: "Inter, sans-serif",
+          color: NAVY,
+          fontSize: "13px",
+          border: `1px solid ${NAVY}35`,
+          borderRadius: 0,
+          background: OFFWHITE,
+          width: "100%",
+          outline: "none",
+          padding: "10px 12px",
+          appearance: "none",
+          cursor: "pointer",
+        }}
+      >
+        <option value="">Selecione...</option>
+        {options.map((o) => (
+          <option key={o} value={o}>
+            {o}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 export function Rule() {
   return <div style={{ height: "1px", background: `${NAVY}15`, margin: "24px 0" }} />;
 }

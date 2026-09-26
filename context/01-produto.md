@@ -15,7 +15,7 @@ acadêmica dentro da própria arquitetura do produto.
 
 ## O problema
 
-Hoje, fora do GitHub, estudantes do IC não têm onde expor o que desenvolvem nem
+Hoje, fora do GitHub, estudantes do IC/UFAL não têm onde expor o que desenvolvem nem
 onde encontrar alguém para tirar uma ideia do papel. O resultado é network
 perdido entre pessoas com interesses parecidos. O VitrineIC quer ser também
 porta de entrada para PIBIC, PIBITI e startups dentro do Instituto.
@@ -49,6 +49,19 @@ justificativa visível e exige ato deliberado do curador, com campo para
 registrar o porquê.
 
 No código: `components/curator/`.
+
+## Instituição e cursos
+
+O alvo é o **Instituto de Computação da Universidade Federal de Alagoas**
+(IC/UFAL), em Maceió. São três cursos ofertados:
+
+- Ciência da Computação
+- Engenharia da Computação
+- Inteligência Artificial
+
+Tudo isso vive em `src/data/institution.ts` — nome, domínios e lista de cursos.
+O tipo `Course` em `src/types/index.ts` restringe o campo a esses três valores,
+então adicionar um curso é mudar os dois arquivos, e o compilador aponta o resto.
 
 ## Usuários
 

@@ -1,4 +1,5 @@
 import { Divider, InputField, SSOButton } from "./ui";
+import { INSTITUTION } from "@/data/institution";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
 export function StudentForm({ onEnter }: { onEnter: () => void }) {
@@ -19,7 +20,7 @@ export function StudentForm({ onEnter }: { onEnter: () => void }) {
             </svg>
           }
           label="Entrar com SSO Institucional"
-          sub="ic.unicamp.br · ic.usp.br · ..."
+          sub={INSTITUTION.domain}
         />
         <SSOButton
           icon={
@@ -29,11 +30,11 @@ export function StudentForm({ onEnter }: { onEnter: () => void }) {
             </svg>
           }
           label="Entrar com E-mail Acadêmico"
-          sub="usuario@universidade.edu.br"
+          sub={INSTITUTION.emailExample}
         />
       </div>
       <Divider label="ou" />
-      <InputField label="E-mail acadêmico" type="email" placeholder="seu@universidade.edu.br" />
+      <InputField label="E-mail acadêmico" type="email" placeholder={INSTITUTION.emailExample} />
       <InputField label="Senha" type="password" placeholder="••••••••" />
       <button
         onClick={onEnter}

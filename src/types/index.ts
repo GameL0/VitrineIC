@@ -18,6 +18,12 @@ export interface Demand {
 
 export type StatusKey = "analise" | "buscando" | "em_andamento" | "concluido" | "cancelado";
 
+/** Cursos ofertados pelo IC/UFAL. A lista vive em `@/data/institution`. */
+export type Course =
+  | "Ciência da Computação"
+  | "Engenharia da Computação"
+  | "Inteligência Artificial";
+
 /** Estágio de um projeto na vitrine do estudante. */
 export type ProjectStatus = "ideation" | "coding" | "review" | "done";
 
@@ -35,7 +41,7 @@ export interface Student {
   id: string;
   name: string;
   initials: string;
-  course: string;
+  course: Course;
   semester: string;
   gpa: string;
   bio: string;

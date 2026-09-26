@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { Input, Label, Rule, Tag } from "./ui";
+import { Input, Label, Rule, Tag, Select } from "./ui";
+import { COURSES, INSTITUTION } from "@/data/institution";
 import { NAVY } from "@/styles/tokens";
 
 export function Step1({
@@ -87,16 +88,16 @@ export function Step1({
             />
           </div>
           <div className="grid md:grid-cols-2 gap-5">
-            <Input
+            <Select
               label="Curso"
-              placeholder="Eng. de Computação"
+              options={COURSES}
               value={data.course || ""}
               onChange={(v) => setData({ ...data, course: v })}
             />
             <Input
               label="E-mail institucional"
               type="email"
-              placeholder="a123456@dac.unicamp.br"
+              placeholder={INSTITUTION.emailExample}
               mono
               value={data.email || ""}
               onChange={(v) => setData({ ...data, email: v })}

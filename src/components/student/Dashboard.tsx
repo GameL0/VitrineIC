@@ -1,5 +1,6 @@
 import { Label } from "./ui";
 import { notifications } from "@/data/notifications";
+import { INSTITUTION } from "@/data/institution";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
 export function Dashboard({
@@ -121,7 +122,7 @@ export function Dashboard({
                 className="text-[11px]"
                 style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
               >
-                vitrine.ic.unicamp.br/u/{name.split(" ")[0].toLowerCase()}
+                {INSTITUTION.showcaseDomain}/u/{name.split(" ")[0].toLowerCase()}
               </span>
             </div>
           </div>
@@ -253,7 +254,7 @@ export function Dashboard({
               </div>
               <div style={{ height: "1px", background: `${NAVY}10` }} className="mb-2" />
               <p className="text-[8px]" style={{ fontFamily: "Space Mono", color: NAVY, opacity: 0.3 }}>
-                vitrine.ic.unicamp.br/u/{name.split(" ")[0].toLowerCase()}
+                {INSTITUTION.showcaseDomain}/u/{name.split(" ")[0].toLowerCase()}
               </p>
             </div>
             <div className="mt-4">
