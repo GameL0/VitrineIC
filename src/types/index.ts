@@ -24,6 +24,14 @@ export type Course =
   | "Engenharia da Computação"
   | "Inteligência Artificial";
 
+/** Proficiência declarada numa tecnologia, de Básico (1) a Especialista (4). */
+export type SkillLevel = 1 | 2 | 3 | 4;
+
+export interface StudentSkill {
+  name: string;
+  level: SkillLevel;
+}
+
 /** Estágio de um projeto na vitrine do estudante. */
 export type ProjectStatus = "ideation" | "coding" | "review" | "done";
 

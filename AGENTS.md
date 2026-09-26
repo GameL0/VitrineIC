@@ -47,7 +47,8 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Shell e troca de telas | `StudentArea.tsx` |
 | Onboarding (fluxo) | `Onboarding.tsx`, `StepIndicator.tsx` |
 | Onboarding: perfil / skills / portfólio | `Step1.tsx`, `Step2.tsx`, `Step3.tsx` |
-| Barras de proficiência | `ProficiencyBars.tsx` |
+| Seleção de competências (busca + catálogo) | `SkillPicker.tsx` |
+| Seletor de nível de proficiência | `LevelPicker.tsx` |
 | Dashboard e notificações | `Dashboard.tsx` |
 | Convites recebidos (aceitar/recusar) | `Invitations.tsx` |
 | Conexão estabelecida | `ConnectionEstablished.tsx` |

@@ -82,8 +82,11 @@ O que a escolha implica:
 - **Só tecnologia conta.** `availability`, `gpa`, `semester`, área de interesse e
   escopo existem nos dados e ficam de fora. O README previa "área de interesse,
   tecnologia, disponibilidade" — um dos três está implementado.
-- **A taxonomia é implícita.** Como a comparação é textual, `React`, `ReactJS` e
-  `React.js` são tecnologias distintas.
+- **A taxonomia é parcialmente controlada.** A comparação continua textual, mas
+  a entrada passa por `canonicalSkill` (`@/data/skills`), que resolve apelidos:
+  `reactjs` e `react.js` viram `React` antes de entrar no perfil. Skills fora do
+  catálogo ainda podem ser declaradas — ficam marcadas como tal na UI, e é nelas
+  que a divergência de grafia persiste.
 - **Demanda sem skills retorna `NaN`** (divisão por zero).
 
 Para um protótipo de disciplina é defensável: transparente e explicável. O ponto
@@ -104,7 +107,7 @@ protótipo. Nada deve ser tratado ou publicado como real.
 | `matched-students.ts` | `MATCHED_STUDENTS` | solicitante |
 | `projects.ts` | `SAMPLE_PROJECTS`, `STATUS_CONFIG` | laboratório |
 | `notifications.ts` | `notifications` | dashboard do estudante |
-| `skills.ts` | `ALL_SKILLS`, `LEVELS` | onboarding |
+| `skills.ts` | `ALL_SKILLS` (catálogo + apelidos), `LEVELS`, busca e normalização | onboarding |
 
 ### O problema central: três bases paralelas
 
