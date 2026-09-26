@@ -1,41 +1,48 @@
-# figma-make-app
+# VitrineIC
 
-React + Vite + Tailwind CSS project running inside Figma Make.
+React + Vite + Tailwind CSS v4. Vitrine de projetos e demandas do Instituto de
+Computação.
 
-## Development Server
+## Servidor de desenvolvimento
 
-A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
+```bash
+pnpm install
+pnpm dev
+```
 
-- Preview URL: The user can access the running app through the preview panel
-- Hot reload: Changes to source files are reflected immediately
+Sobe em `http://localhost:5173` com hot reload.
+Outros scripts: `pnpm build` (typecheck + build), `pnpm preview`, `pnpm typecheck`.
 
-## Project Structure
+## Estrutura do projeto
 
-This is the canonical project structure. Start with task-relevant files below. Only follow imports or inspect other files when required, when a documented path is missing, or when the repository contradicts this guide.
+- `src/main.tsx` — entrypoint React; importa `src/index.css` e monta `src/App.tsx` no `#root`
+- `src/App.tsx` — landing page, modal de acesso e roteamento entre as áreas
+- `src/StudentArea.tsx` — área do estudante (onboarding, dashboard, laboratório)
+- `src/RequesterArea.tsx` — área do solicitante (demandas, nova demanda, matches)
+- `src/CuratorArea.tsx` — área da curadoria (triagem, matchmaking, confirmação)
+- `src/index.css` — CSS global, import do Tailwind v4 e tokens do tema
+- `vite.config.ts` — Vite com React, Tailwind v4 e o alias `@` para `src`
+- `.mise.toml` — versões de Node.js e pnpm
 
-- `src/main.tsx` - React entrypoint; imports `src/index.css` and mounts `src/App.tsx` into the `#root` element
-- `src/App.tsx` - Primary application component and the usual starting point for UI work
-- `src/index.css` - Global CSS entrypoint and Tailwind CSS v4 import
-- `index.html` - Vite HTML shell containing the `#root` element and loading `src/main.tsx`
-- `package.json` - Project dependencies and the Vite build, development, preview, and formatting scripts
-- `vite.config.ts` - Vite configuration with React, Tailwind CSS v4, and Figma Make plugins plus the `@` alias for `src`
-- `.mise.toml` - Toolchain versions for Node.js and pnpm
+Documentação do projeto em `docs/`.
 
-## Dependencies
+## Dependências
 
-- Runtime: React 19 and React DOM 19
-- Styling: Tailwind CSS v4 with the `@tailwindcss/vite` plugin
-- Build tooling: Vite 8, TypeScript 5.7, and `@vitejs/plugin-react`
-- Formatting: oxfmt
+- Runtime: React 19 e React DOM 19
+- Estilo: Tailwind CSS v4 via plugin `@tailwindcss/vite`
+- Build: Vite 8, TypeScript 5.7 e `@vitejs/plugin-react`
 
-## Styling
+## Estilo
 
-This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin configured in `vite.config.ts`. `src/index.css` imports Tailwind with `@import 'tailwindcss';`. Use Tailwind utility classes directly in JSX and put global CSS or Tailwind v4 theme customization in `src/index.css`. This scaffold does not need a Tailwind config file or PostCSS config.
+Tailwind CSS v4 pelo plugin `@tailwindcss/vite` configurado em `vite.config.ts`.
+`src/index.css` importa o Tailwind com `@import 'tailwindcss';` e declara os
+tokens no bloco `@theme`. Não há config de Tailwind nem PostCSS.
 
-`src/main.tsx` imports `src/index.css`, so global font wiring belongs in `src/index.css`. Keep CSS `@import` statements first, then add any `@font-face` rules and font-family defaults there.
+Identidade: navy `#1C2B4A`, vermelho `#c1121f`, off-white `#F5F4F0`; DM Serif
+Display (títulos), Inter (corpo), Space Mono (rótulos em caixa alta).
 
-## Code quality
+## Qualidade de código
 
-- Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.
-- Ensure JSX tags are closed and braces are balanced.
-- Export components as default exports.
+- Use aspas duplas em strings que contenham apóstrofos (`"We're here to help"`)
+- Garanta que tags JSX estejam fechadas e chaves balanceadas
+- Exporte componentes como default export
