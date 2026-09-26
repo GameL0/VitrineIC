@@ -23,11 +23,15 @@ export function Step2({
         className="text-sm mb-10"
         style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
       >
-        Busque ou escolha suas competências técnicas e ajuste o nível de
-        proficiência. Elas são o principal critério do match com as demandas.
+        Digite para buscar ou use os atalhos abaixo. Elas são o principal
+        critério do match com as demandas.
       </p>
 
-      <SkillPicker value={skills} onChange={(s) => setData({ ...data, skills: s })} />
+      <SkillPicker
+        value={skills}
+        course={data.course}
+        onChange={(s) => setData({ ...data, skills: s })}
+      />
     </div>
   );
 }

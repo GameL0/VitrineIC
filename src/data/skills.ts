@@ -13,7 +13,7 @@
  * Ao incluir uma tecnologia, registre os apelidos com que ela costuma ser
  * escrita — é isso que mantém o match funcionando.
  */
-import type { SkillLevel } from "@/types";
+import type { Course, SkillLevel } from "@/types";
 
 export interface SkillDef {
   name: string;
@@ -241,6 +241,43 @@ export const ALL_SKILLS: SkillDef[] = [
   { name: "Escrita Científica", cat: "Ferramentas & Processo", aliases: ["redação científica", "artigos"] },
   { name: "Jira", cat: "Ferramentas & Processo", aliases: ["trello", "notion"] },
 ];
+
+/**
+ * Atalhos por curso — progressive disclosure.
+ *
+ * O curso é coletado no passo 1, então o passo 2 não precisa abrir 195
+ * tecnologias: mostra ~12 relevantes para quem está preenchendo. O catálogo
+ * completo continua acessível sob demanda.
+ */
+export const SUGGESTED_BY_COURSE: Record<Course, string[]> = {
+  "Ciência da Computação": [
+    "Algoritmos", "Estruturas de Dados", "Python", "Java", "Git", "SQL",
+    "Sistemas Operacionais", "Compiladores", "Sistemas Distribuídos",
+    "React", "Docker", "Testes Automatizados",
+  ],
+  "Engenharia da Computação": [
+    "C", "C++", "Arduino", "ESP32", "STM32", "FPGA", "VHDL", "Verilog",
+    "Firmware", "I2C/SPI", "Arquitetura de Computadores", "Controle e Automação",
+  ],
+  "Inteligência Artificial": [
+    "Python", "Machine Learning", "Deep Learning", "PyTorch", "scikit-learn",
+    "Pandas", "NumPy", "Visão Computacional", "NLP", "LLMs", "RAG", "MLOps",
+  ],
+};
+
+/** Usado quando o curso ainda não foi informado. */
+export const POPULAR_SKILLS = [
+  "Python", "JavaScript", "Git", "SQL", "React", "Java",
+  "C", "Docker", "Algoritmos", "Linux", "HTML/CSS", "Machine Learning",
+];
+
+/** Atalhos a exibir: os do curso, ou os populares como retaguarda. */
+export function suggestedFor(course?: string): string[] {
+  const list = course && course in SUGGESTED_BY_COURSE
+    ? SUGGESTED_BY_COURSE[course as Course]
+    : POPULAR_SKILLS;
+  return list;
+}
 
 export const SKILL_CATEGORIES = Array.from(new Set(ALL_SKILLS.map((s) => s.cat)));
 
