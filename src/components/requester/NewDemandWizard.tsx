@@ -208,7 +208,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
       />
       <div
         className="flex items-start gap-4 p-4"
-        style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03` }}
+        style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03`, borderRadius: "12px" }}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.3, flexShrink: 0, marginTop: 2 }}>
           <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.1" />
@@ -232,7 +232,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
       <p className="text-sm mb-8" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
         Confirme os dados antes de enviar a demanda.
       </p>
-      <div style={{ border: `1px solid ${NAVY}18` }}>
+      <div style={{ border: `1px solid ${NAVY}18`, borderRadius: "12px", overflow: "hidden" }}>
         {[
           { label: "Título", value: form.title || "—" },
           { label: "Área", value: form.area || "—" },
@@ -309,7 +309,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           <button
             onClick={next}
             className="flex items-center gap-3 px-8 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-88"
-            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
           >
             {step === 3 ? "Enviar Demanda" : "Próximo"}
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

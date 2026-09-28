@@ -2,9 +2,9 @@
 @import 'tailwindcss';
 
 @theme inline {
-  --color-navy: #1C2B4A;
+  --color-navy: #0d1321;
   --color-red: #c1121f;
-  --color-offwhite: #F5F4F0;
+  --color-offwhite: #edede9;
   --font-serif: 'DM Serif Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
@@ -16,7 +16,7 @@
 
 html {
   font-family: 'Inter', system-ui, sans-serif;
-  background-color: #F5F4F0;
+  background-color: #edede9;
   color: #0a0a0a;
   -webkit-font-smoothing: antialiased;
 }
@@ -29,9 +29,40 @@ body {
 /* Hide scrollbar by default */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #1C2B4A33; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #0d132133; border-radius: 2px; }
 
 /* Modal scroll lock */
 body.modal-open {
   overflow: hidden;
+}
+
+/* =========================================
+   Global Design Bases (Dashboard & Entire App)
+   ========================================= */
+
+/* Inputs, selects, textareas */
+input, select, textarea {
+  border-radius: 8px !important;
+}
+
+/* Primary and secondary buttons */
+button {
+  border-radius: 10px !important;
+}
+
+/* Tags, badges, pills */
+button[class*="text-[8px]"],
+button[class*="text-[9px]"],
+button[class*="text-[10px]"],
+span[class*="text-[8px]"][class*="uppercase"],
+span[class*="text-[9px]"][class*="uppercase"],
+span[class*="text-[10px]"][class*="uppercase"] {
+  border-radius: 6px !important;
+}
+
+/* Modals and containers larger */
+.modal-open > div > div, 
+div.max-w-lg,
+div[style*="max-width: 32rem"] {
+  border-radius: 20px !important;
 }

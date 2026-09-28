@@ -57,7 +57,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
             onChange={(e) => setQuery(e.target.value)}
             placeholder="ex.: Python, robótica…"
             className="w-full px-3 py-2.5 text-sm bg-transparent outline-none transition-colors"
-            style={{ border: `1px solid ${NAVY}44`, borderRadius: 0, fontFamily: SANS, color: NAVY }}
+            style={{ border: `1px solid ${NAVY}44`, borderRadius: "8px", fontFamily: SANS, color: NAVY }}
             onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
             onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}44`)}
           />
@@ -84,7 +84,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
             >
               <div
                 className="flex items-center justify-center flex-shrink-0"
-                style={{ width: "44px", height: "44px", background: NAVY }}
+                style={{ width: "44px", height: "44px", background: NAVY, borderRadius: "10px" }}
               >
                 <span
                   className="text-[12px] tracking-[0.1em]"
@@ -110,7 +110,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
                     <span
                       key={s}
                       className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
-                      style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.55 }}
+                      style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.55, borderRadius: "6px" }}
                     >
                       {s}
                     </span>

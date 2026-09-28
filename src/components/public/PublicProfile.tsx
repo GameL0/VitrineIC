@@ -134,7 +134,7 @@ export function PublicProfile({
                       className="ml-2 text-[9px] tracking-[0.12em] uppercase"
                       style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
                     >
-                      {LANGUAGE_LEVELS[l.level - 1]}
+                      C: {LANGUAGE_LEVELS[l.conversacao - 1]} / L: {LANGUAGE_LEVELS[l.leitura - 1]}
                     </span>
                   </span>
                 ))}

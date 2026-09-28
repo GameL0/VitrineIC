@@ -3,8 +3,9 @@ import { NAVY, RED } from "@/styles/tokens";
 export function StepIndicator({ current }: { current: number }) {
   const steps = [
     { n: "01", label: "Perfil & Interesses" },
-    { n: "02", label: "Competências" },
-    { n: "03", label: "Portfólio" },
+    { n: "02", label: "Técnicas" },
+    { n: "03", label: "Idiomas" },
+    { n: "04", label: "Portfólio" },
   ];
   return (
     <div className="flex items-center gap-0 mb-14">

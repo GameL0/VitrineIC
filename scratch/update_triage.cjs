@@ -1,20 +1,17 @@
-import { useState } from "react";
-import { DEMAND_STATUS, KANBAN_COLS, StatusBadge } from "./StatusBadge";
-import { Mono, SkillTag } from "./ui";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
-import type { Demand, DemandStatus } from "@/types";
+const fs = require('fs');
 
+const f = 'src/components/curator/Triage.tsx';
+let c = fs.readFileSync(f, 'utf8');
 
+const triageCardNew = `
 export function TriageCard({
   demand,
   onStatus,
   onDragStart,
-  onDelete,
 }: {
   demand: Demand;
   onStatus: (s: DemandStatus) => void;
   onDragStart: (id: string) => void;
-  onDelete?: () => void;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -23,12 +20,12 @@ export function TriageCard({
       className="mb-2 transition-all cursor-grab active:cursor-grabbing"
       draggable
       onDragStart={() => onDragStart(demand.id)}
-      style={{ border: `1px solid ${NAVY}18`, background: OFFWHITE, borderRadius: "16px", overflow: "hidden" }}
+      style={{ border: \`1px solid \${NAVY}18\`, background: OFFWHITE, borderRadius: "16px", overflow: "hidden" }}
     >
       <div
         className="px-4 py-3"
         onClick={() => setOpen(!open)}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = `${NAVY}04`)}
+        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = \`\${NAVY}04\`)}
         onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
       >
         <div className="flex items-start justify-between gap-2 mb-2">
@@ -36,7 +33,7 @@ export function TriageCard({
           {demand.priority === "alta" && (
             <span
               className="text-[8px] tracking-[0.14em] uppercase px-1.5 py-0.5 flex-shrink-0"
-              style={{ fontFamily: "Space Mono, monospace", color: RED, border: `1px solid ${RED}`, borderRadius: "6px" }}
+              style={{ fontFamily: "Space Mono, monospace", color: RED, border: \`1px solid \${RED}\`, borderRadius: "6px" }}
             >
               Alta
             </span>
@@ -68,7 +65,7 @@ export function TriageCard({
       </div>
 
       {open && (
-        <div style={{ borderTop: `1px solid ${NAVY}12` }}>
+        <div style={{ borderTop: \`1px solid \${NAVY}12\` }}>
           <div className="px-4 py-3">
             <p className="text-[11px] leading-relaxed mb-3" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
               {demand.description}
@@ -78,7 +75,7 @@ export function TriageCard({
             </div>
           </div>
           
-          <div className="p-2 flex flex-col gap-2" style={{ background: `${NAVY}03`, borderTop: `1px solid ${NAVY}10` }}>
+          <div className="p-2 flex flex-col gap-2" style={{ background: \`\${NAVY}03\`, borderTop: \`1px solid \${NAVY}10\` }}>
             {(["em_analise", "aprovada", "rejeitada"] as DemandStatus[]).map((s) => (
               <button
                 key={s}
@@ -86,7 +83,7 @@ export function TriageCard({
                 className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85"
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  border: `1px solid ${DEMAND_STATUS[s].color}40`,
+                  border: \`1px solid \${DEMAND_STATUS[s].color}40\`,
                   color: demand.status === s ? OFFWHITE : DEMAND_STATUS[s].color,
                   background: demand.status === s ? DEMAND_STATUS[s].color : OFFWHITE,
                   borderRadius: "10px"
@@ -100,31 +97,15 @@ export function TriageCard({
                 )}
               </button>
             ))}
-            
-            {demand.status === "rejeitada" && onDelete && (
-              <button
-                onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85 mt-2"
-                style={{
-                  fontFamily: "Inter, sans-serif",
-                  border: `1px solid #dc2626`,
-                  color: OFFWHITE,
-                  background: "#dc2626",
-                  borderRadius: "10px"
-                }}
-              >
-                <span>Excluir Demanda</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-              </button>
-            )}
           </div>
         </div>
       )}
     </div>
   );
 }
+`;
+
+const triageNew = `
 export function Triage({
   demands,
   setDemands,
@@ -136,10 +117,6 @@ export function Triage({
 
   const updateStatus = (id: string, status: DemandStatus) => {
     setDemands(demands.map((d) => (d.id === id ? { ...d, status } : d)));
-  };
-
-  const deleteDemand = (id: string) => {
-    setDemands(demands.filter(d => d.id !== id));
   };
 
   const handleDrop = (e: React.DragEvent, status: DemandStatus) => {
@@ -167,7 +144,7 @@ export function Triage({
             Demandas Recebidas
           </h1>
         </div>
-        <div className="flex gap-5 flex-wrap">
+        <div className="flex gap-5">
           {KANBAN_COLS.map((col) => (
             <div key={col} className="text-right">
               <p className="text-2xl leading-none" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
@@ -182,21 +159,21 @@ export function Triage({
       </div>
 
       {/* Kanban */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-0" style={{ border: `1px solid ${NAVY}18`, borderRadius: "16px", overflow: "hidden" }}>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-0" style={{ border: \`1px solid \${NAVY}18\`, borderRadius: "16px", overflow: "hidden" }}>
         {KANBAN_COLS.map((col, ci) => (
           <div
             key={col}
             onDrop={(e) => handleDrop(e, col)}
             onDragOver={handleDragOver}
-            style={{ borderLeft: ci > 0 ? `1px solid ${NAVY}18` : "none", transition: "background 0.2s" }}
-            onDragEnter={(e) => { (e.currentTarget as HTMLElement).style.background = `${NAVY}03` }}
+            style={{ borderLeft: ci > 0 ? \`1px solid \${NAVY}18\` : "none", transition: "background 0.2s" }}
+            onDragEnter={(e) => { (e.currentTarget as HTMLElement).style.background = \`\${NAVY}03\` }}
             onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
             onDropCapture={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
           >
             {/* Column header */}
             <div
               className="px-4 py-3 flex items-center gap-2"
-              style={{ borderBottom: `1px solid ${NAVY}18`, background: `${NAVY}04` }}
+              style={{ borderBottom: \`1px solid \${NAVY}18\`, background: \`\${NAVY}04\` }}
             >
               <StatusBadge status={col} />
               <span className="ml-auto text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
@@ -211,7 +188,6 @@ export function Triage({
                   demand={d}
                   onStatus={(s) => updateStatus(d.id, s)}
                   onDragStart={(id) => setDraggedId(id)}
-                  onDelete={() => deleteDemand(d.id)}
                 />
               ))}
               {demands.filter((d) => d.status === col).length === 0 && (
@@ -228,3 +204,7 @@ export function Triage({
     </div>
   );
 }
+`;
+
+const res = c.replace(/export function TriageCard[\s\S]+/, triageCardNew + "\n" + triageNew);
+fs.writeFileSync(f, res);

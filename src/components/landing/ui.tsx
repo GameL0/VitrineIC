@@ -31,7 +31,7 @@ export function InputField({ label, type = "text", placeholder }: { label: strin
         className="w-full px-3 py-2.5 text-sm bg-transparent outline-none transition-colors"
         style={{
           border: `1px solid ${NAVY}44`,
-          borderRadius: 0,
+          borderRadius: "8px",
           fontFamily: "Inter, sans-serif",
           color: NAVY,
         }}
@@ -54,7 +54,7 @@ export function SSOButton({
   return (
     <button
       className="w-full flex items-center gap-3 px-4 py-3 text-left transition-all group"
-      style={{ border: `1px solid ${NAVY}33`, background: "transparent" }}
+      style={{ border: `1px solid ${NAVY}33`, background: "transparent", borderRadius: "10px" }}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = NAVY)}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${NAVY}33`)}
     >

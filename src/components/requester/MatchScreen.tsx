@@ -8,7 +8,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
 
   return (
     <div
-      style={{ border: `1px solid ${NAVY}20` }}
+      style={{ border: `1px solid ${NAVY}20`, borderRadius: "16px", overflow: "hidden" }}
       className="transition-all"
     >
       {/* Card header */}
@@ -19,7 +19,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
       >
         {/* Avatar */}
         <div
-          className="w-16 h-16 flex items-center justify-center flex-shrink-0"
+          className="w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-[12px]"
           style={{ background: NAVY }}
         >
           <span
@@ -41,7 +41,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
             </h3>
             <div
               className="px-2 py-0.5 flex items-center gap-1.5"
-              style={{ border: `1px solid ${RED}`, background: `${RED}08` }}
+              style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px" }}
             >
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: RED }} />
               <span
@@ -183,7 +183,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
           >
             <button
               className="flex-1 flex items-center justify-center gap-3 px-6 py-3.5 text-[10px] tracking-[0.18em] uppercase font-semibold transition-all"
-              style={{ background: RED, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+              style={{ background: RED, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
               onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
               onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
@@ -195,7 +195,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
             </button>
             <button
               className="flex-1 flex items-center justify-center gap-3 px-6 py-3.5 text-[10px] tracking-[0.18em] uppercase font-semibold transition-all"
-              style={{ border: `1.5px solid ${RED}`, color: RED, background: "transparent", fontFamily: "Inter, sans-serif" }}
+              style={{ border: `1.5px solid ${RED}`, color: RED, background: "transparent", fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
               onMouseEnter={(e) => { e.currentTarget.style.background = `${RED}08`; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
             >
@@ -206,7 +206,7 @@ export function MatchCard({ student }: { student: typeof MATCHED_STUDENTS[0] }) 
             </button>
             <button
               className="flex items-center justify-center gap-2 px-5 py-3.5 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-60 opacity-40"
-              style={{ border: `1px solid ${NAVY}30`, color: NAVY, fontFamily: "Space Mono, monospace" }}
+              style={{ border: `1px solid ${NAVY}30`, color: NAVY, fontFamily: "Space Mono, monospace", borderRadius: "10px" }}
             >
               Ver perfil completo
             </button>
@@ -246,7 +246,7 @@ export function MatchScreen() {
       {/* Summary bar */}
       <div
         className="flex items-center gap-8 px-6 py-4 mb-8"
-        style={{ background: `${NAVY}05`, border: `1px solid ${NAVY}12` }}
+        style={{ background: `${NAVY}05`, border: `1px solid ${NAVY}12`, borderRadius: "12px" }}
       >
         {[
           { val: "2", label: "Matches ativos" },
@@ -278,7 +278,7 @@ export function MatchScreen() {
 
       <div
         className="mt-8 px-6 py-5 flex items-center gap-4"
-        style={{ border: `1px dashed ${NAVY}20` }}
+        style={{ border: `1px dashed ${NAVY}20`, borderRadius: "12px" }}
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0 }}>
           <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.1" />

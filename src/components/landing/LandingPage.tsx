@@ -9,7 +9,6 @@ const NAV_ITEMS: { label: string; view: PublicView }[] = [
   { label: "Impacto", view: "impact" },
 ];
 
-
 export default function LandingPage({
   onSignIn,
   onAdmin,
@@ -23,13 +22,13 @@ export default function LandingPage({
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
       {/* ── Nav ── */}
       <nav
-        className="w-full flex items-center justify-between px-8 md:px-16 py-5"
-        style={{ borderBottom: `1px solid ${NAVY}18` }}
+        className="w-full flex items-center justify-between px-8 md:px-16 py-5 sticky top-0 z-30"
+        style={{ borderBottom: `1px solid ${NAVY}18`, background: OFFWHITE }}
       >
         <div className="flex items-center gap-3">
           <div
             className="w-6 h-6 flex-shrink-0"
-            style={{ background: NAVY }}
+            style={{ background: NAVY, borderRadius: "6px" }}
           />
           <span
             className="text-[13px] tracking-[0.2em] uppercase font-semibold"
@@ -55,7 +54,7 @@ export default function LandingPage({
             style={{ fontFamily: "Space Mono, monospace", color: RED }}
           >
             <svg width="7" height="7" viewBox="0 0 7 7" fill="none">
-              <rect x="0.5" y="0.5" width="6" height="6" fill={RED} />
+              <rect x="0.5" y="0.5" width="6" height="6" fill={RED} rx="2" />
             </svg>
             Admin
           </button>
@@ -67,6 +66,7 @@ export default function LandingPage({
             border: `1px solid ${NAVY}`,
             color: NAVY,
             fontFamily: "Inter, sans-serif",
+            borderRadius: "10px",
           }}
         >
           Entrar
@@ -110,7 +110,7 @@ export default function LandingPage({
               <button
                 onClick={onSignIn}
                 className="inline-flex items-center gap-4 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-semibold transition-all group"
-                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
@@ -122,7 +122,7 @@ export default function LandingPage({
               <button
                 onClick={() => onNavigate({ view: "projects" })}
                 className="inline-flex items-center gap-2 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-medium transition-opacity hover:opacity-70"
-                style={{ border: `1px solid ${NAVY}44`, color: NAVY, fontFamily: "Inter, sans-serif" }}
+                style={{ border: `1px solid ${NAVY}44`, color: NAVY, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
               >
                 Explorar Projetos
               </button>
@@ -224,21 +224,21 @@ export default function LandingPage({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredStudents.map((student, i) => (
             <div
               key={i}
               className="group p-6 transition-all cursor-pointer"
               style={{
-                borderTop: `1px solid ${NAVY}18`,
-                borderLeft: i % 3 !== 0 ? `1px solid ${NAVY}18` : "none",
-                borderRight: "none",
+                border: `1px solid ${NAVY}18`,
+                borderRadius: "16px",
+                background: "#ffffff",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.background = `${NAVY}05`;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.background = "transparent";
+                (e.currentTarget as HTMLDivElement).style.background = "#ffffff";
               }}
             >
               <div className="flex items-start justify-between mb-4">
@@ -249,6 +249,7 @@ export default function LandingPage({
                     color: NAVY,
                     border: `1px solid ${NAVY}25`,
                     opacity: 0.6,
+                    borderRadius: "6px"
                   }}
                 >
                   {student.tag}
@@ -297,18 +298,13 @@ export default function LandingPage({
               />
             </div>
           ))}
-          {/* Bottom border row */}
-          <div
-            className="col-span-1 md:col-span-2 lg:col-span-3"
-            style={{ borderTop: `1px solid ${NAVY}18` }}
-          />
         </div>
       </section>
 
       {/* ── CTA Banner ── */}
       <section
         className="mx-8 md:mx-16 mb-20"
-        style={{ background: NAVY }}
+        style={{ background: NAVY, borderRadius: "20px", overflow: "hidden" }}
       >
         <div className="max-w-screen-xl mx-auto px-8 md:px-16 py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
@@ -329,7 +325,7 @@ export default function LandingPage({
           <button
             onClick={onSignIn}
             className="flex-shrink-0 flex items-center gap-4 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-semibold transition-all"
-            style={{ background: OFFWHITE, color: NAVY, fontFamily: "Inter, sans-serif" }}
+            style={{ background: OFFWHITE, color: NAVY, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
@@ -347,7 +343,7 @@ export default function LandingPage({
         style={{ borderTop: `1px solid ${NAVY}15` }}
       >
         <div className="flex items-center gap-3">
-          <div className="w-4 h-4" style={{ background: NAVY }} />
+          <div className="w-4 h-4" style={{ background: NAVY, borderRadius: "4px" }} />
           <span
             className="text-[11px] tracking-[0.2em] uppercase"
             style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}

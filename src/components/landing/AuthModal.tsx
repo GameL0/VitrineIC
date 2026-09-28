@@ -25,8 +25,8 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        className="relative w-full max-w-lg bg-[#F5F4F0]"
-        style={{ border: `1.5px solid ${RED}`, outline: `1px solid ${RED}`, outlineOffset: "3px" }}
+        className="relative w-full max-w-lg"
+        style={{ background: OFFWHITE, border: `1.5px solid ${RED}`, borderRadius: "20px", overflow: "hidden" }}
       >
         {/* Header bar */}
         <div
@@ -54,10 +54,7 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
 
         {/* Toggle */}
         <div className="px-8 pt-7 pb-0">
-          <div
-            className="flex w-full"
-            style={{ border: `1px solid ${NAVY}`, position: "relative" }}
-          >
+          <div className="flex w-full gap-3">
             <button
               onClick={() => setRole("student")}
               className="flex-1 py-3 text-[11px] tracking-[0.15em] uppercase font-medium transition-all"
@@ -65,7 +62,8 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
                 fontFamily: "Inter, sans-serif",
                 background: role === "student" ? NAVY : "transparent",
                 color: role === "student" ? OFFWHITE : NAVY,
-                borderRight: `1px solid ${NAVY}`,
+                border: `1px solid ${NAVY}`,
+                borderRadius: "10px",
               }}
             >
               Sou Estudante
@@ -77,28 +75,14 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
                 fontFamily: "Inter, sans-serif",
                 background: role === "company" ? NAVY : "transparent",
                 color: role === "company" ? OFFWHITE : NAVY,
+                border: `1px solid ${NAVY}`,
+                borderRadius: "10px",
               }}
             >
               Sou Empresa/Solicitante
             </button>
           </div>
-          {/* Red accent underline on active */}
-          <div className="flex w-full" style={{ height: "2px" }}>
-            <div
-              style={{
-                flex: 1,
-                background: role === "student" ? RED : "transparent",
-                transition: "background 0.2s",
-              }}
-            />
-            <div
-              style={{
-                flex: 1,
-                background: role === "company" ? RED : "transparent",
-                transition: "background 0.2s",
-              }}
-            />
-          </div>
+
         </div>
 
         {/* Form area */}

@@ -147,7 +147,7 @@ export function ConfirmModal({
                 fontFamily: "Space Mono, monospace",
                 color: NAVY,
                 border: `1px solid ${NAVY}30`,
-                borderRadius: 0,
+                borderRadius: "8px",
                 background: "transparent",
                 resize: "none",
               }}

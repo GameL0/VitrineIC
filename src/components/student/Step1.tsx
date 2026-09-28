@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Input, Label, Rule, Tag, Select } from "./ui";
+import { Input, Label, Rule, Tag, Select, MultiSelect } from "./ui";
 import { COURSES, INSTITUTION } from "@/data/institution";
 import { NAVY } from "@/styles/tokens";
 
@@ -16,13 +16,6 @@ export function Step1({
     "Segurança da Informação", "Banco de Dados", "Computação Gráfica",
     "Sistemas Embarcados", "Bioinformática", "HCI & Design",
   ];
-  const toggleInterest = (item: string) => {
-    const curr: string[] = data.interests || [];
-    setData({
-      ...data,
-      interests: curr.includes(item) ? curr.filter((x: string) => x !== item) : [...curr, item],
-    });
-  };
 
   return (
     <div>
@@ -43,7 +36,7 @@ export function Step1({
           <button
             onClick={() => fileRef.current?.click()}
             className="w-full aspect-square flex flex-col items-center justify-center gap-3 transition-all"
-            style={{ border: `1px dashed ${NAVY}35` }}
+            style={{ border: `1px dashed ${NAVY}35`, borderRadius: "12px" }}
             onMouseEnter={(e) => (e.currentTarget.style.borderColor = NAVY)}
             onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${NAVY}35`)}
           >
@@ -51,7 +44,7 @@ export function Step1({
               <img
                 src={data.photo}
                 alt="Foto"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-xl"
               />
             ) : (
               <>
@@ -80,20 +73,28 @@ export function Step1({
               onChange={(v) => setData({ ...data, name: v })}
             />
             <Input
-              label="Semestre atual"
-              placeholder="4º semestre"
+              label="Matrícula"
+              placeholder="12345678"
               mono
-              value={data.semester || ""}
-              onChange={(v) => setData({ ...data, semester: v })}
+              value={data.matricula || ""}
+              onChange={(v) => setData({ ...data, matricula: v })}
             />
           </div>
           <div className="grid md:grid-cols-2 gap-5">
+            <Select
+              label="Semestre atual"
+              options={Array.from({ length: 14 }, (_, i) => `${i + 1}º semestre`)}
+              value={data.semester || ""}
+              onChange={(v) => setData({ ...data, semester: v })}
+            />
             <Select
               label="Curso"
               options={COURSES}
               value={data.course || ""}
               onChange={(v) => setData({ ...data, course: v })}
             />
+          </div>
+          <div className="grid md:grid-cols-1 gap-5">
             <Input
               label="E-mail institucional"
               type="email"
@@ -117,21 +118,12 @@ export function Step1({
       <Rule />
 
       <div>
-        <Label>Áreas de interesse</Label>
-        <p className="text-[11px] mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.4 }}>
-          Selecione todas que se aplicam
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {interests.map((item) => (
-            <Tag
-              key={item}
-              active={(data.interests || []).includes(item)}
-              onClick={() => toggleInterest(item)}
-            >
-              {item}
-            </Tag>
-          ))}
-        </div>
+        <MultiSelect
+          label="Áreas de interesse"
+          options={interests}
+          value={data.interests || []}
+          onChange={(v) => setData({ ...data, interests: v })}
+        />
       </div>
     </div>
   );

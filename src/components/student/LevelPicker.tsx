@@ -32,7 +32,7 @@ export function LevelPicker({
       role="radiogroup"
       aria-label={`Proficiência em ${name}`}
       className="flex"
-      style={{ border: `1px solid ${NAVY}25` }}
+      style={{ border: `1px solid ${NAVY}60`, borderRadius: "8px", overflow: "hidden" }}
       onKeyDown={(e) => {
         if (e.key === "ArrowRight" || e.key === "ArrowUp") {
           e.preventDefault();
@@ -56,14 +56,14 @@ export function LevelPicker({
             tabIndex={active ? 0 : -1}
             title={labels[step - 1]}
             onClick={() => onChange(step)}
-            className="px-2.5 py-1.5 text-[9px] tracking-[0.12em] uppercase transition-all"
+            className="px-2.5 py-1.5 text-[9px] tracking-[0.12em] uppercase transition-all font-medium"
             style={{
               fontFamily: MONO,
               minWidth: "42px",
-              borderLeft: step > 1 ? `1px solid ${NAVY}18` : "none",
-              background: active ? NAVY : filled ? `${NAVY}0E` : "transparent",
+              borderLeft: step > 1 ? `1px solid ${NAVY}40` : "none",
+              background: active ? NAVY : filled ? `${NAVY}15` : "transparent",
               color: active ? OFFWHITE : NAVY,
-              opacity: active ? 1 : filled ? 0.8 : 0.45,
+              opacity: active ? 1 : filled ? 0.9 : 0.6,
             }}
           >
             {short[step]}

@@ -28,7 +28,7 @@ export function PublicNav({
       style={{ background: OFFWHITE, borderBottom: `1px solid ${NAVY}15` }}
     >
       <button onClick={onHome} className="flex items-center gap-3">
-        <div className="w-5 h-5 flex-shrink-0" style={{ background: NAVY }} />
+        <div className="w-5 h-5 flex-shrink-0" style={{ background: NAVY, borderRadius: "6px" }} />
         <span
           className="text-[12px] tracking-[0.2em] uppercase font-semibold"
           style={{ fontFamily: SANS, color: NAVY }}
@@ -47,7 +47,8 @@ export function PublicNav({
               fontFamily: SANS,
               color: NAVY,
               background: view === item.id ? `${NAVY}08` : "transparent",
-              borderBottom: view === item.id ? `2px solid ${RED}` : "2px solid transparent",
+              borderRadius: "10px",
+              fontWeight: view === item.id ? 600 : 400
             }}
           >
             {item.label}
@@ -58,7 +59,7 @@ export function PublicNav({
       <button
         onClick={onSignIn}
         className="px-5 py-2 text-[10px] tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-80"
-        style={{ border: `1px solid ${NAVY}`, color: NAVY, fontFamily: SANS }}
+        style={{ border: `1px solid ${NAVY}`, color: NAVY, fontFamily: SANS, borderRadius: "10px" }}
       >
         Entrar
       </button>

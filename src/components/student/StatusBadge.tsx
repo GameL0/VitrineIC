@@ -1,27 +1,58 @@
-import { STATUS_CONFIG } from "@/data/projects";
 import { NAVY, RED } from "@/styles/tokens";
 
+export type ProjectPhase = "idealização" | "codificação" | "revisão" | "publicado";
+
 export function StatusBadge({ status }: { status: string }) {
-  const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.ideation;
-  const size = 8;
+  const normalized = status.toLowerCase() as ProjectPhase;
+
+  let icon = null;
+  let label = status;
+
+  switch (normalized) {
+    case "idealização":
+      icon = (
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="6" cy="6" r="4.5" stroke={NAVY} strokeWidth="1.5" />
+        </svg>
+      );
+      break;
+    case "codificação":
+      icon = (
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <rect x="2" y="2" width="8" height="8" fill={RED} />
+        </svg>
+      );
+      break;
+    case "revisão":
+      icon = (
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M6 2L10.5 9.5H1.5L6 2Z" stroke={NAVY} strokeWidth="1.5" />
+        </svg>
+      );
+      break;
+    case "publicado":
+      icon = (
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <rect x="2" y="2" width="8" height="8" fill={NAVY} />
+        </svg>
+      );
+      break;
+    default:
+      icon = (
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="6" cy="6" r="4.5" stroke={NAVY} strokeWidth="1.5" />
+        </svg>
+      );
+  }
+
   return (
     <div className="flex items-center gap-2">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {cfg.shape === "circle" && (
-          <circle cx={size / 2} cy={size / 2} r={size / 2 - 0.5} fill={NAVY} opacity={0.5} />
-        )}
-        {cfg.shape === "square" && (
-          <rect x={0.5} y={0.5} width={size - 1} height={size - 1} fill={RED} opacity={0.8} />
-        )}
-        {cfg.shape === "triangle" && (
-          <polygon points={`${size / 2},0.5 ${size - 0.5},${size - 0.5} 0.5,${size - 0.5}`} fill={NAVY} opacity={0.35} />
-        )}
-      </svg>
+      {icon}
       <span
-        className="text-[9px] tracking-[0.16em] uppercase"
-        style={{ fontFamily: "Space Mono, monospace", color: cfg.shape === "square" && status === "coding" ? RED : NAVY, opacity: cfg.shape === "square" && status === "coding" ? 0.85 : 0.55 }}
+        className="text-[11px] uppercase tracking-widest"
+        style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
       >
-        {cfg.label}
+        {label}
       </span>
     </div>
   );

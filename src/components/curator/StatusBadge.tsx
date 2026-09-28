@@ -10,7 +10,7 @@ export const DEMAND_STATUS: Record<DemandStatus, { label: string; color: string;
   matched:    { label: "Matched",      color: NAVY,         shape: "square"  },
 };
 
-export const KANBAN_COLS: DemandStatus[] = ["nova", "em_analise", "aprovada", "matched"];
+export const KANBAN_COLS: DemandStatus[] = ["nova", "em_analise", "aprovada", "rejeitada", "matched"];
 
 export function StatusBadge({ status, size = 8 }: { status: DemandStatus; size?: number }) {
   const cfg = DEMAND_STATUS[status];

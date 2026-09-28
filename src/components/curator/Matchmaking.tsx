@@ -23,13 +23,13 @@ export function StudentMatchCard({
   return (
     <div
       className="transition-all cursor-pointer"
-      style={{ border: `1px solid ${score >= 60 ? `${NAVY}30` : `${NAVY}15`}` }}
+      style={{ border: `1px solid ${score >= 60 ? `${NAVY}30` : `${NAVY}15`}`, borderRadius: "16px", overflow: "hidden" }}
     >
       <div className="px-5 py-4">
         <div className="flex items-start gap-4">
           <div
             className="w-10 h-10 flex items-center justify-center flex-shrink-0"
-            style={{ background: score >= 60 ? NAVY : `${NAVY}30` }}
+            style={{ background: score >= 60 ? NAVY : `${NAVY}30`, borderRadius: "10px" }}
           >
             <span className="text-[11px]" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: OFFWHITE }}>
               {student.initials}
@@ -48,6 +48,7 @@ export function StudentMatchCard({
                   border: `1px solid ${score >= 70 ? RED : `${NAVY}30`}`,
                   background: score >= 70 ? `${RED}08` : "transparent",
                   opacity: score >= 70 ? 1 : 0.5,
+                  borderRadius: "6px"
                 }}
               >
                 {score}% match
@@ -73,7 +74,7 @@ export function StudentMatchCard({
                 </svg>
                 <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
                   {student.languages
-                    .map((l) => `${l.name} · ${LANGUAGE_LEVELS[l.level - 1]}`)
+                    .map((l) => `${l.name} · C:${LANGUAGE_LEVELS[l.conversacao - 1][0]} L:${LANGUAGE_LEVELS[l.leitura - 1][0]}`)
                     .join("   ")}
                 </span>
               </div>
@@ -169,14 +170,14 @@ export function Matchmaking({
           {demand.id} · {demand.company}
         </p>
 
-        <div className="flex flex-col gap-0" style={{ border: `1px solid ${NAVY}15` }}>
+        <div className="flex flex-col gap-0" style={{ border: `1px solid ${NAVY}15`, borderRadius: "12px", overflow: "hidden" }}>
           {[
             { label: "Área", val: demand.area },
             { label: "Escopo", val: demand.scope },
             { label: "Prazo", val: demand.deadline },
             { label: "Enviado em", val: demand.submitted },
           ].map((r, i, arr) => (
-            <div key={r.label} className="grid px-4 py-3" style={{ gridTemplateColumns: "100px 1fr", borderBottom: i < arr.length - 1 ? `1px solid ${NAVY}08` : "none" }}>
+            <div key={r.label} className="grid px-4 py-3" style={{ gridTemplateColumns: "100px 1fr", borderBottom: i < arr.length - 1 ? `1px solid ${NAVY}08` : "none", background: "#ffffff" }}>
               <Label><span style={{ display: "inline" }}>{r.label}</span></Label>
               <Mono dim>{r.val}</Mono>
             </div>
@@ -201,7 +202,7 @@ export function Matchmaking({
 
         <div
           className="px-4 py-4 flex items-start gap-3"
-          style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03` }}
+          style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03`, borderRadius: "12px" }}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY, opacity: 0.25, flexShrink: 0, marginTop: 2 }}>
             <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1" />
@@ -237,7 +238,7 @@ export function Matchmaking({
               border: `1px solid ${NAVY}30`,
               background: "transparent",
               color: NAVY,
-              borderRadius: 0,
+              borderRadius: "8px",
             }}
             onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
             onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}30`)}

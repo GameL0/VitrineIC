@@ -10,9 +10,10 @@ export function NavBar({
   onBack: () => void;
 }) {
   const navItems = [
-    { id: "dashboard", label: "Demandas" },
+    { id: "available_students", label: "Estudantes Disponíveis" },
+    { id: "dashboard", label: "Minhas Demandas" },
     { id: "new", label: "Nova Demanda" },
-    { id: "matches", label: "Matches" },
+    { id: "profile", label: "Meu Perfil" },
   ];
   return (
     <nav
@@ -44,7 +45,8 @@ export function NavBar({
               fontFamily: "Inter, sans-serif",
               color: NAVY,
               background: view === item.id ? `${NAVY}08` : "transparent",
-              borderBottom: view === item.id ? `2px solid ${RED}` : "2px solid transparent",
+              borderRadius: "10px",
+              fontWeight: view === item.id ? 600 : 400
             }}
           >
             {item.label}

@@ -1,9 +1,28 @@
 import { useRef } from "react";
-import { Input, Label } from "./ui";
-import { NAVY } from "@/styles/tokens";
+import { LanguagePicker } from "./LanguagePicker";
+import { Label } from "./ui";
+import { NAVY, RED } from "@/styles/tokens";
+import type { StudentLanguage } from "@/types";
 
-export function Step3({ data, setData }: { data: any; setData: (d: any) => void }) {
+export function Step3({
+  data,
+  setData,
+}: {
+  data: any;
+  setData: (d: any) => void;
+}) {
   const fileRef = useRef<HTMLInputElement>(null);
+  const languages: StudentLanguage[] = data.languages || [];
+  const certsLang = data.certificadosLang || [];
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []).map((f) => f.name);
+    setData({ ...data, certificadosLang: [...certsLang, ...files] });
+  };
+
+  const removeFile = (idx: number) => {
+    setData({ ...data, certificadosLang: certsLang.filter((_: any, i: number) => i !== idx) });
+  };
 
   return (
     <div>
@@ -11,55 +30,36 @@ export function Step3({ data, setData }: { data: any; setData: (d: any) => void 
         className="text-3xl mb-2"
         style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
       >
-        Portfólio
+        Competências de Idiomas
       </h2>
-      <p className="text-sm mb-10" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
-        Vincule seus repositórios e trabalhos anteriores.
+      <p
+        className="text-sm mb-10"
+        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 300 }}
+      >
+        Adicione os idiomas que você domina e seus respectivos níveis de proficiência.
       </p>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="flex flex-col gap-5">
-          <Input
-            label="GitHub"
-            placeholder="github.com/usuario"
-            mono
-            value={data.github || ""}
-            onChange={(v) => setData({ ...data, github: v })}
-          />
-          <Input
-            label="LinkedIn"
-            placeholder="linkedin.com/in/usuario"
-            mono
-            value={data.linkedin || ""}
-            onChange={(v) => setData({ ...data, linkedin: v })}
-          />
-          <Input
-            label="Site / Portfólio"
-            placeholder="seusite.dev"
-            mono
-            value={data.site || ""}
-            onChange={(v) => setData({ ...data, site: v })}
-          />
-          <Input
-            label="Lattes"
-            placeholder="lattes.cnpq.br/xxxxxxxx"
-            mono
-            value={data.lattes || ""}
-            onChange={(v) => setData({ ...data, lattes: v })}
-          />
-        </div>
+      <LanguagePicker
+        value={languages}
+        onChange={(l) => setData({ ...data, languages: l })}
+      />
 
-        <div>
-          <Label>Trabalhos anteriores</Label>
+      <div className="max-w-3xl mt-10">
+        <Label>Certificados (Opcional)</Label>
+        <p className="text-[11px] mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 500 }}>
+          Armazene aqui seus certificados de idiomas (ex: TOEFL, IELTS) em PDF.
+        </p>
+        
+        {certsLang.length > 0 && (
           <div className="flex flex-col gap-2 mb-4">
-            {(data.docs || []).map((d: string, i: number) => (
+            {certsLang.map((d: string, i: number) => (
               <div
                 key={i}
                 className="flex items-center justify-between px-4 py-3"
-                style={{ border: `1px solid ${NAVY}20` }}
+                style={{ border: `1px solid ${NAVY}40`, borderRadius: "8px" }}
               >
                 <div className="flex items-center gap-3">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY, opacity: 0.5 }}>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY, opacity: 0.8 }}>
                     <rect x="1.5" y="1" width="9" height="12" rx="0.5" stroke="currentColor" strokeWidth="1.1" />
                     <path d="M4 4.5h5M4 7h5M4 9.5h3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
                   </svg>
@@ -71,11 +71,9 @@ export function Step3({ data, setData }: { data: any; setData: (d: any) => void 
                   </span>
                 </div>
                 <button
-                  onClick={() =>
-                    setData({ ...data, docs: (data.docs || []).filter((_: any, j: number) => j !== i) })
-                  }
-                  style={{ color: NAVY, opacity: 0.3 }}
-                  className="hover:opacity-70 transition-opacity"
+                  onClick={() => removeFile(i)}
+                  style={{ color: NAVY, opacity: 0.6 }}
+                  className="hover:opacity-100 transition-opacity"
                 >
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                     <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -84,43 +82,34 @@ export function Step3({ data, setData }: { data: any; setData: (d: any) => void 
               </div>
             ))}
           </div>
+        )}
 
-          <button
-            onClick={() => fileRef.current?.click()}
-            className="w-full py-8 flex flex-col items-center gap-3 transition-all"
-            style={{ border: `1px dashed ${NAVY}30` }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = NAVY)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${NAVY}30`)}
+        <button
+          onClick={() => fileRef.current?.click()}
+          className="w-full py-6 flex flex-col items-center gap-3 transition-all"
+          style={{ border: `2px dashed ${NAVY}50`, borderRadius: "8px" }}
+          onMouseEnter={(e) => (e.currentTarget.style.borderColor = NAVY)}
+          onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${NAVY}50`)}
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ color: NAVY, opacity: 0.6 }}>
+            <path d="M11 14V4M7 8l4-4 4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            <path d="M4 17h14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+          <span
+            className="text-[10px] tracking-[0.14em] uppercase font-semibold"
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.8 }}
           >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
-              <path d="M11 14V4M7 8l4-4 4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-              <path d="M4 17h14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
-            <span
-              className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
-            >
-              Adicionar documento
-            </span>
-            <span
-              className="text-[10px]"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
-            >
-              PDF, DOCX, ZIP · máx. 20 MB
-            </span>
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept=".pdf,.docx,.zip"
-            multiple
-            className="hidden"
-            onChange={(e) => {
-              const files = Array.from(e.target.files || []).map((f) => f.name);
-              setData({ ...data, docs: [...(data.docs || []), ...files] });
-            }}
-          />
-        </div>
+            Anexar certificado
+          </span>
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept=".pdf"
+          multiple
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </div>
     </div>
   );

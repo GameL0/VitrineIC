@@ -51,6 +51,7 @@ export function SkillTag({
         color: highlight ? RED : NAVY,
         background: highlight ? `${RED}08` : "transparent",
         opacity: highlight ? 1 : 0.65,
+        borderRadius: "6px",
       }}
     >
       {children}

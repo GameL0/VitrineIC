@@ -1,4 +1,4 @@
 /** Tokens da identidade visual do VitrineIC (espelham o bloco @theme de index.css). */
-export const NAVY = "#1C2B4A";
+export const NAVY = "#0d1321";
 export const RED = "#c1121f";
-export const OFFWHITE = "#F5F4F0";
+export const OFFWHITE = "#edede9";

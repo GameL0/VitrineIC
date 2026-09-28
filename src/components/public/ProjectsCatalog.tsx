@@ -78,11 +78,12 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
               onClick={() => onOpenProject(project.id)}
               className="group text-left p-6 transition-all"
               style={{
-                borderTop: `1px solid ${NAVY}18`,
-                borderLeft: i % 3 !== 0 ? `1px solid ${NAVY}18` : "none",
+                border: `1px solid ${NAVY}18`,
+                borderRadius: "16px",
+                background: "#ffffff",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}05`)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#ffffff")}
             >
               <div className="flex items-start justify-between mb-4">
                 <span

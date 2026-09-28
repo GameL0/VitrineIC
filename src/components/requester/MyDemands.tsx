@@ -4,7 +4,7 @@ import { Label } from "./ui";
 import { DEMANDS } from "@/data/requester-demands";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
-export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMatch: () => void }) {
+export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMatch: () => void }) {
   const [selected, setSelected] = useState<string | null>(null);
 
   const activeCount = DEMANDS.filter((d) => d.status !== "concluido" && d.status !== "cancelado").length;
@@ -54,7 +54,7 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
           <button
             onClick={onNew}
             className="flex items-center gap-3 px-6 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-85"
-            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
           >
             + Nova Demanda
           </button>
@@ -62,7 +62,7 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
       </div>
 
       {/* Table */}
-      <div style={{ border: `1px solid ${NAVY}18` }}>
+      <div style={{ border: `1px solid ${NAVY}18`, borderRadius: "16px", overflow: "hidden" }}>
         {/* Header row */}
         <div
           className="hidden md:grid px-6 py-3"
@@ -158,33 +158,32 @@ export function Dashboard({ onNew, onViewMatch }: { onNew: () => void; onViewMat
             {/* Expanded detail */}
             {selected === d.id && (
               <div
-                className="px-6 pb-5 grid md:grid-cols-4 gap-4"
+                className="px-6 py-5"
                 style={{ borderTop: `1px solid ${NAVY}10` }}
               >
-                <div className="md:col-span-1">
-                  <Label>Registrado em</Label>
-                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>{d.date}</p>
+                <div className="flex items-center justify-between mb-4">
+                  <Label>Solicitações Enviadas</Label>
                 </div>
-                <div className="md:col-span-1">
-                  <Label>Prazo final</Label>
-                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>{d.deadline}</p>
-                </div>
-                <div className="md:col-span-1">
-                  <Label>Candidatos</Label>
-                  <p className="text-[12px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>{d.applicants}</p>
-                </div>
-                <div className="md:col-span-1 flex items-end">
-                  <button
-                    className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-75"
-                    style={{
-                      fontFamily: "Space Mono, monospace",
-                      color: NAVY,
-                      borderBottom: `1px solid ${NAVY}40`,
-                      opacity: 0.45,
-                    }}
-                  >
-                    Editar demanda
-                  </button>
+                
+                <div className="flex flex-col gap-3">
+                  {[
+                    { name: "João Pereira", status: "Aceito", color: "#16a34a" },
+                    { name: "Maria Clara", status: "Em aguardo", color: "#eab308" },
+                    { name: "Carlos Silva", status: "Recusado", color: "#dc2626" }
+                  ].slice(0, d.applicants > 0 ? (d.applicants > 3 ? 3 : d.applicants) : 0).map((student, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-3" style={{ background: OFFWHITE, borderRadius: "8px", border: `1px solid ${NAVY}15` }}>
+                      <span className="text-[13px] font-medium" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>{student.name}</span>
+                      <span className="px-2 py-1 text-[10px] uppercase font-bold tracking-widest rounded-[6px]" style={{ fontFamily: "Space Mono, monospace", background: `${student.color}15`, color: student.color, border: `1px solid ${student.color}40` }}>
+                        {student.status}
+                      </span>
+                    </div>
+                  ))}
+
+                  {d.applicants === 0 && (
+                     <p className="text-[12px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}>
+                       Nenhuma solicitação enviada para esta demanda ainda.
+                     </p>
+                  )}
                 </div>
               </div>
             )}

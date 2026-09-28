@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ConfirmModal } from "./ConfirmModal";
 import { MatchConfirmed } from "./MatchConfirmed";
 import { Matchmaking } from "./Matchmaking";
+import { MatchmakingHub } from "./MatchmakingHub";
 import { NavBar } from "./NavBar";
 import { Triage } from "./Triage";
 import { Mono } from "./ui";
@@ -12,7 +13,7 @@ import type { Demand } from "@/types";
 
 export default function CuratorArea({ onBack }: { onBack: () => void }) {
   const [demands, setDemands] = useState<Demand[]>(DEMANDS);
-  const [view, setView] = useState<"triage" | "matchmaking" | "confirm" | "confirmed">("triage");
+  const [view, setView] = useState<"triage" | "matchmaking_hub" | "matchmaking" | "confirm" | "confirmed">("triage");
   const [selectedDemand, setSelectedDemand] = useState<Demand | null>(null);
   const [selectedStudent, setSelectedStudent] = useState<typeof STUDENTS[0] | null>(null);
 
@@ -41,7 +42,13 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
         <Triage
           demands={demands}
           setDemands={setDemands}
-          onMatch={goToMatch}
+        />
+      )}
+
+      {view === "matchmaking_hub" && (
+        <MatchmakingHub
+          demands={demands}
+          onSelect={goToMatch}
         />
       )}
 
@@ -54,14 +61,14 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
           >
             <div className="flex items-center gap-3">
               <button
-                onClick={() => setView("triage")}
+                onClick={() => setView("matchmaking_hub")}
                 className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-40"
                 style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
               >
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M8 5H2M4.5 2.5L2 5l2.5 2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
                 </svg>
-                Triagem
+                Análise de Matches
               </button>
               <span style={{ color: NAVY, opacity: 0.2, fontSize: 12 }}>/</span>
               <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>
@@ -87,7 +94,7 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
         <MatchConfirmed
           demand={selectedDemand}
           student={selectedStudent}
-          onBack={() => setView("triage")}
+          onBack={() => setView("matchmaking_hub")}
         />
       )}
 

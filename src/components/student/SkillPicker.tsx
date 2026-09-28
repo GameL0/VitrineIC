@@ -130,7 +130,7 @@ export function SkillPicker({
       <div
         onClick={() => inputRef.current?.focus()}
         className="flex flex-wrap items-center gap-1.5 px-2.5 py-2 mt-1.5 cursor-text"
-        style={{ border: `1px solid ${NAVY}44`, minHeight: "48px" }}
+        style={{ border: `1px solid ${NAVY}60`, minHeight: "48px", borderRadius: "8px" }}
       >
         {value.map((s) => (
           <span
@@ -140,9 +140,8 @@ export function SkillPicker({
               fontFamily: MONO,
               fontSize: "11px",
               background: isCustomSkill(s.name) ? `${RED}0F` : `${NAVY}0C`,
-              border: `1px solid ${isCustomSkill(s.name) ? `${RED}55` : `${NAVY}20`}`,
-              color: NAVY,
-            }}
+              border: `1px solid ${isCustomSkill(s.name) ? `${RED}55` : `${NAVY}40`}`,
+              color: NAVY, borderRadius: "6px" }}
           >
             {s.name}
             <button
@@ -179,7 +178,7 @@ export function SkillPicker({
 
       {/* ── Sugestões da busca: no máximo oito, sem rolagem ── */}
       {query && (results.length > 0 || canAddCustom) && (
-        <div style={{ border: `1px solid ${NAVY}25`, borderTop: "none" }}>
+        <div style={{ border: `1px solid ${NAVY}60`, borderTop: "none", borderRadius: "0 0 8px 8px", overflow: "hidden" }}>
           {results.map((s, i) => (
             <button
               key={s.name}
@@ -230,7 +229,7 @@ export function SkillPicker({
         <div className="mt-5">
           <p
             className="text-[9px] tracking-[0.18em] uppercase mb-2.5"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.7, borderRadius: "6px" }}
           >
             {course ? `Comuns em ${course}` : "Mais declaradas"}
           </p>
@@ -241,13 +240,13 @@ export function SkillPicker({
                 type="button"
                 onClick={() => add(name)}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] tracking-[0.1em] uppercase transition-all"
-                style={{ fontFamily: MONO, border: `1px solid ${NAVY}30`, color: NAVY, opacity: 0.7 }}
+                style={{ fontFamily: MONO, border: `1px solid ${NAVY}60`, color: NAVY, opacity: 0.7 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = NAVY;
                   e.currentTarget.style.opacity = "1";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = `${NAVY}30`;
+                  e.currentTarget.style.borderColor = `${NAVY}60`;
                   e.currentTarget.style.opacity = "0.7";
                 }}
               >
@@ -266,12 +265,12 @@ export function SkillPicker({
             <Label>Nível de proficiência</Label>
             <span
               className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: MONO, color: NAVY, opacity: 0.7 }}
             >
               {value.length} {value.length === 1 ? "competência" : "competências"}
             </span>
           </div>
-          <div style={{ border: `1px solid ${NAVY}15` }}>
+          <div style={{ border: `1px solid ${NAVY}40`, borderRadius: "8px", overflow: "hidden" }}>
             {value.map((s, i) => (
               <div
                 key={s.name}
@@ -336,10 +335,8 @@ export function SkillPicker({
                         className="px-2.5 py-1 text-[10px] tracking-[0.1em] uppercase transition-all"
                         style={{
                           fontFamily: MONO,
-                          border: `1px solid ${NAVY}25`,
-                          color: NAVY,
-                          opacity: 0.6,
-                        }}
+                          border: `1px solid ${NAVY}60`,
+                          color: NAVY, opacity: 0.6, borderRadius: "6px" }}
                         onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
                         onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
                       >
@@ -354,7 +351,7 @@ export function SkillPicker({
         )}
       </div>
 
-      <p className="text-[10px] mt-6" style={{ fontFamily: SANS, color: NAVY, opacity: 0.4 }}>
+      <p className="text-[10px] mt-6" style={{ fontFamily: SANS, color: NAVY, opacity: 0.7 }}>
         Não achou? Digite o nome e pressione Enter — a competência entra marcada
         como fora do catálogo. Backspace remove a última.
       </p>

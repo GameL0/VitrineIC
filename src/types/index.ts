@@ -34,7 +34,9 @@ export interface StudentSkill {
 
 export interface StudentLanguage {
   name: string;
-  level: SkillLevel;
+  conversacao: SkillLevel;
+  leitura: SkillLevel;
+  escuta: SkillLevel;
 }
 
 /** Estágio de um projeto na vitrine do estudante. */
@@ -54,12 +56,14 @@ export interface Student {
   id: string;
   name: string;
   initials: string;
+  matricula?: string;
   course: Course;
   semester: string;
   gpa: string;
   bio: string;
   interests: string[];
   skills: string[];
+  certificados?: string;
   languages: StudentLanguage[];
   projects: StudentProject[];
   github: string;

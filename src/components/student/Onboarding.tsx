@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
 import { Step3 } from "./Step3";
+import { Step4 } from "./Step4";
 import { StepIndicator } from "./StepIndicator";
 import { NAVY, OFFWHITE } from "@/styles/tokens";
 
@@ -10,7 +11,7 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
   const [formData, setFormData] = useState<any>({});
 
   const next = () => {
-    if (step < 2) setStep(step + 1);
+    if (step < 3) setStep(step + 1);
     else onComplete(formData);
   };
 
@@ -63,6 +64,12 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
               setData={update}
             />
           )}
+          {step === 3 && (
+            <Step4
+              data={formData}
+              setData={update}
+            />
+          )}
         </div>
 
         <div className="flex items-center justify-between mt-12 pt-6" style={{ borderTop: `1px solid ${NAVY}15` }}>
@@ -83,14 +90,14 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
               className="text-[9px] tracking-[0.14em]"
               style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
             >
-              {step + 1} / 3
+              {step + 1} / 4
             </span>
             <button
               onClick={next}
               className="flex items-center gap-3 px-8 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-88"
-              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
             >
-              {step === 2 ? "Concluir" : "Próximo"}
+              {step === 3 ? "Concluir" : "Próximo"}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               </svg>

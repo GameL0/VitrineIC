@@ -4,17 +4,17 @@ export function NavBar({
   view,
   setView,
   onBack,
-  pendingInvites = 0,
+  unreadCount = 0,
 }: {
   view: string;
   setView: (v: string) => void;
   onBack: () => void;
-  pendingInvites?: number;
+  unreadCount?: number;
 }) {
   const navItems = [
-    { id: "dashboard", label: "Dashboard" },
-    { id: "invitations", label: "Convites" },
-    { id: "lab", label: "Laboratório" },
+    { id: "opportunities", label: "Oportunidades" },
+    { id: "projects", label: "Meus Projetos" },
+    { id: "notifications", label: "Notificações" },
     { id: "profile", label: "Perfil" },
   ];
   return (
@@ -23,7 +23,7 @@ export function NavBar({
       style={{ background: OFFWHITE, borderBottom: `1px solid ${NAVY}15` }}
     >
       <div className="flex items-center gap-3">
-        <div className="w-5 h-5 flex-shrink-0" style={{ background: NAVY }} />
+        <div className="w-5 h-5 flex-shrink-0" style={{ background: NAVY, borderRadius: "6px" }} />
         <span
           className="text-[12px] tracking-[0.2em] uppercase font-semibold"
           style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
@@ -31,7 +31,7 @@ export function NavBar({
           VitrineIC
         </span>
         <span
-          className="text-[9px] tracking-[0.18em] uppercase ml-2"
+          className="text-[9px] tracking-[0.18em] uppercase ml-2 hidden md:inline-block"
           style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
         >
           · Área do Estudante
@@ -42,21 +42,22 @@ export function NavBar({
           <button
             key={item.id}
             onClick={() => setView(item.id)}
-            className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all"
+            className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all flex items-center gap-2"
             style={{
               fontFamily: "Inter, sans-serif",
               color: NAVY,
               background: view === item.id ? `${NAVY}08` : "transparent",
-              borderBottom: view === item.id ? `2px solid ${RED}` : "2px solid transparent",
+              borderRadius: "10px",
+              fontWeight: view === item.id ? 600 : 400
             }}
           >
             {item.label}
-            {item.id === "invitations" && pendingInvites > 0 && (
+            {item.id === "notifications" && unreadCount > 0 && (
               <span
-                className="ml-2 px-1.5 py-0.5 text-[8px]"
+                className="px-1.5 py-0.5 text-[8px] rounded-[5px]"
                 style={{ fontFamily: "Space Mono, monospace", background: RED, color: OFFWHITE }}
               >
-                {pendingInvites}
+                {unreadCount}
               </span>
             )}
           </button>
