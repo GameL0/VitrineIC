@@ -83,6 +83,25 @@ produção, `pnpm preview` serve o build e `pnpm typecheck` verifica os tipos.
 Stack: React 19, Vite 8, TypeScript e Tailwind CSS v4. Sem roteador, sem
 estado global e sem dependências de UI.
 
+## Deploy na Railway
+
+É um site estático: a Railway instala, roda o build e serve `dist/`. Nenhuma
+variável de ambiente é necessária — a porta vem de `PORT`, injetada pela
+plataforma.
+
+1. Na Railway, **New Project → Deploy from GitHub repo** e escolha este repo.
+2. Em **Settings → Networking**, clique em *Generate Domain*.
+
+O resto já está no repositório: `railway.json` define build (`pnpm build`) e
+start (`pnpm start`), `.node-version` fixa o Node 22 e `packageManager` fixa o
+pnpm. `pnpm start` serve `dist/` com fallback de SPA.
+
+Para reproduzir o deploy localmente:
+
+```bash
+pnpm build && pnpm start
+```
+
 ## Organização do repositório
 
 ```

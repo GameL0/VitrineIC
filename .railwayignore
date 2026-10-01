@@ -1,0 +1,6 @@
+context/
+docs/
+presentations/
+*.md
+!README.md
+student_notifs.txt
