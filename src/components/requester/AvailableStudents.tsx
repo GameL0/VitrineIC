@@ -52,24 +52,28 @@ function StudentMatchCard({ student, onClick }: { student: any, onClick: () => v
           </div>
           <p
             className="text-[11px] mb-3"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             {student.course} · {student.semester}º Semestre
           </p>
           <div className="flex flex-wrap gap-1.5">
-            {student.skills.slice(0, 5).map((s: any) => (
+            {student.skills.slice(0, 5).map((s: string) => (
               <span
-                key={s.name}
-                className="px-2 py-0.5 text-[9px] tracking-[0.12em] uppercase"
+                key={s}
+                className="px-2 py-1 text-[9px] tracking-[0.1em] uppercase flex items-center gap-1.5"
                 style={{
                   fontFamily: "Space Mono, monospace",
                   color: NAVY,
                   border: `1px solid ${NAVY}22`,
-                  opacity: 0.65,
+                  opacity: 0.75,
                   borderRadius: "6px"
                 }}
               >
-                {s.name}
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                {s}
               </span>
             ))}
             {student.skills.length > 5 && (
@@ -84,7 +88,7 @@ function StudentMatchCard({ student, onClick }: { student: any, onClick: () => v
           <div className="flex flex-col items-end gap-1">
             <span
               className="text-[9px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               Compatibilidade
             </span>
@@ -103,7 +107,7 @@ function StudentMatchCard({ student, onClick }: { student: any, onClick: () => v
           </div>
           <button
             className="text-[9px] tracking-[0.14em] uppercase flex items-center gap-1.5 mt-4 transition-opacity hover:opacity-70"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             Ver perfil completo
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -206,12 +210,12 @@ export function AvailableStudents() {
                 {selectedStudent.bio || "Estudante altamente engajado e em busca de novos desafios em desenvolvimento de software e inteligência artificial."}
               </p>
               <div className="flex items-center gap-2 mt-4">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: NAVY, opacity: 0.5 }}>
                   <rect x="1" y="2" width="7" height="8" rx="0.5" stroke="currentColor" strokeWidth="1" />
                   <path d="M5 1h5v5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                   <path d="M5 7l5-5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                 </svg>
-                <span className="text-[10px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+                <span className="text-[10px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
                   github.com/{selectedStudent.name.split(" ")[0].toLowerCase()}
                 </span>
               </div>
@@ -293,7 +297,7 @@ export function AvailableStudents() {
       <div className="mb-10">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
           Banco de Talentos

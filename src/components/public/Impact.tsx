@@ -53,7 +53,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
       <div className="mb-12">
         <p
           className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
           Atividade Curricular de Extensão · ACE 1
@@ -94,7 +94,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
               </p>
               <p
                 className="text-[10px] tracking-[0.14em] uppercase mb-4"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 {m.label}
               </p>
@@ -103,7 +103,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
               </div>
               <p
                 className="text-[9px] tracking-[0.14em] uppercase mt-2"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 {pct}% da meta ({m.target})
               </p>
@@ -117,7 +117,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
         <div>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Funil da curadoria
@@ -160,7 +160,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
           </div>
           <p
             className="text-[10px] leading-relaxed mt-5"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
           >
             Cada demanda passa por revisão humana antes de virar contato. O funil
             mede quanto do que entra chega a uma conexão efetivada.
@@ -171,7 +171,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
         <div>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Projetos por área
@@ -188,7 +188,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
                   </span>
                   <span
                     className="text-[11px]"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                   >
                     {n}
                   </span>
@@ -203,7 +203,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
           </div>
           <button
             onClick={onOpenProjects}
-            className="text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-45 mt-6"
+            className="text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-50 mt-6"
             style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
           >
             Ver catálogo completo
@@ -214,7 +214,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
       {/* Depoimentos */}
       <p
         className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+        style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
       >
         <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
         Depoimentos
@@ -234,7 +234,7 @@ export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
               </p>
               <p
                 className="text-[10px] tracking-[0.14em] uppercase mt-0.5"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 {t.role}
               </p>

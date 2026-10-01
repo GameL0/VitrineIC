@@ -23,7 +23,7 @@ export function NavBar({
       style={{ background: OFFWHITE, borderBottom: `1px solid ${NAVY}15` }}
     >
       <div className="flex items-center gap-3">
-        <div className="w-5 h-5 flex-shrink-0" style={{ background: NAVY, borderRadius: "6px" }} />
+        <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
         <span
           className="text-[12px] tracking-[0.2em] uppercase font-semibold"
           style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
@@ -32,7 +32,7 @@ export function NavBar({
         </span>
         <span
           className="text-[9px] tracking-[0.18em] uppercase ml-2 hidden md:inline-block"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
         >
           · Área do Estudante
         </span>
@@ -65,7 +65,7 @@ export function NavBar({
       </div>
       <button
         onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-40 flex items-center gap-2"
+        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50 flex items-center gap-2"
         style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

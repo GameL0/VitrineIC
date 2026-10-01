@@ -60,7 +60,7 @@ export function ConnectionEstablished({
         >
           <span
             className="text-[9px] tracking-[0.18em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             Protocolo
           </span>
@@ -74,7 +74,7 @@ export function ConnectionEstablished({
         <div className="p-6" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             Projeto
           </p>
@@ -83,7 +83,7 @@ export function ConnectionEstablished({
           </h2>
           <p
             className="text-[10px] tracking-[0.14em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             {demand.id} · {demand.scope} · prazo {demand.deadline}
           </p>
@@ -103,7 +103,7 @@ export function ConnectionEstablished({
         <div className="p-6" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             Contato liberado
           </p>
@@ -130,7 +130,7 @@ export function ConnectionEstablished({
       <div className="mb-12">
         <p
           className="text-[9px] tracking-[0.2em] uppercase mb-5"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           Próximos passos
         </p>

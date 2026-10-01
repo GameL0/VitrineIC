@@ -80,7 +80,7 @@ export function LanguagePicker({
                 type="button"
                 onClick={() => remove(l.name)}
                 aria-label={`Remover ${l.name}`}
-                className="w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-100 opacity-40 ml-auto sm:ml-4"
+                className="w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-100 opacity-50 ml-auto sm:ml-4"
                 style={{ color: NAVY }}
               >
                 <svg width="12" height="12" viewBox="0 0 10 10" fill="none">

@@ -10,7 +10,7 @@ export function MatchmakingHub({ demands, onSelect }: { demands: Demand[], onSel
       <div className="mb-10">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
           Curadoria Ativa

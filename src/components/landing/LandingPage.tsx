@@ -2,6 +2,7 @@ import { featuredStudents, stats } from "@/data/showcase";
 import { INSTITUTION } from "@/data/institution";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { PublicRoute, PublicView } from "@/components/public/routes";
+import { PublicNav } from "@/components/public/PublicNav";
 
 const NAV_ITEMS: { label: string; view: PublicView }[] = [
   { label: "Projetos", view: "projects" },
@@ -20,58 +21,13 @@ export default function LandingPage({
 }) {
   return (
     <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
-      {/* ── Nav ── */}
-      <nav
-        className="w-full flex items-center justify-between px-8 md:px-16 py-5 sticky top-0 z-30"
-        style={{ borderBottom: `1px solid ${NAVY}18`, background: OFFWHITE }}
-      >
-        <div className="flex items-center gap-3">
-          <div
-            className="w-6 h-6 flex-shrink-0"
-            style={{ background: NAVY, borderRadius: "6px" }}
-          />
-          <span
-            className="text-[13px] tracking-[0.2em] uppercase font-semibold"
-            style={{ fontFamily: "Inter, sans-serif", color: NAVY, letterSpacing: "0.22em" }}
-          >
-            VitrineIC
-          </span>
-        </div>
-        <div className="hidden md:flex items-center gap-8">
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item.label}
-              onClick={() => onNavigate({ view: item.view })}
-              className="text-[11px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50"
-              style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
-            >
-              {item.label}
-            </button>
-          ))}
-          <button
-            onClick={onAdmin}
-            className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-25 flex items-center gap-1.5"
-            style={{ fontFamily: "Space Mono, monospace", color: RED }}
-          >
-            <svg width="7" height="7" viewBox="0 0 7 7" fill="none">
-              <rect x="0.5" y="0.5" width="6" height="6" fill={RED} rx="2" />
-            </svg>
-            Admin
-          </button>
-        </div>
-        <button
-          onClick={onSignIn}
-          className="px-5 py-2 text-[10px] tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-80"
-          style={{
-            border: `1px solid ${NAVY}`,
-            color: NAVY,
-            fontFamily: "Inter, sans-serif",
-            borderRadius: "10px",
-          }}
-        >
-          Entrar
-        </button>
-      </nav>
+      <PublicNav
+        view="home"
+        onHome={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onNavigate={(v) => onNavigate({ view: v })}
+        onSignIn={onSignIn}
+        onAdmin={onAdmin}
+      />
 
       {/* ── Hero ── */}
       <section className="px-8 md:px-16 pt-20 pb-16 max-w-screen-xl mx-auto">
@@ -80,7 +36,7 @@ export default function LandingPage({
           <div className="md:col-span-8">
             <p
               className="text-[10px] tracking-[0.25em] uppercase mb-6 flex items-center gap-3"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.45 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               <span
                 className="inline-block w-8"
@@ -137,7 +93,7 @@ export default function LandingPage({
             />
             <p
               className="text-[10px] tracking-[0.18em] uppercase leading-relaxed"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               {INSTITUTION.unit}<br />
               {INSTITUTION.university}<br />
@@ -180,7 +136,7 @@ export default function LandingPage({
                 </p>
                 <p
                   className="text-[11px] tracking-[0.14em] uppercase mt-2"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.45 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   {stat.label}
                 </p>
@@ -196,7 +152,7 @@ export default function LandingPage({
           <div>
             <p
               className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               <span
                 className="inline-block w-5"
@@ -213,7 +169,7 @@ export default function LandingPage({
           </div>
           <button
             onClick={() => onNavigate({ view: "projects" })}
-            className="hidden md:block text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-40 pb-1"
+            className="hidden md:block text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-50 pb-1"
             style={{
               fontFamily: "Space Mono, monospace",
               color: NAVY,
@@ -230,15 +186,19 @@ export default function LandingPage({
               key={i}
               className="group p-6 transition-all cursor-pointer"
               style={{
-                border: `1px solid ${NAVY}18`,
+                border: `1px solid ${NAVY}33`,
                 borderRadius: "16px",
                 background: "#ffffff",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.background = `${NAVY}05`;
+                (e.currentTarget as HTMLDivElement).style.borderColor = NAVY;
+                (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 1px ${NAVY}`;
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLDivElement).style.background = "#ffffff";
+                (e.currentTarget as HTMLDivElement).style.borderColor = `${NAVY}33`;
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
               }}
             >
               <div className="flex items-start justify-between mb-4">
@@ -256,7 +216,7 @@ export default function LandingPage({
                 </span>
                 <span
                   className="text-[9px]"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   {student.year}
                 </span>
@@ -275,7 +235,7 @@ export default function LandingPage({
               </p>
               <p
                 className="text-[10px] mt-0.5"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {student.course} · {student.semester}
               </p>
@@ -310,7 +270,7 @@ export default function LandingPage({
           <div>
             <p
               className="text-[10px] tracking-[0.22em] uppercase mb-4"
-              style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE, opacity: 0.4 }}
+              style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE, opacity: 0.5 }}
             >
               Pronto para começar?
             </p>
@@ -338,31 +298,33 @@ export default function LandingPage({
       </section>
 
       {/* ── Footer ── */}
-      <footer
-        className="px-8 md:px-16 py-8 max-w-screen-xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-        style={{ borderTop: `1px solid ${NAVY}15` }}
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-4 h-4" style={{ background: NAVY, borderRadius: "4px" }} />
-          <span
-            className="text-[11px] tracking-[0.2em] uppercase"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
-          >
-            VitrineIC — {INSTITUTION.unitShort} · {INSTITUTION.universityShort} · 2026
-          </span>
-        </div>
-        <div className="flex gap-6">
-          {["Privacidade", "Termos", "Contato"].map((item) => (
-            <button
-              key={item}
-              className="text-[10px] tracking-[0.15em] uppercase transition-opacity hover:opacity-80 opacity-35"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+      <div style={{ background: NAVY }}>
+        <footer
+          className="px-8 md:px-16 py-8 max-w-screen-xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+          style={{ borderTop: `1px solid ${OFFWHITE}15` }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-4 h-4" style={{ background: OFFWHITE, borderRadius: "4px" }} />
+            <span
+              className="text-[11px] tracking-[0.2em] uppercase"
+              style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE, opacity: 0.5 }}
             >
-              {item}
-            </button>
-          ))}
-        </div>
-      </footer>
+              VitrineIC — {INSTITUTION.unitShort} · {INSTITUTION.universityShort} · 2026
+            </span>
+          </div>
+          <div className="flex gap-6">
+            {["Privacidade", "Termos", "Contato"].map((item) => (
+              <button
+                key={item}
+                className="text-[10px] tracking-[0.15em] uppercase transition-opacity hover:opacity-80 opacity-50"
+                style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE }}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }

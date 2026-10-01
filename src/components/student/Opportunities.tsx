@@ -39,6 +39,17 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
                 Match {selected.compatibility}%
               </span>
             </div>
+            <div
+              className="px-3 py-1 flex items-center gap-1.5"
+              style={{ border: `1px solid ${NAVY}40`, background: `${NAVY}05`, borderRadius: "6px" }}
+            >
+              <span
+                className="text-[10px] tracking-[0.14em] uppercase font-bold"
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+              >
+                {selected.origin}
+              </span>
+            </div>
           </div>
           <p
             className="text-[14px] max-w-2xl leading-relaxed mt-4"
@@ -114,7 +125,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
       <div className="mb-10">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
           Oportunidades
@@ -138,13 +149,19 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
         {OPPORTUNITIES.sort((a, b) => b.compatibility - a.compatibility).map((opp) => (
           <div
             key={opp.id}
-            className="flex flex-col p-6 transition-all hover:-translate-y-1"
+            className="flex flex-col p-6 transition-all hover:-translate-y-1 cursor-pointer"
+            onClick={() => setSelected(opp)}
             style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}
           >
-            <div className="flex items-start justify-between mb-4">
-              <h3 className="text-xl font-medium" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY, flex: 1, paddingRight: "16px" }}>
-                {opp.title}
-              </h3>
+            <div className="flex items-start justify-between mb-4 gap-4">
+              <div>
+                <h3 className="text-xl font-medium leading-tight mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+                  {opp.title}
+                </h3>
+                <span className="px-2 py-1 text-[8px] uppercase tracking-widest font-bold" style={{ background: `${NAVY}10`, color: NAVY, borderRadius: "4px", fontFamily: "Space Mono, monospace" }}>
+                  {opp.origin}
+                </span>
+              </div>
               <div
                 className="px-2.5 py-1 flex items-center gap-1.5 flex-shrink-0"
                 style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px" }}
@@ -157,12 +174,14 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
                 </span>
               </div>
             </div>
+            
             <p
               className="text-[13px] leading-relaxed mb-6 flex-1"
               style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65 }}
             >
               {opp.description}
             </p>
+
             <button
               onClick={() => setSelected(opp)}
               className="mt-auto self-start flex items-center gap-2 px-5 py-2.5 text-[10px] tracking-[0.16em] uppercase font-semibold transition-colors"

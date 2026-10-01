@@ -151,7 +151,7 @@ export function SkillPicker({
                 remove(s.name);
               }}
               aria-label={`Remover ${s.name}`}
-              className="w-3.5 h-3.5 flex items-center justify-center transition-opacity hover:opacity-100 opacity-40"
+              className="w-3.5 h-3.5 flex items-center justify-center transition-opacity hover:opacity-100 opacity-50"
               style={{ color: NAVY }}
             >
               <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
@@ -196,7 +196,7 @@ export function SkillPicker({
               </span>
               <span
                 className="text-[9px] tracking-[0.12em] uppercase flex-shrink-0"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.3 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 {s.cat}
               </span>
@@ -286,7 +286,7 @@ export function SkillPicker({
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <span
                     className="hidden sm:inline text-[9px] tracking-[0.1em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                   >
                     {LEVELS[s.level - 1]}
                   </span>
@@ -307,7 +307,7 @@ export function SkillPicker({
         <button
           type="button"
           onClick={() => setShowCatalog(!showCatalog)}
-          className="text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-45"
+          className="text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50"
           style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
         >
           {showCatalog ? "Ocultar catálogo" : `Ver catálogo completo (${ALL_SKILLS.length})`}

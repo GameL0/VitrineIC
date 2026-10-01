@@ -50,7 +50,7 @@ export function TriageCard({
         </p>
         <p
           className="text-[10px] mb-2"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.45 }}
+          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
         >
           {demand.company}
         </p>
@@ -59,7 +59,7 @@ export function TriageCard({
             <SkillTag key={s} small>{s}</SkillTag>
           ))}
           {demand.skills.length > 3 && (
-            <span className="text-[8px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
+            <span className="text-[8px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
               +{demand.skills.length - 3}
             </span>
           )}
@@ -103,7 +103,12 @@ export function TriageCard({
             
             {demand.status === "rejeitada" && onDelete && (
               <button
-                onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  if (window.confirm("Você tem certeza que deseja excluir esta demanda?")) {
+                    onDelete(); 
+                  }
+                }}
                 className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85 mt-2"
                 style={{
                   fontFamily: "Inter, sans-serif",
@@ -159,7 +164,7 @@ export function Triage({
       <div className="mb-10 flex items-end justify-between flex-wrap gap-4">
         <div>
           <p className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Fila de Triagem
           </p>
@@ -173,7 +178,7 @@ export function Triage({
               <p className="text-2xl leading-none" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
                 {demands.filter((d) => d.status === col).length}
               </p>
-              <p className="text-[9px] mt-1" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
+              <p className="text-[9px] mt-1" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
                 {DEMAND_STATUS[col].label}
               </p>
             </div>
@@ -199,7 +204,7 @@ export function Triage({
               style={{ borderBottom: `1px solid ${NAVY}18`, background: `${NAVY}04` }}
             >
               <StatusBadge status={col} />
-              <span className="ml-auto text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
+              <span className="ml-auto text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
                 {demands.filter((d) => d.status === col).length}
               </span>
             </div>
@@ -215,7 +220,7 @@ export function Triage({
                 />
               ))}
               {demands.filter((d) => d.status === col).length === 0 && (
-                <div className="flex items-center justify-center h-24 border-2 border-dashed rounded-[12px] opacity-30 pointer-events-none" style={{ borderColor: NAVY }}>
+                <div className="flex items-center justify-center h-24 border-2 border-dashed rounded-[12px] opacity-50 pointer-events-none" style={{ borderColor: NAVY }}>
                   <span className="text-[9px] uppercase tracking-widest" style={{ fontFamily: "Space Mono, monospace", color: NAVY }}>
                     Solte aqui
                   </span>

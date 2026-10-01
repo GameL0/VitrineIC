@@ -33,16 +33,19 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
           className="flex items-center justify-between px-8 py-5"
           style={{ borderBottom: `1px solid ${NAVY}22` }}
         >
-          <span
-            className="text-[10px] tracking-[0.2em] uppercase"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
-          >
-            VitrineIC · Acesso
-          </span>
+          <div className="flex items-center gap-3">
+            <img src="/logo.jpg" alt="Logo ConectaIC" className="w-5 h-5 object-contain rounded-[4px]" style={{ background: NAVY }} />
+            <span
+              className="text-[10px] tracking-[0.2em] uppercase font-bold"
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.8 }}
+            >
+              VitrineIC · Acesso
+            </span>
+          </div>
           <button
             onClick={onClose}
             className="w-7 h-7 flex items-center justify-center transition-colors"
-            style={{ color: NAVY, opacity: 0.4 }}
+            style={{ color: NAVY, opacity: 0.5 }}
             aria-label="Fechar"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

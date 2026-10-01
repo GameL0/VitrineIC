@@ -54,8 +54,16 @@ export function Input({
           style={base}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}60`)}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = NAVY;
+            e.currentTarget.style.outline = `2px solid ${NAVY}`;
+            e.currentTarget.style.backgroundColor = OFFWHITE;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = `${NAVY}60`;
+            e.currentTarget.style.outline = "none";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
         />
       ) : (
         <input
@@ -64,8 +72,16 @@ export function Input({
           style={base}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}60`)}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = NAVY;
+            e.currentTarget.style.outline = `2px solid ${NAVY}`;
+            e.currentTarget.style.backgroundColor = OFFWHITE;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = `${NAVY}60`;
+            e.currentTarget.style.outline = "none";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
         />
       )}
     </div>
@@ -184,16 +200,11 @@ export function MultiSelect({
       {open && (
         <div
           style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
             marginTop: "4px",
             background: OFFWHITE,
             border: `1px solid ${NAVY}30`,
             borderRadius: "8px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            zIndex: 50,
             maxHeight: "200px",
             overflowY: "auto"
           }}

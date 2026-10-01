@@ -7,7 +7,7 @@ export function StudentForm({ onEnter }: { onEnter: () => void }) {
     <div>
       <p
         className="text-[11px] tracking-[0.15em] uppercase mb-5"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.45 }}
+        style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
       >
         Acesso Institucional
       </p>
@@ -47,7 +47,7 @@ export function StudentForm({ onEnter }: { onEnter: () => void }) {
       </button>
       <p
         className="text-center text-[11px] mt-4"
-        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.45 }}
+        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
       >
         Não tem conta?{" "}
         <button className="underline underline-offset-2" style={{ color: RED }}>

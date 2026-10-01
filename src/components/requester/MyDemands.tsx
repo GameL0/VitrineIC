@@ -16,7 +16,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Painel do Solicitante
@@ -44,7 +44,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 </p>
                 <p
                   className="text-[9px] mt-1"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   {s.label}
                 </p>
@@ -76,7 +76,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
             <span
               key={h}
               className="text-[9px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               {h}
             </span>
@@ -118,13 +118,13 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
               </span>
               <span
                 className="hidden md:block text-[10px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {d.area}
               </span>
               <span
                 className="hidden md:block text-[10px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {d.deadline}
               </span>
@@ -147,7 +147,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 ) : (
                   <span
                     className="text-[10px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
+                    style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
                   >
                     {d.applicants > 0 ? `${d.applicants} concl.` : "—"}
                   </span>
@@ -161,30 +161,12 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 className="px-6 py-5"
                 style={{ borderTop: `1px solid ${NAVY}10` }}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <Label>Solicitações Enviadas</Label>
+                <div className="flex items-center justify-between mb-2">
+                  <Label>Descrição da Demanda</Label>
                 </div>
-                
-                <div className="flex flex-col gap-3">
-                  {[
-                    { name: "João Pereira", status: "Aceito", color: "#16a34a" },
-                    { name: "Maria Clara", status: "Em aguardo", color: "#eab308" },
-                    { name: "Carlos Silva", status: "Recusado", color: "#dc2626" }
-                  ].slice(0, d.applicants > 0 ? (d.applicants > 3 ? 3 : d.applicants) : 0).map((student, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3" style={{ background: OFFWHITE, borderRadius: "8px", border: `1px solid ${NAVY}15` }}>
-                      <span className="text-[13px] font-medium" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>{student.name}</span>
-                      <span className="px-2 py-1 text-[10px] uppercase font-bold tracking-widest rounded-[6px]" style={{ fontFamily: "Space Mono, monospace", background: `${student.color}15`, color: student.color, border: `1px solid ${student.color}40` }}>
-                        {student.status}
-                      </span>
-                    </div>
-                  ))}
-
-                  {d.applicants === 0 && (
-                     <p className="text-[12px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}>
-                       Nenhuma solicitação enviada para esta demanda ainda.
-                     </p>
-                  )}
-                </div>
+                <p className="text-[12px] leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.7 }}>
+                  Esta é uma descrição genérica da sua demanda publicada. Você pode ver todos os matches gerados pela curadoria acessando o botão 'Ver'.
+                </p>
               </div>
             )}
           </div>

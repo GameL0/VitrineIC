@@ -5,7 +5,7 @@ export function Label({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="block text-[9px] tracking-[0.22em] uppercase mb-1.5"
-      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
     >
       {children}
     </span>

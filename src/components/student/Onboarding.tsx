@@ -27,7 +27,7 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
         className="w-full px-8 md:px-16 py-4 flex items-center gap-3"
         style={{ borderBottom: `1px solid ${NAVY}15` }}
       >
-        <div className="w-5 h-5" style={{ background: NAVY }} />
+        <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
         <span
           className="text-[12px] tracking-[0.2em] uppercase font-semibold"
           style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
@@ -36,7 +36,7 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
         </span>
         <span
           className="text-[9px] tracking-[0.18em] uppercase ml-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
         >
           · Configuração inicial
         </span>
@@ -75,8 +75,8 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
         <div className="flex items-center justify-between mt-12 pt-6" style={{ borderTop: `1px solid ${NAVY}15` }}>
           <button
             onClick={() => setStep(Math.max(0, step - 1))}
-            className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+            className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
             disabled={step === 0}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -88,7 +88,7 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
           <div className="flex items-center gap-3">
             <span
               className="text-[9px] tracking-[0.14em]"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               {step + 1} / 4
             </span>

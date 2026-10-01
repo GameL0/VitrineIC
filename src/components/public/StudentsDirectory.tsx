@@ -25,7 +25,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
         <div>
           <p
             className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
             Diretório
@@ -48,7 +48,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
         <div style={{ minWidth: "240px" }}>
           <label
             className="block text-[9px] tracking-[0.18em] uppercase mb-1.5"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             Buscar por nome, curso ou skill
           </label>
@@ -67,7 +67,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
       {shown.length === 0 ? (
         <p
           className="py-20 text-center text-[11px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           Nenhum estudante encontrado
         </p>
@@ -100,7 +100,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
                 </h2>
                 <p
                   className="text-[10px] tracking-[0.14em] uppercase mb-3"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                 >
                   {student.course} · {student.semester} · {student.projects.length}{" "}
                   {student.projects.length === 1 ? "projeto" : "projetos"}
@@ -121,7 +121,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
               <div className="hidden md:block text-right flex-shrink-0">
                 <p
                   className="text-[9px] tracking-[0.16em] uppercase mb-1"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                 >
                   Disponibilidade
                 </p>

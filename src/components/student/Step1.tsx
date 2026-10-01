@@ -48,13 +48,13 @@ export function Step1({
               />
             ) : (
               <>
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style={{ color: NAVY, opacity: 0.5 }}>
                   <circle cx="14" cy="11" r="5" stroke="currentColor" strokeWidth="1.2" />
                   <path d="M4 22c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                 </svg>
                 <span
                   className="text-[9px] tracking-[0.14em] uppercase text-center"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   Carregar foto
                 </span>

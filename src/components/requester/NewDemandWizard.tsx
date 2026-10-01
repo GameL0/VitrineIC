@@ -210,13 +210,13 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         className="flex items-start gap-4 p-4"
         style={{ border: `1px solid ${NAVY}18`, background: `${NAVY}03`, borderRadius: "12px" }}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.3, flexShrink: 0, marginTop: 2 }}>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.5, flexShrink: 0, marginTop: 2 }}>
           <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.1" />
           <path d="M8 5v4M8 11v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
         <p
           className="text-[11px] leading-relaxed"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.45, fontWeight: 300 }}
+          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
         >
           Após submissão, a equipe de curadoria do IC revisará a demanda em até 5 dias úteis.
           Você receberá notificação por e-mail ao ser aprovada e quando houver match com estudantes.
@@ -252,7 +252,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           >
             <span
               className="text-[9px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
             >
               {r.label}
             </span>
@@ -291,8 +291,8 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         <button
           onClick={() => setStep(Math.max(0, step - 1))}
           disabled={step === 0}
-          className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: step === 0 ? 0.2 : 0.5 }}
+          className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -302,7 +302,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         <div className="flex items-center gap-3">
           <span
             className="text-[9px] tracking-[0.14em]"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.25 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             {step + 1} / 4
           </span>

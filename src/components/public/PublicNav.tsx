@@ -4,17 +4,19 @@ import type { PublicView } from "./routes";
 const MONO = "Space Mono, monospace";
 const SANS = "Inter, sans-serif";
 
-/** Navegação das páginas públicas, no mesmo formato das navs das áreas. */
+/** Navegação das páginas públicas, unificada com a Landing Page. */
 export function PublicNav({
   view,
   onNavigate,
   onHome,
   onSignIn,
+  onAdmin,
 }: {
-  view: PublicView;
+  view?: PublicView | "home"; // allow optional view for landing
   onNavigate: (v: PublicView) => void;
   onHome: () => void;
   onSignIn: () => void;
+  onAdmin?: () => void;
 }) {
   const items: { id: PublicView; label: string }[] = [
     { id: "projects", label: "Projetos" },
@@ -28,7 +30,7 @@ export function PublicNav({
       style={{ background: OFFWHITE, borderBottom: `1px solid ${NAVY}15` }}
     >
       <button onClick={onHome} className="flex items-center gap-3">
-        <div className="w-5 h-5 flex-shrink-0" style={{ background: NAVY, borderRadius: "6px" }} />
+        <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
         <span
           className="text-[12px] tracking-[0.2em] uppercase font-semibold"
           style={{ fontFamily: SANS, color: NAVY }}
@@ -38,6 +40,19 @@ export function PublicNav({
       </button>
 
       <div className="hidden md:flex items-center gap-1">
+        <button
+          onClick={onHome}
+          className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all"
+          style={{
+            fontFamily: SANS,
+            color: NAVY,
+            background: (!view || view === "home") ? `${NAVY}08` : "transparent",
+            borderRadius: "10px",
+            fontWeight: (!view || view === "home") ? 600 : 400
+          }}
+        >
+          Início
+        </button>
         {items.map((item) => (
           <button
             key={item.id}
@@ -54,6 +69,18 @@ export function PublicNav({
             {item.label}
           </button>
         ))}
+        {onAdmin && (
+          <button
+            onClick={onAdmin}
+            className="ml-4 px-3 py-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50 flex items-center gap-1.5"
+            style={{ fontFamily: MONO, color: RED }}
+          >
+            <svg width="7" height="7" viewBox="0 0 7 7" fill="none">
+              <rect x="0.5" y="0.5" width="6" height="6" fill={RED} rx="2" />
+            </svg>
+            Admin
+          </button>
+        )}
       </div>
 
       <button

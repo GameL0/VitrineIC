@@ -44,12 +44,12 @@ export function ConfirmModal({
             <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
               <rect x="0.5" y="0.5" width="7" height="7" fill={RED} />
             </svg>
-            Confirmação de Match
+            Confirmação de Recomendação
           </p>
           <button
             onClick={onClose}
             className="w-7 h-7 flex items-center justify-center"
-            style={{ color: NAVY, opacity: 0.3 }}
+            style={{ color: NAVY, opacity: 0.5 }}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
@@ -151,8 +151,16 @@ export function ConfirmModal({
                 background: "transparent",
                 resize: "none",
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
-              onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}30`)}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = NAVY;
+                e.currentTarget.style.outline = `2px solid ${NAVY}`;
+                e.currentTarget.style.backgroundColor = OFFWHITE;
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = `${NAVY}30`;
+                e.currentTarget.style.outline = "none";
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
             />
           </div>
         </div>
@@ -163,19 +171,19 @@ export function ConfirmModal({
             <button
               onClick={onConfirm}
               className="flex-1 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-opacity hover:opacity-88"
-              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+              style={{ background: RED, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
             >
-              Confirmar Conexão
+              Confirmar Recomendação
             </button>
             <button
               onClick={onClose}
-              className="px-6 py-4 text-[10px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-60 opacity-40"
+              className="px-6 py-4 text-[10px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-60 opacity-50"
               style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Inter, sans-serif" }}
             >
               Cancelar
             </button>
           </div>
-          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
+          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
             O solicitante e o estudante receberão notificação automática por e-mail.
           </p>
         </div>

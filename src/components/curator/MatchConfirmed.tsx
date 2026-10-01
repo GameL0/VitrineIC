@@ -22,15 +22,15 @@ export function MatchConfirmed({
         <p className="text-[9px] tracking-[0.25em] uppercase mb-5 flex items-center gap-3"
           style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.85 }}>
           <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
-          Match efetivado
+          Recomendação Registrada
         </p>
         <h1 className="text-7xl md:text-8xl leading-none tracking-tight mb-6"
           style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
-          Conexão<br />
-          <em className="not-italic" style={{ color: RED }}>confirmada.</em>
+          Recomendação<br />
+          <em className="not-italic" style={{ color: RED }}>enviada.</em>
         </h1>
         <div className="inline-flex items-center gap-4 px-5 py-3" style={{ border: `1px solid ${NAVY}22`, background: `${NAVY}04` }}>
-          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}>
+          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
             Protocolo
           </span>
           <span className="text-xl font-bold" style={{ fontFamily: "Space Mono, monospace", color: NAVY }}>
@@ -63,14 +63,14 @@ export function MatchConfirmed({
               <h3 className="text-xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
                 {student.name}
               </h3>
-              <Mono dim>{student.course} · {student.semester} · IRA {student.gpa}</Mono>
+              <Mono dim>{student.course} · {student.semester}</Mono>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-2xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: RED }}>
               {score}%
             </span>
-            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}>
+            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
               compatibilidade técnica
             </span>
           </div>

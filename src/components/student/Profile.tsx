@@ -32,7 +32,7 @@ export function Profile({ profile, onSave }: { profile: any; onSave: (d: any) =>
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
             Configurações
@@ -118,18 +118,26 @@ export function Profile({ profile, onSave }: { profile: any; onSave: (d: any) =>
               {data.photo ? (
                 <img src={data.photo} alt="Foto de Perfil" className="w-full h-full object-cover" />
               ) : (
-                <svg width="40" height="40" viewBox="0 0 28 28" fill="none" style={{ color: NAVY, opacity: 0.3 }}>
+                <svg width="40" height="40" viewBox="0 0 28 28" fill="none" style={{ color: NAVY, opacity: 0.5 }}>
                   <circle cx="14" cy="11" r="5" stroke="currentColor" strokeWidth="1.2" />
                   <path d="M4 22c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                 </svg>
               )}
             </div>
             <button
-              className="px-4 py-2 text-[10px] tracking-[0.1em] uppercase font-medium"
+              className="px-4 py-2 text-[10px] tracking-[0.1em] uppercase font-medium cursor-pointer"
               style={{ border: `1px solid ${NAVY}40`, color: NAVY, borderRadius: "8px" }}
             >
               Alterar Foto
             </button>
+            <div className="w-full mt-6">
+              <Input
+                label="Links Adicionais (GitHub, LinkedIn, Site)"
+                placeholder="https://..."
+                value={(data as any).links || ""}
+                onChange={(v) => setData({ ...data, links: v } as any)}
+              />
+            </div>
           </div>
         </div>
       </div>

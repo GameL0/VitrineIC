@@ -46,8 +46,9 @@ input, select, textarea {
 }
 
 /* Primary and secondary buttons */
-button {
+button, a {
   border-radius: 10px !important;
+  cursor: pointer;
 }
 
 /* Tags, badges, pills */

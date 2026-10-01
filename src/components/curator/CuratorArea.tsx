@@ -62,7 +62,7 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setView("matchmaking_hub")}
-                className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-40"
+                className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50"
                 style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
               >
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -70,13 +70,13 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
                 </svg>
                 Análise de Matches
               </button>
-              <span style={{ color: NAVY, opacity: 0.2, fontSize: 12 }}>/</span>
+              <span style={{ color: NAVY, opacity: 0.5, fontSize: 12 }}>/</span>
               <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>
                 Matchmaking
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.3 }}>
+              <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
                 {selectedDemand.id}
               </span>
               <span className="text-[9px] px-2 py-0.5" style={{ fontFamily: "Space Mono, monospace", color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.5 }}>

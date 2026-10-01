@@ -8,6 +8,7 @@ interface MyProject {
   description: string;
   phase: string;
   link?: string;
+  tools?: string;
 }
 
 const PHASES = ["Idealização", "Codificação", "Revisão", "Publicado"];
@@ -41,7 +42,7 @@ export function Projects() {
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
             Portfólio Pessoal
@@ -104,6 +105,14 @@ export function Projects() {
                 onChange={(v) => setForm({ ...form, link: v })}
                 mono
               />
+              <div className="md:col-span-2">
+                <Input
+                  label="Ferramentas utilizadas (separadas por vírgula)"
+                  placeholder="Ex: React, Python, TensorFlow"
+                  value={form.tools || ""}
+                  onChange={(v) => setForm({ ...form, tools: v })}
+                />
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-4 mt-8 pt-6" style={{ borderTop: `1px solid ${NAVY}15` }}>

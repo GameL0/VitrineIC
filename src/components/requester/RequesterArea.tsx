@@ -6,10 +6,12 @@ import { NewDemandWizard } from "./NewDemandWizard";
 import { SuccessScreen } from "./SuccessScreen";
 import { Profile } from "./Profile";
 import { AvailableStudents } from "./AvailableStudents";
+import { Team } from "./Team";
+import { Notifications } from "./Notifications";
 import { OFFWHITE } from "@/styles/tokens";
 
 export default function RequesterArea({ onBack }: { onBack: () => void }) {
-  const [view, setView] = useState<"dashboard" | "new" | "success" | "matches" | "profile" | "available_students">("available_students");
+  const [view, setView] = useState<"dashboard" | "new" | "success" | "matches" | "profile" | "available_students" | "team" | "notifications">("available_students");
   const [protocol, setProtocol] = useState("");
 
   const handleSetView = (v: string) => setView(v as typeof view);
@@ -45,7 +47,11 @@ export default function RequesterArea({ onBack }: { onBack: () => void }) {
         />
       )}
 
-      {view === "matches" && <MatchScreen />}
+      {view === "matches" && <MatchScreen onBack={() => setView("dashboard")} />}
+
+      {view === "team" && <Team />}
+      
+      {view === "notifications" && <Notifications />}
 
       {view === "profile" && <Profile />}
     </div>

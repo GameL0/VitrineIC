@@ -7,6 +7,7 @@ export interface Opportunity {
   responsible: string;
   duration: string;
   contractType: string;
+  origin: "Interno UFAL" | "Empresa Externa";
 }
 
 export const OPPORTUNITIES: Opportunity[] = [
@@ -19,6 +20,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     responsible: "Prof. Marcos Silva",
     duration: "6 meses",
     contractType: "Bolsa PIBIC",
+    origin: "Interno UFAL",
   },
   {
     id: "opp-2",
@@ -29,6 +31,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     responsible: "Dra. Ana Costa (Empresa HealthTech)",
     duration: "12 meses",
     contractType: "PJ",
+    origin: "Empresa Externa",
   },
   {
     id: "opp-3",
@@ -39,6 +42,7 @@ export const OPPORTUNITIES: Opportunity[] = [
     responsible: "Secretaria de Educação",
     duration: "4 meses",
     contractType: "Bolsa Extensão",
+    origin: "Interno UFAL",
   },
   {
     id: "opp-4",
@@ -49,5 +53,6 @@ export const OPPORTUNITIES: Opportunity[] = [
     responsible: "Carlos Mendes (TI UFAL)",
     duration: "3 meses",
     contractType: "CLT (Estágio)",
+    origin: "Interno UFAL",
   },
 ];

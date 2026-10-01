@@ -24,7 +24,7 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
       <div className="mb-10">
         <p
           className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
           Vitrine pública
@@ -63,7 +63,7 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
         ))}
         <span
           className="ml-auto text-[10px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           {shown.length} {shown.length === 1 ? "projeto" : "projetos"}
         </span>
@@ -78,12 +78,20 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
               onClick={() => onOpenProject(project.id)}
               className="group text-left p-6 transition-all"
               style={{
-                border: `1px solid ${NAVY}18`,
+                border: `1px solid ${NAVY}33`,
                 borderRadius: "16px",
                 background: "#ffffff",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}05`)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#ffffff")}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = `${NAVY}05`;
+                e.currentTarget.style.borderColor = NAVY;
+                e.currentTarget.style.boxShadow = `0 0 0 1px ${NAVY}`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#ffffff";
+                e.currentTarget.style.borderColor = `${NAVY}33`;
+                e.currentTarget.style.boxShadow = "none";
+              }}
             >
               <div className="flex items-start justify-between mb-4">
                 <span
@@ -94,7 +102,7 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
                 </span>
                 <span
                   className="text-[9px] tracking-[0.14em] uppercase"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.3 }}
+                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                 >
                   {project.year}
                 </span>
@@ -141,7 +149,7 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
                 {status && (
                   <span
                     className="text-[9px] tracking-[0.14em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                   >
                     {status.label}
                   </span>

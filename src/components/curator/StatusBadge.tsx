@@ -3,10 +3,10 @@ import { NAVY, RED } from "@/styles/tokens";
 import type { DemandStatus } from "@/types";
 
 export const DEMAND_STATUS: Record<DemandStatus, { label: string; color: string; shape: "circle" | "square" | "diamond" }> = {
-  nova:       { label: "Nova",         color: RED,          shape: "diamond" },
-  em_analise: { label: "Em Análise",   color: `${NAVY}88`,  shape: "circle"  },
-  aprovada:   { label: "Aprovada",     color: "#2d7a3a",    shape: "square"  },
-  rejeitada:  { label: "Rejeitada",    color: `${NAVY}40`,  shape: "diamond" },
+  nova:       { label: "Nova",         color: "#2563eb",    shape: "diamond" },
+  em_analise: { label: "Em Análise",   color: RED,          shape: "circle"  },
+  aprovada:   { label: "Aprovada",     color: "#16a34a",    shape: "square"  },
+  rejeitada:  { label: "Rejeitada",    color: RED,          shape: "diamond" },
   matched:    { label: "Matched",      color: NAVY,         shape: "square"  },
 };
 

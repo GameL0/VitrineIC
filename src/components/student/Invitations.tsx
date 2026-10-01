@@ -70,7 +70,7 @@ function InvitationCard({
               </span>
               <span
                 className="text-[9px] tracking-[0.14em] uppercase"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 {demand.company} · {invitation.sentAt}
               </span>
@@ -83,7 +83,7 @@ function InvitationCard({
             </h3>
             <p
               className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+              style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
             >
               {demand.id} · {demand.area} · prazo {demand.deadline}
             </p>
@@ -106,7 +106,7 @@ function InvitationCard({
             <div>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mb-3"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 Descrição do problema
               </p>
@@ -118,7 +118,7 @@ function InvitationCard({
               </p>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mb-3"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 Requisitos técnicos
               </p>
@@ -138,7 +138,7 @@ function InvitationCard({
             <div>
               <p
                 className="text-[9px] tracking-[0.2em] uppercase mb-3"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 Por que você foi indicado
               </p>
@@ -154,7 +154,7 @@ function InvitationCard({
                 </p>
                 <p
                   className="text-[9px] tracking-[0.14em] uppercase mt-3"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                 >
                   — Curadoria do IC
                 </p>
@@ -180,7 +180,7 @@ function InvitationCard({
                     </button>
                     <button
                       onClick={onDecline}
-                      className="px-5 py-3 text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-45"
+                      className="px-5 py-3 text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-50"
                       style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}30` }}
                     >
                       Recusar
@@ -188,7 +188,7 @@ function InvitationCard({
                   </div>
                   <p
                     className="text-[10px] mt-4 leading-relaxed"
-                    style={{ fontFamily: SANS, color: NAVY, opacity: 0.4 }}
+                    style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
                   >
                     Ao aceitar, seus dados de contato são enviados ao solicitante e o
                     projeto segue para formalização.
@@ -197,7 +197,7 @@ function InvitationCard({
               ) : (
                 <p
                   className="text-[11px] tracking-[0.14em] uppercase"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.45 }}
+                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
                 >
                   {invitation.status === "aceito"
                     ? "Você aceitou este convite."
@@ -236,7 +236,7 @@ export function Invitations({
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Caixa de convites
@@ -253,7 +253,7 @@ export function Invitations({
               </p>
               <p
                 className="text-[9px] tracking-[0.14em] uppercase mt-1.5"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
               >
                 {k === "pendente" ? "Pendentes" : k === "aceito" ? "Aceitos" : "Recusados"}
               </p>
@@ -275,7 +275,7 @@ export function Invitations({
       {shown.length === 0 ? (
         <p
           className="py-16 text-center text-[11px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           Nenhum convite nesta categoria
         </p>

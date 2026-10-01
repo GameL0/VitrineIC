@@ -27,7 +27,7 @@ export function Profile() {
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
             Configurações
@@ -76,11 +76,19 @@ export function Profile() {
               )}
             </div>
             <button
-              className="px-4 py-2 text-[10px] tracking-[0.1em] uppercase font-medium"
+              className="px-4 py-2 text-[10px] tracking-[0.1em] uppercase font-medium cursor-pointer"
               style={{ border: `1px solid ${NAVY}40`, color: NAVY, borderRadius: "8px" }}
             >
               Alterar Foto
             </button>
+            <div className="w-full mt-6">
+              <Input
+                label="Site ou Links Adicionais"
+                placeholder="https://..."
+                value={(data as any).links || ""}
+                onChange={(v) => setData({ ...data, links: v } as any)}
+              />
+            </div>
           </div>
         </div>
       </div>

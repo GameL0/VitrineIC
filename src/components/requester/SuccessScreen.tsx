@@ -30,7 +30,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
         >
           <span
             className="text-[9px] tracking-[0.18em] uppercase"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
           >
             Protocolo
           </span>
@@ -54,7 +54,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
       <div className="mb-16">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-8"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.35 }}
+          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
         >
           Próximas etapas
         </p>

@@ -58,8 +58,16 @@ export function Input({
           style={base}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}35`)}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = NAVY;
+            e.currentTarget.style.outline = `2px solid ${NAVY}`;
+            e.currentTarget.style.backgroundColor = OFFWHITE;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = `${NAVY}35`;
+            e.currentTarget.style.outline = "none";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
         />
       ) : (
         <input
@@ -68,8 +76,16 @@ export function Input({
           style={base}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
-          onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}35`)}
+          onFocus={(e) => {
+            e.currentTarget.style.borderColor = NAVY;
+            e.currentTarget.style.outline = `2px solid ${NAVY}`;
+            e.currentTarget.style.backgroundColor = OFFWHITE;
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.borderColor = `${NAVY}35`;
+            e.currentTarget.style.outline = "none";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
         />
       )}
     </div>

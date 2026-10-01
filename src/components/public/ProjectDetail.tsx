@@ -24,7 +24,7 @@ export function ProjectDetail({
       <div className="px-8 md:px-16 py-24 max-w-screen-xl mx-auto text-center">
         <p
           className="text-[11px] tracking-[0.16em] uppercase mb-6"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
         >
           Projeto não encontrado
         </p>
@@ -46,7 +46,7 @@ export function ProjectDetail({
     <div className="px-8 md:px-16 py-10 max-w-screen-lg mx-auto">
       <button
         onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-40 flex items-center gap-2 mb-10"
+        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50 flex items-center gap-2 mb-10"
         style={{ fontFamily: MONO, color: NAVY }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -73,7 +73,7 @@ export function ProjectDetail({
           )}
           <span
             className="text-[9px] tracking-[0.14em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.3 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             {project.year} · {project.id}
           </span>
@@ -98,7 +98,7 @@ export function ProjectDetail({
         <div className="p-6 md:col-span-2" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             Stack técnica
           </p>
@@ -118,7 +118,7 @@ export function ProjectDetail({
         <div className="p-6" style={{ background: OFFWHITE }}>
           <p
             className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
           >
             Disponibilidade
           </p>
@@ -131,7 +131,7 @@ export function ProjectDetail({
       {/* Autoria */}
       <p
         className="text-[9px] tracking-[0.2em] uppercase mb-4"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.4 }}
+        style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
       >
         Desenvolvido por
       </p>
@@ -175,7 +175,7 @@ export function ProjectDetail({
           height="14"
           viewBox="0 0 14 14"
           fill="none"
-          style={{ color: NAVY, opacity: 0.3, flexShrink: 0, marginTop: "4px" }}
+          style={{ color: NAVY, opacity: 0.5, flexShrink: 0, marginTop: "4px" }}
         >
           <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
@@ -188,7 +188,7 @@ export function ProjectDetail({
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2"
-            style={{ fontFamily: MONO, color: OFFWHITE, opacity: 0.4 }}
+            style={{ fontFamily: MONO, color: OFFWHITE, opacity: 0.5 }}
           >
             Interessado neste projeto?
           </p>
