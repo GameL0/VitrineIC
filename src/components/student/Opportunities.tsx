@@ -11,7 +11,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
         <button
           onClick={() => setSelected(null)}
           className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 mb-8"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -23,7 +23,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
           <div className="flex items-center gap-4 mb-3">
             <h1
               className="text-4xl"
-              style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+              style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
             >
               {selected.title}
             </h1>
@@ -34,7 +34,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: RED }} />
               <span
                 className="text-[10px] tracking-[0.14em] uppercase font-bold"
-                style={{ fontFamily: "Space Mono, monospace", color: RED }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED }}
               >
                 Match {selected.compatibility}%
               </span>
@@ -45,7 +45,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
             >
               <span
                 className="text-[10px] tracking-[0.14em] uppercase font-bold"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
               >
                 {selected.origin}
               </span>
@@ -53,7 +53,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
           </div>
           <p
             className="text-[14px] max-w-2xl leading-relaxed mt-4"
-            style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.7 }}
+            style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.7 }}
           >
             {selected.description}
           </p>
@@ -62,27 +62,27 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
         <div className="grid md:grid-cols-2 gap-8 mt-12">
           <div className="flex flex-col gap-6">
             <div>
-              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                 Responsável
               </span>
-              <p className="text-[15px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>{selected.responsible}</p>
+              <p className="text-[15px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>{selected.responsible}</p>
             </div>
             <div>
-              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                 Duração Prevista
               </span>
-              <p className="text-[15px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>{selected.duration}</p>
+              <p className="text-[15px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>{selected.duration}</p>
             </div>
             <div>
-              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                 Tipo de Contrato
               </span>
-              <p className="text-[15px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>{selected.contractType}</p>
+              <p className="text-[15px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>{selected.contractType}</p>
             </div>
           </div>
 
           <div>
-            <span className="block text-[10px] tracking-[0.15em] uppercase mb-3 font-semibold" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+            <span className="block text-[10px] tracking-[0.15em] uppercase mb-3 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
               Competências Desejadas
             </span>
             <div className="flex flex-wrap gap-2">
@@ -91,7 +91,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
                   key={s}
                   className="px-3 py-1 text-[11px] tracking-[0.1em] uppercase"
                   style={{
-                    fontFamily: "Space Mono, monospace",
+                    fontFamily: "Geist Mono, ui-monospace, monospace",
                     color: NAVY,
                     border: `1px solid ${NAVY}30`,
                     background: `${NAVY}05`,
@@ -106,7 +106,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
             <div className="mt-12">
               <button
                 className="w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 text-[11px] tracking-[0.18em] uppercase font-semibold transition-all hover:opacity-90"
-                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
               >
                 Tenho Interesse
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -125,20 +125,20 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
       <div className="mb-10">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
           Oportunidades
         </p>
         <h1
           className="text-4xl mb-3"
-          style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
         >
           Projetos com Vagas Abertas
         </h1>
         <p
           className="text-[14px] max-w-2xl"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
         >
           Explore projetos que estão buscando estudantes. O nível de compatibilidade
           indica o quão próximo o seu perfil está das exigências da vaga.
@@ -155,10 +155,10 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
           >
             <div className="flex items-start justify-between mb-4 gap-4">
               <div>
-                <h3 className="text-xl font-medium leading-tight mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+                <h3 className="text-xl font-medium leading-tight mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                   {opp.title}
                 </h3>
-                <span className="px-2 py-1 text-[8px] uppercase tracking-widest font-bold" style={{ background: `${NAVY}10`, color: NAVY, borderRadius: "4px", fontFamily: "Space Mono, monospace" }}>
+                <span className="px-2 py-1 text-[8px] uppercase tracking-widest font-bold" style={{ background: `${NAVY}10`, color: NAVY, borderRadius: "4px", fontFamily: "Geist Mono, ui-monospace, monospace" }}>
                   {opp.origin}
                 </span>
               </div>
@@ -168,7 +168,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
               >
                 <span
                   className="text-[9px] tracking-[0.14em] uppercase font-bold"
-                  style={{ fontFamily: "Space Mono, monospace", color: RED }}
+                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED }}
                 >
                   {opp.compatibility}% Match
                 </span>
@@ -177,7 +177,7 @@ export function Opportunities({ profile, onOpenNotifications }: { profile: any; 
             
             <p
               className="text-[13px] leading-relaxed mb-6 flex-1"
-              style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65 }}
+              style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}
             >
               {opp.description}
             </p>

@@ -25,7 +25,7 @@ export function ConfirmModal({
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: "rgba(28,43,74,0.5)", backdropFilter: "blur(2px)" }}
+      style={{ backgroundColor: "rgba(26,25,21,0.5)", backdropFilter: "blur(2px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
@@ -40,7 +40,7 @@ export function ConfirmModal({
         {/* Modal header */}
         <div className="flex items-center justify-between px-8 py-5" style={{ borderBottom: `1px solid ${NAVY}15` }}>
           <p className="text-[10px] tracking-[0.2em] uppercase flex items-center gap-3"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
             <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
               <rect x="0.5" y="0.5" width="7" height="7" fill={RED} />
             </svg>
@@ -62,7 +62,7 @@ export function ConfirmModal({
           <div className="grid grid-cols-2 gap-0 mb-6" style={{ border: `1px solid ${NAVY}15` }}>
             <div className="px-5 py-5" style={{ borderRight: `1px solid ${NAVY}15` }}>
               <Label>Demanda</Label>
-              <p className="text-[15px] leading-tight mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+              <p className="text-[15px] leading-tight mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                 {demand.title}
               </p>
               <Mono dim>{demand.id} · {demand.company}</Mono>
@@ -71,12 +71,12 @@ export function ConfirmModal({
               <Label>Estudante</Label>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 flex items-center justify-center flex-shrink-0" style={{ background: NAVY }}>
-                  <span className="text-[10px]" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: OFFWHITE }}>
+                  <span className="text-[10px]" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>
                     {student.initials}
                   </span>
                 </div>
                 <div>
-                  <p className="text-[15px] leading-tight" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+                  <p className="text-[15px] leading-tight" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                     {student.name}
                   </p>
                   <Mono dim>{student.course} · {student.semester}</Mono>
@@ -90,7 +90,7 @@ export function ConfirmModal({
             <div>
               <Label>Compatibilidade técnica</Label>
               <div className="flex items-center gap-3 mt-1">
-                <span className="text-3xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: score >= 70 ? RED : NAVY }}>
+                <span className="text-3xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: score >= 70 ? RED : NAVY }}>
                   {score}%
                 </span>
                 <div className="flex items-end gap-[2px]">
@@ -120,7 +120,7 @@ export function ConfirmModal({
               <div className="flex flex-col gap-1.5 mt-2">
                 {student.projects.map((p) => (
                   <div key={p.title} className="flex items-center justify-between px-3 py-2" style={{ border: `1px solid ${NAVY}10` }}>
-                    <span className="text-[12px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65 }}>
+                    <span className="text-[12px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}>
                       {p.title}
                     </span>
                     <div className="flex gap-1">
@@ -144,7 +144,7 @@ export function ConfirmModal({
               placeholder="Registre o motivo técnico da seleção, critérios adicionais considerados..."
               className="w-full px-3 py-2.5 text-[11px] outline-none transition-colors"
               style={{
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "Geist Mono, ui-monospace, monospace",
                 color: NAVY,
                 border: `1px solid ${NAVY}30`,
                 borderRadius: "8px",
@@ -171,19 +171,19 @@ export function ConfirmModal({
             <button
               onClick={onConfirm}
               className="flex-1 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-opacity hover:opacity-88"
-              style={{ background: RED, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+              style={{ background: RED, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
             >
               Confirmar Recomendação
             </button>
             <button
               onClick={onClose}
               className="px-6 py-4 text-[10px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-60 opacity-50"
-              style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Inter, sans-serif" }}
+              style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
             >
               Cancelar
             </button>
           </div>
-          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
             O solicitante e o estudante receberão notificação automática por e-mail.
           </p>
         </div>

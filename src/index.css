@@ -1,13 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
-  --color-navy: #0d1321;
-  --color-red: #c1121f;
-  --color-offwhite: #edede9;
-  --font-serif: 'DM Serif Display', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --color-navy: #1a1915;
+  --color-red: #2f6b4f;
+  --color-offwhite: #f3f1ec;
+  --color-stone: #e6e2d9;
+  --color-ink: #1a1915;
+  --color-moss: #2f6b4f;
+  --color-sage: #a8c3ae;
+  --font-serif: 'Inter Tight', 'Geist', system-ui, sans-serif;
+  --font-display: 'Inter Tight', 'Geist', system-ui, sans-serif;
+  --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
 }
 
 *, *::before, *::after {
@@ -15,55 +20,147 @@
 }
 
 html {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #edede9;
-  color: #0a0a0a;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  background-color: #f3f1ec;
+  color: #1a1915;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: #f3f1ec;
 }
 
-/* Hide scrollbar by default */
+::selection {
+  background: #a8c3ae;
+  color: #1a1915;
+}
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #0d132133; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #1a191533; border-radius: 2px; }
 
-/* Modal scroll lock */
 body.modal-open {
   overflow: hidden;
 }
 
 /* =========================================
-   Global Design Bases (Dashboard & Entire App)
+   Tipografia
+   Títulos: Inter Tight, peso médio e tracking negativo.
+   Rótulos: Geist Mono em caixa alta, tracking contido.
    ========================================= */
 
-/* Inputs, selects, textareas */
-input, select, textarea {
-  border-radius: 8px !important;
+[style*="Inter Tight"] {
+  font-weight: 500;
+  letter-spacing: -0.015em !important;
+  font-feature-settings: "ss01", "cv11";
 }
 
-/* Primary and secondary buttons */
+h1[style*="Inter Tight"],
+h2[style*="Inter Tight"],
+[class*="text-4xl"][style*="Inter Tight"],
+[class*="text-5xl"][style*="Inter Tight"] {
+  letter-spacing: -0.035em !important;
+}
+
+[style*="Geist Mono"] {
+  letter-spacing: 0.08em !important;
+}
+
+/* Botões em sans: caixa normal, como em produto SaaS. */
+button.uppercase[style*="font-family: Geist, Inter"] {
+  text-transform: none;
+  letter-spacing: -0.005em !important;
+  font-size: 13px;
+}
+
+/* =========================================
+   Formas
+   ========================================= */
+
+input, select, textarea {
+  border-radius: 10px !important;
+}
+
 button, a {
   border-radius: 10px !important;
   cursor: pointer;
 }
 
-/* Tags, badges, pills */
+/* Links sublinhados ficam retos para o traço não curvar. */
+button[style*="border-bottom"] {
+  border-radius: 0 !important;
+}
+
 button[class*="text-[8px]"],
 button[class*="text-[9px]"],
 button[class*="text-[10px]"],
 span[class*="text-[8px]"][class*="uppercase"],
 span[class*="text-[9px]"][class*="uppercase"],
 span[class*="text-[10px]"][class*="uppercase"] {
-  border-radius: 6px !important;
+  border-radius: 999px !important;
 }
 
-/* Modals and containers larger */
-.modal-open > div > div, 
 div.max-w-lg,
 div[style*="max-width: 32rem"] {
   border-radius: 20px !important;
+}
+
+/* Cards: sombra suave em camadas, sem contorno pesado. */
+div[style*="border-radius: 16px"],
+button[style*="border-radius: 16px"] {
+  box-shadow:
+    0 1px 1px rgba(26, 25, 21, 0.03),
+    0 2px 4px rgba(26, 25, 21, 0.03),
+    0 12px 32px -16px rgba(26, 25, 21, 0.14);
+}
+
+/* =========================================
+   Superfícies texturizadas (pedra)
+   Ruído fractal em SVG + manchas radiais, no lugar de fotos.
+   ========================================= */
+
+.vt-stone {
+  position: relative;
+  isolation: isolate;
+  background-color: #1a1915;
+  background-image:
+    radial-gradient(120% 80% at 85% 0%, rgba(168, 195, 174, 0.18) 0%, transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgba(230, 226, 217, 0.10) 0%, transparent 60%),
+    linear-gradient(160deg, #24231e 0%, #1a1915 55%, #121210 100%);
+}
+
+.vt-stone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vt-sand {
+  position: relative;
+  isolation: isolate;
+  background-color: #e6e2d9;
+  background-image:
+    radial-gradient(100% 90% at 100% 0%, rgba(255, 255, 255, 0.65) 0%, transparent 60%),
+    radial-gradient(80% 80% at 0% 100%, rgba(47, 107, 79, 0.10) 0%, transparent 60%);
+}
+
+.vt-sand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.38 0 0 0 0 0.33 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }

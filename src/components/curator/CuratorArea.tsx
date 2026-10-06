@@ -63,7 +63,7 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
               <button
                 onClick={() => setView("matchmaking_hub")}
                 className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
               >
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                   <path d="M8 5H2M4.5 2.5L2 5l2.5 2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
@@ -71,15 +71,15 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
                 Análise de Matches
               </button>
               <span style={{ color: NAVY, opacity: 0.5, fontSize: 12 }}>/</span>
-              <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.6 }}>
+              <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.6 }}>
                 Matchmaking
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+              <span className="text-[9px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                 {selectedDemand.id}
               </span>
-              <span className="text-[9px] px-2 py-0.5" style={{ fontFamily: "Space Mono, monospace", color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.5 }}>
+              <span className="text-[9px] px-2 py-0.5" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.5 }}>
                 {selectedDemand.skills.length} requisitos
               </span>
             </div>

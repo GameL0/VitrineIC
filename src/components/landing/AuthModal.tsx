@@ -21,12 +21,12 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: "rgba(28,43,74,0.55)", backdropFilter: "blur(2px)" }}
+      style={{ backgroundColor: "rgba(26,25,21,0.55)", backdropFilter: "blur(2px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
         className="relative w-full max-w-lg"
-        style={{ background: OFFWHITE, border: `1.5px solid ${RED}`, borderRadius: "20px", overflow: "hidden" }}
+        style={{ background: OFFWHITE, border: `1px solid ${NAVY}14`, borderRadius: "20px", boxShadow: `0 40px 80px -24px ${NAVY}66`, overflow: "hidden" }}
       >
         {/* Header bar */}
         <div
@@ -37,7 +37,7 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
             <img src="/logo.jpg" alt="Logo ConectaIC" className="w-5 h-5 object-contain rounded-[4px]" style={{ background: NAVY }} />
             <span
               className="text-[10px] tracking-[0.2em] uppercase font-bold"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.8 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.8 }}
             >
               VitrineIC · Acesso
             </span>
@@ -62,7 +62,7 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
               onClick={() => setRole("student")}
               className="flex-1 py-3 text-[11px] tracking-[0.15em] uppercase font-medium transition-all"
               style={{
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "Geist, Inter, system-ui, sans-serif",
                 background: role === "student" ? NAVY : "transparent",
                 color: role === "student" ? OFFWHITE : NAVY,
                 border: `1px solid ${NAVY}`,
@@ -75,7 +75,7 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
               onClick={() => setRole("company")}
               className="flex-1 py-3 text-[11px] tracking-[0.15em] uppercase font-medium transition-all"
               style={{
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "Geist, Inter, system-ui, sans-serif",
                 background: role === "company" ? NAVY : "transparent",
                 color: role === "company" ? OFFWHITE : NAVY,
                 border: `1px solid ${NAVY}`,

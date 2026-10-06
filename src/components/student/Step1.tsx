@@ -21,11 +21,11 @@ export function Step1({
     <div>
       <h2
         className="text-3xl mb-2"
-        style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+        style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
       >
         Perfil & Interesses
       </h2>
-      <p className="text-sm mb-10" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-10" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
         Configure sua identidade na plataforma.
       </p>
 
@@ -54,7 +54,7 @@ export function Step1({
                 </svg>
                 <span
                   className="text-[9px] tracking-[0.14em] uppercase text-center"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   Carregar foto
                 </span>

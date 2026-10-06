@@ -18,7 +18,7 @@ export function WizardStepIndicator({ current }: { current: number }) {
             <span
               className="text-[20px] leading-none transition-all"
               style={{
-                fontFamily: "DM Serif Display, Georgia, serif",
+                fontFamily: "Inter Tight, Geist, system-ui, sans-serif",
                 color: i < current ? RED : i === current ? NAVY : `${NAVY}28`,
               }}
             >
@@ -27,7 +27,7 @@ export function WizardStepIndicator({ current }: { current: number }) {
             <span
               className="text-[9px] tracking-[0.14em] uppercase whitespace-nowrap"
               style={{
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "Geist Mono, ui-monospace, monospace",
                 color: i === current ? NAVY : `${NAVY}30`,
               }}
             >
@@ -93,10 +93,10 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
   const fieldsBystep = [
     /* step 0 */
     <div key="s0" className="flex flex-col gap-6">
-      <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+      <h2 className="text-3xl mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
         Descrição do Problema
       </h2>
-      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-4" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
         Descreva o desafio que sua organização enfrenta com clareza e objetividade.
       </p>
       <Input
@@ -131,10 +131,10 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
 
     /* step 1 */
     <div key="s1" className="flex flex-col gap-6">
-      <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+      <h2 className="text-3xl mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
         Escopo & Prazos
       </h2>
-      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-4" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
         Defina o tamanho do projeto, cronograma e recursos disponíveis.
       </p>
       <div className="grid md:grid-cols-2 gap-5">
@@ -179,10 +179,10 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
 
     /* step 2 */
     <div key="s2" className="flex flex-col gap-6">
-      <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+      <h2 className="text-3xl mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
         Requisitos Técnicos
       </h2>
-      <p className="text-sm mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-4" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
         Liste as tecnologias, habilidades e pré-requisitos desejados.
       </p>
       <Input
@@ -216,7 +216,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         </svg>
         <p
           className="text-[11px] leading-relaxed"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
         >
           Após submissão, a equipe de curadoria do IC revisará a demanda em até 5 dias úteis.
           Você receberá notificação por e-mail ao ser aprovada e quando houver match com estudantes.
@@ -226,10 +226,10 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
 
     /* step 3 — review */
     <div key="s3">
-      <h2 className="text-3xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+      <h2 className="text-3xl mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
         Revisão Final
       </h2>
-      <p className="text-sm mb-8" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+      <p className="text-sm mb-8" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
         Confirme os dados antes de enviar a demanda.
       </p>
       <div style={{ border: `1px solid ${NAVY}18`, borderRadius: "12px", overflow: "hidden" }}>
@@ -252,13 +252,13 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           >
             <span
               className="text-[9px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
             >
               {r.label}
             </span>
             <span
               className="text-[13px]"
-              style={{ fontFamily: r.label === "Skills" || r.label === "Prazo" ? "Space Mono, monospace" : "Inter, sans-serif", color: NAVY, opacity: 0.75 }}
+              style={{ fontFamily: r.label === "Skills" || r.label === "Prazo" ? "Geist Mono, ui-monospace, monospace" : "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.75 }}
             >
               {r.value}
             </span>
@@ -271,7 +271,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           <Label>Descrição do problema</Label>
           <p
             className="text-[13px] leading-relaxed mt-2"
-            style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.6, fontWeight: 300 }}
+            style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.6, fontWeight: 300 }}
           >
             {form.problem}
           </p>
@@ -292,7 +292,7 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
           onClick={() => setStep(Math.max(0, step - 1))}
           disabled={step === 0}
           className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -302,14 +302,14 @@ export function NewDemandWizard({ onSuccess }: { onSuccess: (protocol: string) =
         <div className="flex items-center gap-3">
           <span
             className="text-[9px] tracking-[0.14em]"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
           >
             {step + 1} / 4
           </span>
           <button
             onClick={next}
             className="flex items-center gap-3 px-8 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-88"
-            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
           >
             {step === 3 ? "Enviar Demanda" : "Próximo"}
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

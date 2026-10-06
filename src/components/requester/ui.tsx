@@ -6,7 +6,7 @@ export function Label({ children, light }: { children: React.ReactNode; light?: 
     <span
       className="block text-[9px] tracking-[0.22em] uppercase mb-1.5"
       style={{
-        fontFamily: "Space Mono, monospace",
+        fontFamily: "Geist Mono, ui-monospace, monospace",
         color: light ? OFFWHITE : NAVY,
         opacity: light ? 0.45 : 0.45,
       }}
@@ -36,7 +36,7 @@ export function Input({
   onChange?: (v: string) => void;
 }) {
   const base: React.CSSProperties = {
-    fontFamily: mono ? "Space Mono, monospace" : "Inter, sans-serif",
+    fontFamily: mono ? "Geist Mono, ui-monospace, monospace" : "Geist, Inter, system-ui, sans-serif",
     color: NAVY,
     fontSize: mono ? "12px" : "13px",
     border: `1px solid ${NAVY}35`,
@@ -110,7 +110,7 @@ export function SelectField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         style={{
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "Geist, Inter, system-ui, sans-serif",
           color: NAVY,
           fontSize: "13px",
           border: `1px solid ${NAVY}35`,
