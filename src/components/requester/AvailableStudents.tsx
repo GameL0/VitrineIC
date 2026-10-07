@@ -255,7 +255,7 @@ export function AvailableStudents() {
 
         {/* Offer Modal */}
         {showOfferModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: "rgba(26,25,21,0.55)", backdropFilter: "blur(2px)" }}>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: "rgba(11,37,69,0.55)", backdropFilter: "blur(2px)" }}>
             <div className="w-full max-w-md p-8" style={{ background: OFFWHITE, borderRadius: "20px" }}>
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>Fazer Oferta</h2>

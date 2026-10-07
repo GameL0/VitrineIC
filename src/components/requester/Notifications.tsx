@@ -222,7 +222,7 @@ export function Notifications() {
                     background: OFFWHITE,
                     border: `1px solid ${n.unread ? NAVY : `${NAVY}15`}`,
                     borderRadius: "12px",
-                    boxShadow: n.unread ? "0 4px 20px rgba(26,25,21,0.08)" : "none",
+                    boxShadow: n.unread ? "0 4px 20px rgba(11,37,69,0.08)" : "none",
                   }}
                 >
                   <div className="flex items-start gap-4">

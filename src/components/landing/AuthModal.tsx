@@ -21,7 +21,7 @@ export function AuthModal({ onClose, onEnterStudent, onEnterCompany }: { onClose
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: "rgba(26,25,21,0.55)", backdropFilter: "blur(2px)" }}
+      style={{ backgroundColor: "rgba(11,37,69,0.55)", backdropFilter: "blur(2px)" }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div

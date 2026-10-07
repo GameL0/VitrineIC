@@ -130,7 +130,7 @@ Os mesmos tokens existem como constantes em `src/styles/tokens.ts` para os
 estilos aplicados via `style={{}}`, que é como o código herdado do protótipo
 funciona. **Em código novo, prefira as utilities** (`text-navy`, `font-serif`).
 
-Identidade (inspirada no rulebase.co): tinta quente `#1a1915` (constante `NAVY`),
+Identidade (inspirada no rulebase.co): azul-marinho `#0b2545` (constante `NAVY`),
 vermelho `#c1121f` (constante `RED`), creme `#f3f1ec` (`OFFWHITE`); Inter Tight
 (títulos), Geist (corpo), Geist Mono (rótulos em caixa alta). Superfícies escuras
 texturizadas com a classe `.vt-stone`. Detalhes em `context/04-design-system.md`.

@@ -1,7 +1,7 @@
 # Design system
 
-A identidade segue a referência do **rulebase.co**: fundo creme quente, tinta
-quase preta, acento vermelho `#c1121f`, títulos sans grandes com tracking negativo,
+A identidade segue a referência do **rulebase.co**: fundo creme quente, texto
+azul-marinho, acento vermelho `#c1121f`, títulos sans grandes com tracking negativo,
 cards brancos arredondados com sombra suave e painéis escuros com textura de
 pedra. A estrutura das telas é a mesma da fase editorial anterior; mudou só a
 camada visual.
@@ -14,11 +14,12 @@ ficou para depois.
 
 | Token | Hex | Uso |
 |---|---|---|
-| `NAVY` (tinta) | `#1a1915` | texto, bordas, botão primário, painéis escuros |
+| `NAVY` (azul-marinho) | `#0b2545` | texto, bordas, botão primário, painéis escuros |
+| `NAVY_MID` / `NAVY_SOFT` | `#13315c` / `#134074` | gradiente dos painéis `.vt-stone` |
 | `RED` (vermelho) | `#c1121f` | acento pontual |
 | `OFFWHITE` (creme) | `#f3f1ec` | fundo da página, texto sobre tinta |
 | `STONE` | `#e6e2d9` | superfícies secundárias |
-| `ROSE` | `#f19ca1` | acento sobre fundo escuro |
+| `SKY` | `#8da9c4` | texto e acento sobre fundo escuro, seleção |
 
 Cores de status (literais, tons terrosos): azul ardósia `#4a6a9c` (novo),
 ocre `#b7791f` (em análise/aguardo), musgo `#2f6b4f` (aprovado/aceito),
