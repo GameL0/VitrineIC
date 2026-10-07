@@ -14,8 +14,8 @@ import {
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { SkillLevel, StudentSkill } from "@/types";
 
-const MONO = "Space Mono, monospace";
-const SANS = "Inter, sans-serif";
+const MONO = "Geist Mono, ui-monospace, monospace";
+const SANS = "Geist, Inter, system-ui, sans-serif";
 
 const DEFAULT_LEVEL: SkillLevel = 2;
 

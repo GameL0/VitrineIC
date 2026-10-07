@@ -10,20 +10,20 @@ export function MatchmakingHub({ demands, onSelect }: { demands: Demand[], onSel
       <div className="mb-10">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
           Curadoria Ativa
         </p>
         <h1
           className="text-4xl mb-3"
-          style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
         >
           Análise de Matches
         </h1>
         <p
           className="text-[14px] max-w-2xl"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
         >
           Selecione uma demanda aprovada para analisar os perfis dos estudantes,
           recomendar candidatos para a empresa e gerenciar oportunidades.
@@ -39,19 +39,19 @@ export function MatchmakingHub({ demands, onSelect }: { demands: Demand[], onSel
             style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}
           >
             <div className="flex items-center justify-between mb-4 w-full">
-               <span className="text-[10px] tracking-widest uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+               <span className="text-[10px] tracking-widest uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                  {d.id}
                </span>
-               <span className="px-2 py-0.5 text-[9px] tracking-[0.14em] uppercase font-bold" style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px", color: RED, fontFamily: "Space Mono, monospace" }}>
+               <span className="px-2 py-0.5 text-[9px] tracking-[0.14em] uppercase font-bold" style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px", color: RED, fontFamily: "Geist Mono, ui-monospace, monospace" }}>
                  {d.priority === 'alta' ? 'Alta Prioridade' : 'Normal'}
                </span>
             </div>
             
-            <h3 className="text-xl leading-tight mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+            <h3 className="text-xl leading-tight mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
               {d.title}
             </h3>
             
-            <p className="text-[12px] line-clamp-3 mb-6 flex-1" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65 }}>
+            <p className="text-[12px] line-clamp-3 mb-6 flex-1" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}>
               {d.description}
             </p>
 
@@ -60,13 +60,13 @@ export function MatchmakingHub({ demands, onSelect }: { demands: Demand[], onSel
                 <span
                   key={skill}
                   className="px-2 py-0.5 text-[9px] tracking-[0.1em] uppercase"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, border: `1px solid ${NAVY}20`, borderRadius: "6px" }}
+                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, border: `1px solid ${NAVY}20`, borderRadius: "6px" }}
                 >
                   {skill}
                 </span>
               ))}
               {d.skills.length > 3 && (
-                <span className="px-2 py-0.5 text-[9px] tracking-[0.1em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+                <span className="px-2 py-0.5 text-[9px] tracking-[0.1em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                   +{d.skills.length - 3}
                 </span>
               )}
@@ -76,7 +76,7 @@ export function MatchmakingHub({ demands, onSelect }: { demands: Demand[], onSel
 
         {approvedDemands.length === 0 && (
           <div className="col-span-full p-12 text-center" style={{ border: `1px dashed ${NAVY}30`, borderRadius: "16px" }}>
-             <p className="text-[14px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}>
+             <p className="text-[14px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}>
                Não há nenhuma demanda aprovada no momento. Aprove demandas na tela de Análise de Projetos.
              </p>
           </div>

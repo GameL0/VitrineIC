@@ -4,9 +4,9 @@ import { DEMANDS } from "@/data/demands";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { Invitation } from "@/types";
 
-const MONO = "Space Mono, monospace";
-const SANS = "Inter, sans-serif";
-const SERIF = "DM Serif Display, Georgia, serif";
+const MONO = "Geist Mono, ui-monospace, monospace";
+const SANS = "Geist, Inter, system-ui, sans-serif";
+const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
 
 /** Barras de compatibilidade, no mesmo vocabulário visual do matchmaking. */
 function ScoreBars({ score }: { score: number }) {

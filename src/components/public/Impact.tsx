@@ -4,9 +4,9 @@ import { INVITATIONS } from "@/data/invitations";
 import { IMPACT_PERIOD, TARGETS, TESTIMONIALS } from "@/data/impact";
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
-const MONO = "Space Mono, monospace";
-const SANS = "Inter, sans-serif";
-const SERIF = "DM Serif Display, Georgia, serif";
+const MONO = "Geist Mono, ui-monospace, monospace";
+const SANS = "Geist, Inter, system-ui, sans-serif";
+const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
 
 /**
  * Painel de indicadores da atividade de extensão (ACE1).

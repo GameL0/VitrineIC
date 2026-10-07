@@ -5,7 +5,7 @@ export function Label({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="block text-[9px] tracking-[0.22em] uppercase mb-1.5"
-      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+      style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
     >
       {children}
     </span>
@@ -16,7 +16,7 @@ export function Mono({ children, dim, red }: { children: React.ReactNode; dim?: 
   return (
     <span
       style={{
-        fontFamily: "Space Mono, monospace",
+        fontFamily: "Geist Mono, ui-monospace, monospace",
         color: red ? RED : NAVY,
         opacity: dim ? 0.4 : 1,
         fontSize: "11px",
@@ -44,7 +44,7 @@ export function SkillTag({
     <span
       className="inline-block tracking-[0.12em] uppercase"
       style={{
-        fontFamily: "Space Mono, monospace",
+        fontFamily: "Geist Mono, ui-monospace, monospace",
         fontSize: small ? "8px" : "9px",
         padding: small ? "2px 6px" : "3px 8px",
         border: `1px solid ${highlight ? RED : `${NAVY}28`}`,

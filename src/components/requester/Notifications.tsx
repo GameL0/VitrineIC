@@ -60,7 +60,7 @@ export function Notifications() {
         <button
           onClick={() => { setSelected(null); setReply(""); }}
           className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 mb-8"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -76,14 +76,14 @@ export function Notifications() {
             <div>
               <span
                 className="text-[10px] tracking-widest uppercase mb-3 inline-block font-bold"
-                style={{ fontFamily: "Space Mono, monospace", color: selected.type !== "SISTEMA" ? RED : `${NAVY}80` }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: selected.type !== "SISTEMA" ? RED : `${NAVY}80` }}
               >
                 {selected.type}
               </span>
-              <h2 className="text-3xl mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+              <h2 className="text-3xl mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                 {selected.project}
               </h2>
-              <p className="text-[14px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.6 }}>
+              <p className="text-[14px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.6 }}>
                 Enviado por <strong style={{ fontWeight: 600 }}>{selected.from}</strong> em {selected.time}
               </p>
             </div>
@@ -108,7 +108,7 @@ export function Notifications() {
           </div>
 
           <div className="mb-10">
-            <p className="text-[15px] leading-relaxed whitespace-pre-wrap" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>
+            <p className="text-[15px] leading-relaxed whitespace-pre-wrap" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>
               {selected.content}
             </p>
           </div>
@@ -125,7 +125,7 @@ export function Notifications() {
             <div className="mt-4 flex justify-end">
               <button
                 className="px-8 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-90"
-                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "8px" }}
+                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "8px" }}
               >
                 Enviar Resposta
               </button>
@@ -141,13 +141,13 @@ export function Notifications() {
       <div className="mb-10">
         <h1
           className="text-4xl mb-3"
-          style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
         >
           Notificações
         </h1>
         <p
           className="text-[14px] max-w-xl"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.6, fontWeight: 300 }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.6, fontWeight: 300 }}
         >
           Mantenha-se atualizado sobre candidaturas, recomendações e aprovações das suas demandas.
         </p>
@@ -164,7 +164,7 @@ export function Notifications() {
                 color: NAVY,
               }}
             >
-              <span className="text-[13px] font-medium" style={{ fontFamily: "Inter, sans-serif" }}>
+              <span className="text-[13px] font-medium" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif" }}>
                 Todas
               </span>
             </button>
@@ -176,13 +176,13 @@ export function Notifications() {
                 color: NAVY,
               }}
             >
-              <span className="text-[13px] font-medium" style={{ fontFamily: "Inter, sans-serif" }}>
+              <span className="text-[13px] font-medium" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif" }}>
                 Não lidas
               </span>
               {unreadCount > 0 && (
                 <span
                   className="px-2 py-0.5 text-[10px] font-bold rounded-full"
-                  style={{ background: RED, color: OFFWHITE, fontFamily: "Space Mono, monospace" }}
+                  style={{ background: RED, color: OFFWHITE, fontFamily: "Geist Mono, ui-monospace, monospace" }}
                 >
                   {unreadCount}
                 </span>
@@ -195,7 +195,7 @@ export function Notifications() {
           <div className="flex items-center justify-between mb-6">
             <span
               className="text-[10px] tracking-[0.16em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
             >
               {filteredNotifs.length} {filteredNotifs.length === 1 ? "mensagem" : "mensagens"}
             </span>
@@ -203,7 +203,7 @@ export function Notifications() {
               <button
                 onClick={markAllRead}
                 className="text-[10px] tracking-[0.16em] uppercase font-bold transition-opacity hover:opacity-70"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
               >
                 Marcar todas como lidas
               </button>
@@ -222,7 +222,7 @@ export function Notifications() {
                     background: OFFWHITE,
                     border: `1px solid ${n.unread ? NAVY : `${NAVY}15`}`,
                     borderRadius: "12px",
-                    boxShadow: n.unread ? "0 4px 20px rgba(28,43,74,0.08)" : "none",
+                    boxShadow: n.unread ? "0 4px 20px rgba(11,37,69,0.08)" : "none",
                   }}
                 >
                   <div className="flex items-start gap-4">
@@ -237,13 +237,13 @@ export function Notifications() {
                       <div className="flex items-center gap-3 mb-1">
                         <span
                           className="text-[9px] tracking-widest uppercase font-bold"
-                          style={{ fontFamily: "Space Mono, monospace", color: n.type !== "SISTEMA" ? RED : `${NAVY}60` }}
+                          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: n.type !== "SISTEMA" ? RED : `${NAVY}60` }}
                         >
                           {n.type}
                         </span>
                         <span
                           className="text-[10px]"
-                          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
+                          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}
                         >
                           · {n.time}
                         </span>
@@ -251,7 +251,7 @@ export function Notifications() {
                       <h3
                         className="text-[16px] mb-1"
                         style={{
-                          fontFamily: "DM Serif Display, Georgia, serif",
+                          fontFamily: "Inter Tight, Geist, system-ui, sans-serif",
                           color: NAVY,
                           fontWeight: n.unread ? "bold" : "normal"
                         }}
@@ -260,7 +260,7 @@ export function Notifications() {
                       </h3>
                       <p
                         className="text-[13px] line-clamp-1"
-                        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.7 }}
+                        style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.7 }}
                       >
                         {n.content}
                       </p>
@@ -277,7 +277,7 @@ export function Notifications() {
               >
                 <p
                   className="text-[13px]"
-                  style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
+                  style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}
                 >
                   Nenhuma notificação encontrada.
                 </p>

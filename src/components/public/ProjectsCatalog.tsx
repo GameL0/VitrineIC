@@ -3,9 +3,9 @@ import { ALL_PROJECTS } from "@/data/students";
 import { STATUS_CONFIG } from "@/data/projects";
 import { NAVY, RED } from "@/styles/tokens";
 
-const MONO = "Space Mono, monospace";
-const SANS = "Inter, sans-serif";
-const SERIF = "DM Serif Display, Georgia, serif";
+const MONO = "Geist Mono, ui-monospace, monospace";
+const SANS = "Geist, Inter, system-ui, sans-serif";
+const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
 
 const AREAS = ["Todas", ...Array.from(new Set(ALL_PROJECTS.map((p) => p.area)))];
 
@@ -54,7 +54,7 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
               fontFamily: MONO,
               border: `1px solid ${area === a ? NAVY : `${NAVY}30`}`,
               background: area === a ? NAVY : "transparent",
-              color: area === a ? "#F5F4F0" : NAVY,
+              color: area === a ? "#f3f1ec" : NAVY,
               opacity: area === a ? 1 : 0.6,
             }}
           >
@@ -69,7 +69,7 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
         </span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
         {shown.map((project, i) => {
           const status = STATUS_CONFIG[project.status];
           return (
@@ -78,19 +78,19 @@ export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string)
               onClick={() => onOpenProject(project.id)}
               className="group text-left p-6 transition-all"
               style={{
-                border: `1px solid ${NAVY}33`,
+                border: `1px solid ${NAVY}14`,
                 borderRadius: "16px",
                 background: "#ffffff",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = `${NAVY}05`;
-                e.currentTarget.style.borderColor = NAVY;
-                e.currentTarget.style.boxShadow = `0 0 0 1px ${NAVY}`;
+                e.currentTarget.style.background = "#ffffff";
+                e.currentTarget.style.borderColor = `${NAVY}33`;
+                e.currentTarget.style.boxShadow = `0 18px 40px -20px ${NAVY}55`;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "#ffffff";
-                e.currentTarget.style.borderColor = `${NAVY}33`;
-                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.borderColor = `${NAVY}14`;
+                e.currentTarget.style.boxShadow = "";
               }}
             >
               <div className="flex items-start justify-between mb-4">

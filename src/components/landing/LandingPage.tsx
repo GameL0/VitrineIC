@@ -1,6 +1,6 @@
 import { featuredStudents, stats } from "@/data/showcase";
 import { INSTITUTION } from "@/data/institution";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED, SKY } from "@/styles/tokens";
 import type { PublicRoute, PublicView } from "@/components/public/routes";
 import { PublicNav } from "@/components/public/PublicNav";
 
@@ -36,7 +36,7 @@ export default function LandingPage({
           <div className="md:col-span-8">
             <p
               className="text-[10px] tracking-[0.25em] uppercase mb-6 flex items-center gap-3"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
             >
               <span
                 className="inline-block w-8"
@@ -46,7 +46,7 @@ export default function LandingPage({
             </p>
             <h1
               className="text-5xl md:text-7xl leading-[1.0] mb-8"
-              style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY, letterSpacing: "-0.01em" }}
+              style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY, letterSpacing: "-0.01em" }}
             >
               Conectando{" "}
               <em className="not-italic" style={{ color: RED }}>
@@ -56,7 +56,7 @@ export default function LandingPage({
             </h1>
             <p
               className="text-base md:text-lg leading-[1.7] max-w-xl"
-              style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65, fontWeight: 300 }}
+              style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65, fontWeight: 300 }}
             >
               VitrineIC é o ponto de encontro entre estudantes de computação e
               organizações que buscam soluções inovadoras. Explore projetos,
@@ -66,7 +66,7 @@ export default function LandingPage({
               <button
                 onClick={onSignIn}
                 className="inline-flex items-center gap-4 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-semibold transition-all group"
-                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
                 onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
@@ -78,31 +78,35 @@ export default function LandingPage({
               <button
                 onClick={() => onNavigate({ view: "projects" })}
                 className="inline-flex items-center gap-2 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-medium transition-opacity hover:opacity-70"
-                style={{ border: `1px solid ${NAVY}44`, color: NAVY, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+                style={{ border: `1px solid ${NAVY}44`, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
               >
                 Explorar Projetos
               </button>
             </div>
           </div>
 
-          {/* Side rule */}
+          {/* Side card */}
           <div className="hidden md:block md:col-span-4 pt-4">
             <div
-              className="w-full h-px mb-8"
-              style={{ background: `${NAVY}15` }}
-            />
-            <p
-              className="text-[10px] tracking-[0.18em] uppercase leading-relaxed"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              className="vt-stone p-8 flex flex-col justify-between"
+              style={{ borderRadius: "20px", minHeight: "320px" }}
             >
-              {INSTITUTION.unit}<br />
-              {INSTITUTION.university}<br />
-              {INSTITUTION.city} — {INSTITUTION.state}
-            </p>
-            <div
-              className="w-full h-px mt-8"
-              style={{ background: `${NAVY}15` }}
-            />
+              <span
+                className="inline-flex items-center gap-2 self-start px-3 py-1 text-[10px] uppercase"
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: SKY, border: `1px solid ${SKY}55` }}
+              >
+                <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: SKY }} />
+                Vitrine aberta
+              </span>
+              <p
+                className="text-[11px] uppercase leading-relaxed"
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: OFFWHITE, opacity: 0.7 }}
+              >
+                {INSTITUTION.unit}<br />
+                {INSTITUTION.university}<br />
+                {INSTITUTION.city} — {INSTITUTION.state}
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -123,20 +127,20 @@ export default function LandingPage({
             >
               <span
                 className="text-[10px] mt-1 flex-shrink-0"
-                style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.8 }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED, opacity: 0.8 }}
               >
                 {stat.index}
               </span>
               <div>
                 <p
                   className="text-4xl md:text-5xl leading-none mb-1"
-                  style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+                  style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
                 >
                   {stat.value}
                 </p>
                 <p
                   className="text-[11px] tracking-[0.14em] uppercase mt-2"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   {stat.label}
                 </p>
@@ -152,7 +156,7 @@ export default function LandingPage({
           <div>
             <p
               className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
             >
               <span
                 className="inline-block w-5"
@@ -162,7 +166,7 @@ export default function LandingPage({
             </p>
             <h2
               className="text-3xl md:text-4xl leading-tight"
-              style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+              style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
             >
               Estudantes & Projetos
             </h2>
@@ -171,7 +175,7 @@ export default function LandingPage({
             onClick={() => onNavigate({ view: "projects" })}
             className="hidden md:block text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-50 pb-1"
             style={{
-              fontFamily: "Space Mono, monospace",
+              fontFamily: "Geist Mono, ui-monospace, monospace",
               color: NAVY,
               borderBottom: `1px solid ${NAVY}`,
             }}
@@ -186,26 +190,26 @@ export default function LandingPage({
               key={i}
               className="group p-6 transition-all cursor-pointer"
               style={{
-                border: `1px solid ${NAVY}33`,
+                border: `1px solid ${NAVY}14`,
                 borderRadius: "16px",
                 background: "#ffffff",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.background = `${NAVY}05`;
-                (e.currentTarget as HTMLDivElement).style.borderColor = NAVY;
-                (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 1px ${NAVY}`;
+                (e.currentTarget as HTMLDivElement).style.background = "#ffffff";
+                (e.currentTarget as HTMLDivElement).style.borderColor = `${NAVY}33`;
+                (e.currentTarget as HTMLDivElement).style.boxShadow = `0 18px 40px -20px ${NAVY}55`;
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLDivElement).style.background = "#ffffff";
-                (e.currentTarget as HTMLDivElement).style.borderColor = `${NAVY}33`;
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                (e.currentTarget as HTMLDivElement).style.borderColor = `${NAVY}14`;
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "";
               }}
             >
               <div className="flex items-start justify-between mb-4">
                 <span
                   className="text-[9px] tracking-[0.16em] uppercase px-2 py-1"
                   style={{
-                    fontFamily: "Space Mono, monospace",
+                    fontFamily: "Geist Mono, ui-monospace, monospace",
                     color: NAVY,
                     border: `1px solid ${NAVY}25`,
                     opacity: 0.6,
@@ -216,26 +220,26 @@ export default function LandingPage({
                 </span>
                 <span
                   className="text-[9px]"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   {student.year}
                 </span>
               </div>
               <h3
                 className="text-base font-semibold mb-1 leading-snug"
-                style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
+                style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}
               >
                 {student.project}
               </h3>
               <p
                 className="text-[12px] mt-3 leading-relaxed"
-                style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
+                style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}
               >
                 {student.name}
               </p>
               <p
                 className="text-[10px] mt-0.5"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {student.course} · {student.semester}
               </p>
@@ -263,29 +267,29 @@ export default function LandingPage({
 
       {/* ── CTA Banner ── */}
       <section
-        className="mx-8 md:mx-16 mb-20"
-        style={{ background: NAVY, borderRadius: "20px", overflow: "hidden" }}
+        className="vt-stone mx-8 md:mx-16 mb-20"
+        style={{ borderRadius: "24px", overflow: "hidden" }}
       >
         <div className="max-w-screen-xl mx-auto px-8 md:px-16 py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
             <p
               className="text-[10px] tracking-[0.22em] uppercase mb-4"
-              style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: OFFWHITE, opacity: 0.5 }}
             >
               Pronto para começar?
             </p>
             <h2
               className="text-3xl md:text-4xl leading-tight"
-              style={{ fontFamily: "DM Serif Display, Georgia, serif", color: OFFWHITE }}
+              style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}
             >
               Faça parte da vitrine de<br />
-              <em className="not-italic" style={{ color: RED }}>inovação</em> do IC.
+              <em className="not-italic" style={{ color: SKY }}>inovação</em> do IC.
             </h2>
           </div>
           <button
             onClick={onSignIn}
             className="flex-shrink-0 flex items-center gap-4 px-8 py-4 text-[11px] tracking-[0.22em] uppercase font-semibold transition-all"
-            style={{ background: OFFWHITE, color: NAVY, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+            style={{ background: OFFWHITE, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
@@ -298,7 +302,7 @@ export default function LandingPage({
       </section>
 
       {/* ── Footer ── */}
-      <div style={{ background: NAVY }}>
+      <div className="vt-stone">
         <footer
           className="px-8 md:px-16 py-8 max-w-screen-xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
           style={{ borderTop: `1px solid ${OFFWHITE}15` }}
@@ -307,7 +311,7 @@ export default function LandingPage({
             <div className="w-4 h-4" style={{ background: OFFWHITE, borderRadius: "4px" }} />
             <span
               className="text-[11px] tracking-[0.2em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: OFFWHITE, opacity: 0.5 }}
             >
               VitrineIC — {INSTITUTION.unitShort} · {INSTITUTION.universityShort} · 2026
             </span>
@@ -317,7 +321,7 @@ export default function LandingPage({
               <button
                 key={item}
                 className="text-[10px] tracking-[0.15em] uppercase transition-opacity hover:opacity-80 opacity-50"
-                style={{ fontFamily: "Space Mono, monospace", color: OFFWHITE }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: OFFWHITE }}
               >
                 {item}
               </button>

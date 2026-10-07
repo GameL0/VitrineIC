@@ -20,20 +20,20 @@ export function MatchConfirmed({
     <div className="px-8 md:px-16 py-16 max-w-screen-lg mx-auto">
       <div className="mb-12">
         <p className="text-[9px] tracking-[0.25em] uppercase mb-5 flex items-center gap-3"
-          style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.85 }}>
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED, opacity: 0.85 }}>
           <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
           Recomendação Registrada
         </p>
         <h1 className="text-7xl md:text-8xl leading-none tracking-tight mb-6"
-          style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
           Recomendação<br />
           <em className="not-italic" style={{ color: RED }}>enviada.</em>
         </h1>
         <div className="inline-flex items-center gap-4 px-5 py-3" style={{ border: `1px solid ${NAVY}22`, background: `${NAVY}04` }}>
-          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
             Protocolo
           </span>
-          <span className="text-xl font-bold" style={{ fontFamily: "Space Mono, monospace", color: NAVY }}>
+          <span className="text-xl font-bold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>
             {protocol}
           </span>
         </div>
@@ -43,7 +43,7 @@ export function MatchConfirmed({
       <div className="grid md:grid-cols-2 gap-0 mb-10" style={{ border: `1px solid ${NAVY}18` }}>
         <div className="px-8 py-7" style={{ borderRight: `1px solid ${NAVY}15` }}>
           <Label>Demanda</Label>
-          <h3 className="text-xl mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+          <h3 className="text-xl mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
             {demand.title}
           </h3>
           <Mono dim>{demand.id} · {demand.company}</Mono>
@@ -55,22 +55,22 @@ export function MatchConfirmed({
           <Label>Estudante alocado</Label>
           <div className="flex items-center gap-4 mb-3">
             <div className="w-12 h-12 flex items-center justify-center" style={{ background: NAVY }}>
-              <span className="text-sm" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: OFFWHITE }}>
+              <span className="text-sm" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>
                 {student.initials}
               </span>
             </div>
             <div>
-              <h3 className="text-xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+              <h3 className="text-xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                 {student.name}
               </h3>
               <Mono dim>{student.course} · {student.semester}</Mono>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-2xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: RED }}>
+            <span className="text-2xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: RED }}>
               {score}%
             </span>
-            <span className="text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+            <span className="text-[9px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
               compatibilidade técnica
             </span>
           </div>
@@ -97,7 +97,7 @@ export function MatchConfirmed({
                 </svg>
               )}
             </div>
-            <span className="text-[12px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: item.done ? 0.6 : 0.35, fontWeight: 300 }}>
+            <span className="text-[12px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: item.done ? 0.6 : 0.35, fontWeight: 300 }}>
               {item.text}
             </span>
           </div>
@@ -108,7 +108,7 @@ export function MatchConfirmed({
         <button
           onClick={onBack}
           className="flex items-center gap-3 px-8 py-3.5 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-85"
-          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
         >
           Voltar à Fila
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -117,7 +117,7 @@ export function MatchConfirmed({
         </button>
         <button
           className="px-8 py-3.5 text-[10px] tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-70"
-          style={{ border: `1px solid ${NAVY}35`, color: NAVY, fontFamily: "Inter, sans-serif" }}
+          style={{ border: `1px solid ${NAVY}35`, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
         >
           Exportar relatório
         </button>

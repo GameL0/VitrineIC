@@ -13,14 +13,14 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
       <div className="mb-16">
         <p
           className="text-[9px] tracking-[0.25em] uppercase mb-6 flex items-center gap-3"
-          style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.8 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED, opacity: 0.8 }}
         >
           <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
           Demanda enviada
         </p>
         <h1
           className="text-7xl md:text-9xl leading-none tracking-tight mb-8"
-          style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
         >
           Sucesso.
         </h1>
@@ -30,20 +30,20 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
         >
           <span
             className="text-[9px] tracking-[0.18em] uppercase"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
           >
             Protocolo
           </span>
           <span
             className="text-2xl font-bold tracking-wider"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
           >
             {protocol}
           </span>
         </div>
         <p
           className="text-[13px] mt-6 max-w-lg leading-relaxed"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
         >
           Sua demanda foi registrada e está em fila de análise. Você receberá atualizações
           por e-mail conforme o processo avança.
@@ -54,7 +54,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
       <div className="mb-16">
         <p
           className="text-[9px] tracking-[0.22em] uppercase mb-8"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           Próximas etapas
         </p>
@@ -80,7 +80,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
                     <span
                       className="text-[11px] font-bold"
                       style={{
-                        fontFamily: "Space Mono, monospace",
+                        fontFamily: "Geist Mono, ui-monospace, monospace",
                         color: i === 0 ? OFFWHITE : NAVY,
                         opacity: i === 0 ? 1 : 0.4,
                       }}
@@ -92,7 +92,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
                 <h3
                   className="text-[15px] mb-2"
                   style={{
-                    fontFamily: "DM Serif Display, Georgia, serif",
+                    fontFamily: "Inter Tight, Geist, system-ui, sans-serif",
                     color: i === 0 ? NAVY : `${NAVY}88`,
                   }}
                 >
@@ -101,7 +101,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
                 <p
                   className="text-[11px] leading-relaxed"
                   style={{
-                    fontFamily: "Inter, sans-serif",
+                    fontFamily: "Geist, Inter, system-ui, sans-serif",
                     color: NAVY,
                     opacity: i === 0 ? 0.55 : 0.3,
                     fontWeight: 300,
@@ -128,7 +128,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
                 >
                   <span
                     className="text-[10px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: i === 0 ? OFFWHITE : NAVY, opacity: i === 0 ? 1 : 0.4 }}
+                    style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: i === 0 ? OFFWHITE : NAVY, opacity: i === 0 ? 1 : 0.4 }}
                   >
                     {s.n}
                   </span>
@@ -138,10 +138,10 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
                 )}
               </div>
               <div className="pb-6">
-                <h3 className="text-[15px] mb-1" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: i === 0 ? NAVY : `${NAVY}88` }}>
+                <h3 className="text-[15px] mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: i === 0 ? NAVY : `${NAVY}88` }}>
                   {s.label}
                 </h3>
-                <p className="text-[11px] leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: i === 0 ? 0.5 : 0.28, fontWeight: 300 }}>
+                <p className="text-[11px] leading-relaxed" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: i === 0 ? 0.5 : 0.28, fontWeight: 300 }}>
                   {s.desc}
                 </p>
               </div>
@@ -154,7 +154,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
         <button
           onClick={onDashboard}
           className="flex items-center gap-3 px-8 py-3.5 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-85"
-          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
         >
           Ver Demandas
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -163,7 +163,7 @@ export function SuccessScreen({ protocol, onDashboard }: { protocol: string; onD
         </button>
         <button
           className="px-8 py-3.5 text-[10px] tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-70"
-          style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Inter, sans-serif" }}
+          style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
         >
           Nova Demanda
         </button>

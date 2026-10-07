@@ -50,7 +50,7 @@ export function StatusBadge({ status }: { status: string }) {
       {icon}
       <span
         className="text-[11px] uppercase tracking-widest"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+        style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
       >
         {label}
       </span>

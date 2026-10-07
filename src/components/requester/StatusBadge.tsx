@@ -31,7 +31,7 @@ export function StatusBadge({ status }: { status: StatusKey }) {
       <span
         className="text-[9px] tracking-[0.14em] uppercase"
         style={{
-          fontFamily: "Space Mono, monospace",
+          fontFamily: "Geist Mono, ui-monospace, monospace",
           color: cfg.shape === "square" || cfg.shape === "circle" ? cfg.color : NAVY,
           opacity: cfg.shape === "diamond" && status === "cancelado" ? 0.45 : 1,
         }}

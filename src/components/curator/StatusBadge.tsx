@@ -1,12 +1,12 @@
 import { Mono } from "./ui";
-import { NAVY, RED } from "@/styles/tokens";
+import { NAVY } from "@/styles/tokens";
 import type { DemandStatus } from "@/types";
 
 export const DEMAND_STATUS: Record<DemandStatus, { label: string; color: string; shape: "circle" | "square" | "diamond" }> = {
-  nova:       { label: "Nova",         color: "#2563eb",    shape: "diamond" },
-  em_analise: { label: "Em Análise",   color: RED,          shape: "circle"  },
-  aprovada:   { label: "Aprovada",     color: "#16a34a",    shape: "square"  },
-  rejeitada:  { label: "Rejeitada",    color: RED,          shape: "diamond" },
+  nova:       { label: "Nova",         color: "#4a6a9c",    shape: "diamond" },
+  em_analise: { label: "Em Análise",   color: "#b7791f",    shape: "circle"  },
+  aprovada:   { label: "Aprovada",     color: "#2f6b4f",    shape: "square"  },
+  rejeitada:  { label: "Rejeitada",    color: "#b4432f",    shape: "diamond" },
   matched:    { label: "Matched",      color: NAVY,         shape: "square"  },
 };
 
@@ -21,7 +21,7 @@ export function StatusBadge({ status, size = 8 }: { status: DemandStatus; size?:
         {cfg.shape === "square" && <rect x={0.5} y={0.5} width={size-1} height={size-1} fill={cfg.color} />}
         {cfg.shape === "diamond" && <polygon points={`${size/2},0.5 ${size-0.5},${size/2} ${size/2},${size-0.5} 0.5,${size/2}`} fill={cfg.color} />}
       </svg>
-      <span className="text-[9px] tracking-[0.14em] uppercase" style={{ fontFamily: "Space Mono, monospace", color: cfg.color }}>
+      <span className="text-[9px] tracking-[0.14em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: cfg.color }}>
         {cfg.label}
       </span>
     </div>

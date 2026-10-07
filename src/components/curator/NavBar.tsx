@@ -26,10 +26,10 @@ export function NavBar({
     >
       <div className="flex items-center gap-3">
         <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
-        <span className="text-[12px] tracking-[0.2em] uppercase font-semibold" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>
+        <span className="text-[12px] tracking-[0.2em] uppercase font-semibold" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>
           VitrineIC
         </span>
-        <span className="text-[9px] tracking-[0.18em] uppercase ml-2 hidden md:inline-block" style={{ fontFamily: "Space Mono, monospace", color: RED, opacity: 0.7 }}>
+        <span className="text-[9px] tracking-[0.18em] uppercase ml-2 hidden md:inline-block" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED, opacity: 0.7 }}>
           · Admin — Curadoria
         </span>
       </div>
@@ -40,7 +40,7 @@ export function NavBar({
             onClick={() => setView(item.id as any)}
             className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all flex items-center gap-2"
             style={{
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "Geist, Inter, system-ui, sans-serif",
               color: NAVY,
               background: view === item.id || (item.id === "matchmaking_hub" && (view === "matchmaking" || view === "confirmed")) ? `${NAVY}08` : "transparent",
               borderRadius: "10px",
@@ -49,7 +49,7 @@ export function NavBar({
           >
             {item.label}
             {item.badge && (
-              <span className="px-1.5 py-0.5 text-[8px] rounded-[5px]" style={{ background: RED, color: OFFWHITE, fontFamily: "Space Mono, monospace" }}>
+              <span className="px-1.5 py-0.5 text-[8px] rounded-[5px]" style={{ background: RED, color: OFFWHITE, fontFamily: "Geist Mono, ui-monospace, monospace" }}>
                 {item.badge}
               </span>
             )}
@@ -59,7 +59,7 @@ export function NavBar({
       <button
         onClick={onBack}
         className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50 flex items-center gap-2"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+        style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
           <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />

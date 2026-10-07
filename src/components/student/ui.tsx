@@ -5,7 +5,7 @@ export function Label({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold"
-      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.85 }}
+      style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.85 }}
     >
       {children}
     </span>
@@ -32,7 +32,7 @@ export function Input({
   onChange?: (v: string) => void;
 }) {
   const base: React.CSSProperties = {
-    fontFamily: mono ? "Space Mono, monospace" : "Inter, sans-serif",
+    fontFamily: mono ? "Geist Mono, ui-monospace, monospace" : "Geist, Inter, system-ui, sans-serif",
     color: NAVY,
     fontSize: mono ? "12px" : "13px",
     border: `1px solid ${NAVY}60`,
@@ -116,7 +116,7 @@ export function Select({
           }
         }}
         style={{
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "Geist, Inter, system-ui, sans-serif",
           color: NAVY,
           fontSize: "13px",
           border: `1px solid ${NAVY}60`,
@@ -175,7 +175,7 @@ export function MultiSelect({
       <div
         onClick={() => setOpen(!open)}
         style={{
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "Geist, Inter, system-ui, sans-serif",
           color: NAVY,
           fontSize: "13px",
           border: `1px solid ${open ? NAVY : `${NAVY}60`}`,
@@ -215,7 +215,7 @@ export function MultiSelect({
               onClick={() => toggle(o)}
               className="px-3 py-2.5 flex items-center gap-3 transition-colors cursor-pointer"
               style={{
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "Geist, Inter, system-ui, sans-serif",
                 color: NAVY,
                 fontSize: "13px",
                 borderBottom: `1px solid ${NAVY}10`
@@ -266,7 +266,7 @@ export function Tag({
       onClick={onClick}
       className="px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase transition-all font-medium"
       style={{
-        fontFamily: "Space Mono, monospace",
+        fontFamily: "Geist Mono, ui-monospace, monospace",
         border: `1px solid ${active ? (accent ? RED : NAVY) : `${NAVY}60`}`,
         background: active ? (accent ? RED : NAVY) : "transparent",
         color: active ? OFFWHITE : NAVY,

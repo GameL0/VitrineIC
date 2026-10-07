@@ -6,7 +6,7 @@ export function CompanyForm({ onEnter }: { onEnter: () => void }) {
     <div>
       <p
         className="text-[11px] tracking-[0.15em] uppercase mb-5"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+        style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
       >
         Acesso Corporativo
       </p>
@@ -49,7 +49,7 @@ export function CompanyForm({ onEnter }: { onEnter: () => void }) {
       <button
         onClick={onEnter}
         className="w-full py-3 text-[11px] tracking-[0.18em] uppercase font-semibold transition-all mt-1"
-        style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif" }}
+        style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
         onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
         onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
       >
@@ -57,7 +57,7 @@ export function CompanyForm({ onEnter }: { onEnter: () => void }) {
       </button>
       <p
         className="text-center text-[11px] mt-4"
-        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
+        style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}
       >
         Primeira vez?{" "}
         <button className="underline underline-offset-2" style={{ color: RED }}>
