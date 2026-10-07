@@ -16,7 +16,7 @@ ficou para depois.
 |---|---|---|
 | `NAVY` (azul-marinho) | `#0b2545` | texto, bordas, botão primário |
 | `NAVY_MID` / `NAVY_SOFT` | `#13315c` / `#134074` | tons intermediários de azul (reserva) |
-| `INK` (preto) | `#1a1915` | painéis `.vt-stone`, avatares quadrados e blocos escuros |
+| `INK` (azul-noite) | `#001233` | painéis `.vt-stone`, avatares quadrados e blocos escuros |
 | `RED` (vermelho) | `#c1121f` | acento pontual |
 | `OFFWHITE` (creme) | `#f3f1ec` | fundo da página, texto sobre tinta |
 | `STONE` | `#e6e2d9` | superfícies secundárias |

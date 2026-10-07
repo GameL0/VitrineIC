@@ -10,8 +10,8 @@ export const NAVY_MID = "#13315c";
 export const NAVY_SOFT = "#134074";
 export const RED = "#c1121f";
 export const OFFWHITE = "#f3f1ec";
-/** Preto quente dos blocos escuros (painéis, avatares quadrados). */
-export const INK = "#1a1915";
+/** Azul quase preto dos blocos escuros (painéis, avatares quadrados). */
+export const INK = "#001233";
 /** Pedra clara para superfícies secundárias. */
 export const STONE = "#e6e2d9";
 /** Azul claro para texto e acento sobre fundo escuro. */
