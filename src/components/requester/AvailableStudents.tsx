@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import { STUDENTS } from "@/data/students";
 import { Label, SelectField } from "./ui";
 
@@ -19,7 +19,7 @@ function StudentMatchCard({ student, onClick }: { student: any, onClick: () => v
       >
         <div
           className="w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-[12px]"
-          style={{ background: INK }}
+          style={{ background: NAVY }}
         >
           <span
             className="text-lg"

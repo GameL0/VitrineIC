@@ -1,7 +1,7 @@
 import { Label, Mono, SkillTag } from "./ui";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function MatchConfirmed({
@@ -54,7 +54,7 @@ export function MatchConfirmed({
         <div className="px-8 py-7">
           <Label>Estudante alocado</Label>
           <div className="flex items-center gap-4 mb-3">
-            <div className="w-12 h-12 flex items-center justify-center" style={{ background: INK }}>
+            <div className="w-12 h-12 flex items-center justify-center" style={{ background: NAVY }}>
               <span className="text-sm" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>
                 {student.initials}
               </span>

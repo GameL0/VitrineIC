@@ -1,6 +1,6 @@
 import { findProject } from "@/data/students";
 import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
 const MONO = "Geist Mono, ui-monospace, monospace";
 const SANS = "Geist, Inter, system-ui, sans-serif";
@@ -144,7 +144,7 @@ export function ProjectDetail({
       >
         <div
           className="flex items-center justify-center flex-shrink-0"
-          style={{ width: "48px", height: "48px", background: INK }}
+          style={{ width: "48px", height: "48px", background: NAVY }}
         >
           <span
             className="text-[13px] tracking-[0.1em]"
@@ -183,7 +183,7 @@ export function ProjectDetail({
 
       <div
         className="mt-12 p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
-        style={{ background: INK }}
+        style={{ background: NAVY }}
       >
         <div>
           <p

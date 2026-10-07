@@ -1,7 +1,7 @@
 import { findStudent } from "@/data/students";
 import { LANGUAGE_LEVELS } from "@/data/languages";
 import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 
 const MONO = "Geist Mono, ui-monospace, monospace";
 const SANS = "Geist, Inter, system-ui, sans-serif";
@@ -55,7 +55,7 @@ export function PublicProfile({
       <div className="flex items-start gap-6 mb-10">
         <div
           className="flex items-center justify-center flex-shrink-0"
-          style={{ width: "72px", height: "72px", background: INK }}
+          style={{ width: "72px", height: "72px", background: NAVY }}
         >
           <span
             className="text-xl tracking-[0.1em]"
