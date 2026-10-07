@@ -11,6 +11,7 @@
   --color-navy-soft: #134074;
   --color-moss: #2f6b4f;
   --color-sky: #8da9c4;
+  --color-black: #1a1915;
   --font-serif: 'Inter Tight', 'Geist', system-ui, sans-serif;
   --font-display: 'Inter Tight', 'Geist', system-ui, sans-serif;
   --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
@@ -127,11 +128,11 @@ button[style*="border-radius: 16px"] {
 .vt-stone {
   position: relative;
   isolation: isolate;
-  background-color: #0b2545;
+  background-color: #1a1915;
   background-image:
-    radial-gradient(120% 80% at 85% 0%, rgba(141, 169, 196, 0.22) 0%, transparent 55%),
-    radial-gradient(90% 70% at 0% 100%, rgba(141, 169, 196, 0.14) 0%, transparent 60%),
-    linear-gradient(160deg, #134074 0%, #13315c 45%, #0b2545 100%);
+    radial-gradient(120% 80% at 85% 0%, rgba(141, 169, 196, 0.16) 0%, transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgba(230, 226, 217, 0.10) 0%, transparent 60%),
+    linear-gradient(160deg, #24231e 0%, #1a1915 55%, #121210 100%);
 }
 
 .vt-stone::before {

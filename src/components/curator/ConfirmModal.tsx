@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Label, Mono, Rule, SkillTag } from "./ui";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function ConfirmModal({
@@ -70,7 +70,7 @@ export function ConfirmModal({
             <div className="px-5 py-5">
               <Label>Estudante</Label>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 flex items-center justify-center flex-shrink-0" style={{ background: NAVY }}>
+                <div className="w-9 h-9 flex items-center justify-center flex-shrink-0" style={{ background: INK }}>
                   <span className="text-[10px]" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>
                     {student.initials}
                   </span>

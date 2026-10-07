@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { STUDENTS } from "@/data/students";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
 
 const MONO = "Geist Mono, ui-monospace, monospace";
 const SANS = "Geist, Inter, system-ui, sans-serif";
@@ -84,7 +84,7 @@ export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: strin
             >
               <div
                 className="flex items-center justify-center flex-shrink-0"
-                style={{ width: "44px", height: "44px", background: NAVY, borderRadius: "10px" }}
+                style={{ width: "44px", height: "44px", background: INK, borderRadius: "10px" }}
               >
                 <span
                   className="text-[12px] tracking-[0.1em]"

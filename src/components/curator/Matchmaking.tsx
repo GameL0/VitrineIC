@@ -3,7 +3,7 @@ import { Label, Mono, Rule, SkillTag } from "./ui";
 import { LANGUAGE_LEVELS } from "@/data/languages";
 import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, INK, OFFWHITE, RED } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function StudentMatchCard({
@@ -223,7 +223,7 @@ export function Matchmaking({
 
         <div
           className="px-4 py-4 flex items-start gap-3"
-          style={{ border: `1px solid ${NAVY}`, background: NAVY, borderRadius: "12px" }}
+          style={{ border: `1px solid ${INK}`, background: INK, borderRadius: "12px" }}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: OFFWHITE, flexShrink: 0, marginTop: 2 }}>
             <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1" />
