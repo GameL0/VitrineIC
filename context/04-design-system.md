@@ -1,13 +1,13 @@
 # Design system
 
 A identidade segue a referência do **rulebase.co**: fundo creme quente, tinta
-quase preta, acento verde-musgo, títulos sans grandes com tracking negativo,
+quase preta, acento vermelho `#c1121f`, títulos sans grandes com tracking negativo,
 cards brancos arredondados com sombra suave e painéis escuros com textura de
 pedra. A estrutura das telas é a mesma da fase editorial anterior; mudou só a
 camada visual.
 
 Os nomes das constantes são herdados: `NAVY` é a tinta, `RED` é o acento
-verde e `OFFWHITE` é o creme. Renomear seria um diff em todos os arquivos, então
+vermelho e `OFFWHITE` é o creme. Renomear seria um diff em todos os arquivos, então
 ficou para depois.
 
 ## Cores
@@ -15,10 +15,10 @@ ficou para depois.
 | Token | Hex | Uso |
 |---|---|---|
 | `NAVY` (tinta) | `#1a1915` | texto, bordas, botão primário, painéis escuros |
-| `RED` (musgo) | `#2f6b4f` | acento pontual, estados positivos |
+| `RED` (vermelho) | `#c1121f` | acento pontual |
 | `OFFWHITE` (creme) | `#f3f1ec` | fundo da página, texto sobre tinta |
 | `STONE` | `#e6e2d9` | superfícies secundárias |
-| `SAGE` | `#a8c3ae` | acento sobre fundo escuro |
+| `ROSE` | `#f19ca1` | acento sobre fundo escuro |
 
 Cores de status (literais, tons terrosos): azul ardósia `#4a6a9c` (novo),
 ocre `#b7791f` (em análise/aguardo), musgo `#2f6b4f` (aprovado/aceito),

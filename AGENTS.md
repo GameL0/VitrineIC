@@ -131,7 +131,7 @@ estilos aplicados via `style={{}}`, que é como o código herdado do protótipo
 funciona. **Em código novo, prefira as utilities** (`text-navy`, `font-serif`).
 
 Identidade (inspirada no rulebase.co): tinta quente `#1a1915` (constante `NAVY`),
-verde-musgo `#2f6b4f` (constante `RED`), creme `#f3f1ec` (`OFFWHITE`); Inter Tight
+vermelho `#c1121f` (constante `RED`), creme `#f3f1ec` (`OFFWHITE`); Inter Tight
 (títulos), Geist (corpo), Geist Mono (rótulos em caixa alta). Superfícies escuras
 texturizadas com a classe `.vt-stone`. Detalhes em `context/04-design-system.md`.
 

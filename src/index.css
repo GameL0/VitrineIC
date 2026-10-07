@@ -3,12 +3,12 @@
 
 @theme inline {
   --color-navy: #1a1915;
-  --color-red: #2f6b4f;
+  --color-red: #c1121f;
   --color-offwhite: #f3f1ec;
   --color-stone: #e6e2d9;
   --color-ink: #1a1915;
   --color-moss: #2f6b4f;
-  --color-sage: #a8c3ae;
+  --color-rose: #f19ca1;
   --font-serif: 'Inter Tight', 'Geist', system-ui, sans-serif;
   --font-display: 'Inter Tight', 'Geist', system-ui, sans-serif;
   --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
@@ -34,7 +34,7 @@ body {
 }
 
 ::selection {
-  background: #a8c3ae;
+  background: #f19ca1;
   color: #1a1915;
 }
 
@@ -127,7 +127,7 @@ button[style*="border-radius: 16px"] {
   isolation: isolate;
   background-color: #1a1915;
   background-image:
-    radial-gradient(120% 80% at 85% 0%, rgba(168, 195, 174, 0.18) 0%, transparent 55%),
+    radial-gradient(120% 80% at 85% 0%, rgba(193, 18, 31, 0.22) 0%, transparent 55%),
     radial-gradient(90% 70% at 0% 100%, rgba(230, 226, 217, 0.10) 0%, transparent 60%),
     linear-gradient(160deg, #24231e 0%, #1a1915 55%, #121210 100%);
 }
@@ -150,7 +150,7 @@ button[style*="border-radius: 16px"] {
   background-color: #e6e2d9;
   background-image:
     radial-gradient(100% 90% at 100% 0%, rgba(255, 255, 255, 0.65) 0%, transparent 60%),
-    radial-gradient(80% 80% at 0% 100%, rgba(47, 107, 79, 0.10) 0%, transparent 60%);
+    radial-gradient(80% 80% at 0% 100%, rgba(193, 18, 31, 0.08) 0%, transparent 60%);
 }
 
 .vt-sand::before {

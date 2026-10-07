@@ -1,6 +1,6 @@
 import { featuredStudents, stats } from "@/data/showcase";
 import { INSTITUTION } from "@/data/institution";
-import { NAVY, OFFWHITE, RED, SAGE } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED, ROSE } from "@/styles/tokens";
 import type { PublicRoute, PublicView } from "@/components/public/routes";
 import { PublicNav } from "@/components/public/PublicNav";
 
@@ -93,9 +93,9 @@ export default function LandingPage({
             >
               <span
                 className="inline-flex items-center gap-2 self-start px-3 py-1 text-[10px] uppercase"
-                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: SAGE, border: `1px solid ${SAGE}55` }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: ROSE, border: `1px solid ${ROSE}55` }}
               >
-                <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: SAGE }} />
+                <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: ROSE }} />
                 Vitrine aberta
               </span>
               <p
@@ -283,7 +283,7 @@ export default function LandingPage({
               style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}
             >
               Faça parte da vitrine de<br />
-              <em className="not-italic" style={{ color: SAGE }}>inovação</em> do IC.
+              <em className="not-italic" style={{ color: ROSE }}>inovação</em> do IC.
             </h2>
           </div>
           <button
