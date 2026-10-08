@@ -1,8 +1,8 @@
 import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { PublicView } from "./routes";
 
-const MONO = "Space Mono, monospace";
-const SANS = "Inter, sans-serif";
+const MONO = "Geist Mono, ui-monospace, monospace";
+const SANS = "Geist, Inter, system-ui, sans-serif";
 
 /** Navegação das páginas públicas, unificada com a Landing Page. */
 export function PublicNav({

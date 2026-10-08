@@ -1,13 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 
 @theme inline {
-  --color-navy: #0d1321;
+  --color-navy: #0b2545;
   --color-red: #c1121f;
-  --color-offwhite: #edede9;
-  --font-serif: 'DM Serif Display', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --color-offwhite: #f3f1ec;
+  --color-stone: #e6e2d9;
+  --color-ink: #0b2545;
+  --color-navy-mid: #13315c;
+  --color-navy-soft: #134074;
+  --color-sky: #8da9c4;
+  --color-white: #ffffff;
+
+  /* Status (guia de estilos do Figma, "Estilos/Cores VitrineIC") */
+  --color-slate: #4a6a9c;
+  --color-ochre: #b7791f;
+  --color-moss: #2f6b4f;
+  --color-terracotta: #b4432f;
+
+  /* Escala tipográfica do guia */
+  --text-hero: 72px;
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.035em;
+  --text-page: 56px;
+  --text-page--line-height: 1;
+  --text-page--letter-spacing: -0.035em;
+  --text-section: 36px;
+  --text-section--line-height: 1.05;
+  --text-section--letter-spacing: -0.03em;
+  --text-lead: 18px;
+  --text-lead--line-height: 1.5;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-label: 11px;
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: 0.08em;
+
+  --font-serif: 'Inter Tight', 'Geist', system-ui, sans-serif;
+  --font-display: 'Inter Tight', 'Geist', system-ui, sans-serif;
+  --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+}
+
+:root {
+  --vt-shadow-card:
+    0 1px 1px rgba(11, 37, 69, 0.04),
+    0 2px 4px rgba(11, 37, 69, 0.04),
+    0 8px 24px -8px rgba(11, 37, 69, 0.08);
+  --vt-shadow-card-hover:
+    0 1px 1px rgba(11, 37, 69, 0.05),
+    0 6px 12px rgba(11, 37, 69, 0.06),
+    0 24px 48px -12px rgba(11, 37, 69, 0.16);
 }
 
 *, *::before, *::after {
@@ -15,55 +58,259 @@
 }
 
 html {
-  font-family: 'Inter', system-ui, sans-serif;
-  background-color: #edede9;
-  color: #0a0a0a;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  background-color: #f3f1ec;
+  color: #0b2545;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: #f3f1ec;
 }
 
-/* Hide scrollbar by default */
+::selection {
+  background: #8da9c4;
+  color: #0b2545;
+}
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #0d132133; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #0b254533; border-radius: 2px; }
 
-/* Modal scroll lock */
 body.modal-open {
   overflow: hidden;
 }
 
 /* =========================================
-   Global Design Bases (Dashboard & Entire App)
+   Tipografia
+   Títulos: Inter Tight, peso médio e tracking negativo.
+   Rótulos: Geist Mono em caixa alta, tracking contido.
    ========================================= */
 
-/* Inputs, selects, textareas */
-input, select, textarea {
-  border-radius: 8px !important;
+[style*="Inter Tight"] {
+  font-weight: 500;
+  letter-spacing: -0.015em !important;
+  font-feature-settings: "ss01", "cv11";
 }
 
-/* Primary and secondary buttons */
+h1[style*="Inter Tight"],
+h2[style*="Inter Tight"],
+[class*="text-4xl"][style*="Inter Tight"],
+[class*="text-5xl"][style*="Inter Tight"] {
+  letter-spacing: -0.035em !important;
+}
+
+[style*="Geist Mono"] {
+  letter-spacing: 0.08em !important;
+}
+
+/* Botões em sans: caixa normal, como em produto SaaS. */
+button.uppercase[style*="font-family: Geist, Inter"] {
+  text-transform: none;
+  letter-spacing: -0.005em !important;
+  font-size: 13px;
+}
+
+/* =========================================
+   Formas
+   ========================================= */
+
+input, select, textarea {
+  border-radius: 10px !important;
+}
+
 button, a {
   border-radius: 10px !important;
   cursor: pointer;
 }
 
-/* Tags, badges, pills */
+/* Links sublinhados ficam retos para o traço não curvar. */
+button[style*="border-bottom"] {
+  border-radius: 0 !important;
+}
+
 button[class*="text-[8px]"],
 button[class*="text-[9px]"],
 button[class*="text-[10px]"],
 span[class*="text-[8px]"][class*="uppercase"],
 span[class*="text-[9px]"][class*="uppercase"],
 span[class*="text-[10px]"][class*="uppercase"] {
-  border-radius: 6px !important;
+  border-radius: 999px !important;
 }
 
-/* Modals and containers larger */
-.modal-open > div > div, 
 div.max-w-lg,
 div[style*="max-width: 32rem"] {
   border-radius: 20px !important;
+}
+
+/* Cards (guia: raio 16, borda navy 8%): sombra em camadas; no hover a sombra
+   cresce, sem escala. */
+div[style*="border-radius: 16px"],
+button[style*="border-radius: 16px"],
+.vt-card {
+  box-shadow: var(--vt-shadow-card);
+  transition: box-shadow 0.2s ease;
+}
+
+button[style*="border-radius: 16px"]:hover,
+div[style*="border-radius: 16px"][class*="cursor-pointer"]:hover,
+.vt-card-interactive:hover {
+  box-shadow: var(--vt-shadow-card-hover);
+}
+
+.vt-card {
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.08);
+  border-radius: 16px;
+}
+
+/* Botões desabilitados ficam a 40%, como no guia. */
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Componentes do guia de estilos (Figma: "Estilos/Cores VitrineIC")
+   ========================================= */
+
+/* Botões: 40px de altura, raio 10, Geist 13. */
+.vt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.vt-btn-primary { background: #0b2545; color: #f3f1ec; }
+.vt-btn-primary:hover:not(:disabled) { background: #13315c; }
+.vt-btn-secondary { background: transparent; color: #0b2545; border-color: rgba(11, 37, 69, 0.2); }
+.vt-btn-secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.6); border-color: rgba(11, 37, 69, 0.5); }
+.vt-btn-danger { background: transparent; color: #b4432f; border-color: rgba(180, 67, 47, 0.3); }
+.vt-btn-danger:hover:not(:disabled) { background: rgba(255, 255, 255, 0.6); border-color: rgba(11, 37, 69, 0.5); }
+.vt-btn-cream { background: #f3f1ec; color: #0b2545; }
+
+/* Inputs: fundo branco, borda navy 15%; foco com borda navy e anel de 4px;
+   erro em terracota; desabilitado com texto a 40%. */
+.vt-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #0b2545;
+  border: 1px solid rgba(11, 37, 69, 0.15);
+  border-radius: 10px;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  resize: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.vt-input::placeholder { color: rgba(11, 37, 69, 0.35); }
+.vt-input:focus { border-color: #0b2545; box-shadow: 0 0 0 4px rgba(11, 37, 69, 0.08); }
+.vt-input[aria-invalid="true"] { border-color: #b4432f; }
+.vt-input[aria-invalid="true"]:focus { box-shadow: 0 0 0 4px rgba(180, 67, 47, 0.1); }
+.vt-input:disabled { color: rgba(11, 37, 69, 0.4); cursor: not-allowed; }
+.vt-input-mono { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; }
+
+/* Tags: pílula com contorno navy 13% e texto a 70%; selecionada é sólida. */
+.vt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid rgba(11, 37, 69, 0.13);
+  border-radius: 999px;
+  color: rgba(11, 37, 69, 0.7);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.vt-pill-selected { background: #0b2545; border-color: #0b2545; color: #f3f1ec; }
+
+/* Status: pílula com fundo tingido (10%) e texto na cor do status.
+   A cor vem de --vt-status no style do elemento. */
+.vt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vt-status) 10%, transparent);
+  color: var(--vt-status);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.vt-status::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: currentColor;
+}
+.vt-status-solid { background: #0b2545; color: #f3f1ec; }
+
+/* =========================================
+   Superfícies texturizadas (pedra)
+   Ruído fractal em SVG + manchas radiais, no lugar de fotos.
+   Painéis destacados usam raio 24 (guia); o rodapé fica reto.
+   ========================================= */
+
+.vt-stone {
+  position: relative;
+  isolation: isolate;
+  background-color: #0b2545;
+  background-image:
+    radial-gradient(120% 80% at 85% 0%, rgba(141, 169, 196, 0.22) 0%, transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgba(141, 169, 196, 0.14) 0%, transparent 60%),
+    linear-gradient(160deg, #134074 0%, #13315c 45%, #0b2545 100%);
+}
+
+.vt-stone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vt-sand {
+  position: relative;
+  isolation: isolate;
+  background-color: #e6e2d9;
+  background-image:
+    radial-gradient(100% 90% at 100% 0%, rgba(255, 255, 255, 0.65) 0%, transparent 60%),
+    radial-gradient(80% 80% at 0% 100%, rgba(193, 18, 31, 0.08) 0%, transparent 60%);
+}
+
+.vt-sand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.38 0 0 0 0 0.33 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }

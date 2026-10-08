@@ -1,11 +1,11 @@
 import * as React from "react";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED, WHITE } from "@/styles/tokens";
 
 export function Label({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold"
-      style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.85 }}
+      style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.85 }}
     >
       {children}
     </span>
@@ -31,19 +31,7 @@ export function Input({
   value?: string;
   onChange?: (v: string) => void;
 }) {
-  const base: React.CSSProperties = {
-    fontFamily: mono ? "Space Mono, monospace" : "Inter, sans-serif",
-    color: NAVY,
-    fontSize: mono ? "12px" : "13px",
-    border: `1px solid ${NAVY}60`,
-    borderRadius: "8px",
-    background: "transparent",
-    width: "100%",
-    outline: "none",
-    padding: "10px 12px",
-    resize: "none",
-    transition: "border-color 0.15s",
-  };
+  const cls = mono ? "vt-input vt-input-mono" : "vt-input";
   return (
     <div>
       {label && <Label>{label}</Label>}
@@ -51,37 +39,17 @@ export function Input({
         <textarea
           rows={rows}
           placeholder={placeholder}
-          style={base}
+          className={cls}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = NAVY;
-            e.currentTarget.style.outline = `2px solid ${NAVY}`;
-            e.currentTarget.style.backgroundColor = OFFWHITE;
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = `${NAVY}60`;
-            e.currentTarget.style.outline = "none";
-            e.currentTarget.style.backgroundColor = "transparent";
-          }}
         />
       ) : (
         <input
           type={type}
           placeholder={placeholder}
-          style={base}
+          className={cls}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = NAVY;
-            e.currentTarget.style.outline = `2px solid ${NAVY}`;
-            e.currentTarget.style.backgroundColor = OFFWHITE;
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = `${NAVY}60`;
-            e.currentTarget.style.outline = "none";
-            e.currentTarget.style.backgroundColor = "transparent";
-          }}
         />
       )}
     </div>
@@ -115,16 +83,8 @@ export function Select({
             onChange(e.target.value);
           }
         }}
+        className="vt-input"
         style={{
-          fontFamily: "Inter, sans-serif",
-          color: NAVY,
-          fontSize: "13px",
-          border: `1px solid ${NAVY}60`,
-          borderRadius: "8px",
-          background: OFFWHITE,
-          width: "100%",
-          outline: "none",
-          padding: "10px 12px",
           appearance: multiple ? "auto" : "none",
           cursor: "pointer",
         }}
@@ -175,14 +135,15 @@ export function MultiSelect({
       <div
         onClick={() => setOpen(!open)}
         style={{
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "Geist, Inter, system-ui, sans-serif",
           color: NAVY,
-          fontSize: "13px",
-          border: `1px solid ${open ? NAVY : `${NAVY}60`}`,
-          borderRadius: "8px",
-          background: OFFWHITE,
+          fontSize: "14px",
+          border: `1px solid ${open ? NAVY : `${NAVY}26`}`,
+          boxShadow: open ? `0 0 0 4px ${NAVY}14` : "none",
+          borderRadius: "10px",
+          background: WHITE,
           width: "100%",
-          padding: "10px 12px",
+          padding: "10px 14px",
           cursor: "pointer",
           minHeight: "41px",
           display: "flex",
@@ -215,7 +176,7 @@ export function MultiSelect({
               onClick={() => toggle(o)}
               className="px-3 py-2.5 flex items-center gap-3 transition-colors cursor-pointer"
               style={{
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "Geist, Inter, system-ui, sans-serif",
                 color: NAVY,
                 fontSize: "13px",
                 borderBottom: `1px solid ${NAVY}10`
@@ -266,7 +227,7 @@ export function Tag({
       onClick={onClick}
       className="px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase transition-all font-medium"
       style={{
-        fontFamily: "Space Mono, monospace",
+        fontFamily: "Geist Mono, ui-monospace, monospace",
         border: `1px solid ${active ? (accent ? RED : NAVY) : `${NAVY}60`}`,
         background: active ? (accent ? RED : NAVY) : "transparent",
         color: active ? OFFWHITE : NAVY,

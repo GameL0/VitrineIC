@@ -16,14 +16,14 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Painel do Solicitante
           </p>
           <h1
             className="text-4xl"
-            style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+            style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
           >
             Suas Demandas
           </h1>
@@ -38,13 +38,13 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
               <div key={s.label} className="text-right">
                 <p
                   className="text-2xl leading-none"
-                  style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+                  style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
                 >
                   {s.val}
                 </p>
                 <p
                   className="text-[9px] mt-1"
-                  style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
                 >
                   {s.label}
                 </p>
@@ -54,7 +54,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
           <button
             onClick={onNew}
             className="flex items-center gap-3 px-6 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-85"
-            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
           >
             + Nova Demanda
           </button>
@@ -76,7 +76,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
             <span
               key={h}
               className="text-[9px] tracking-[0.18em] uppercase"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
             >
               {h}
             </span>
@@ -106,25 +106,25 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
             >
               <span
                 className="block text-[11px] mb-1 md:mb-0"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {d.id}
               </span>
               <span
                 className="block text-[14px] font-medium mb-1 md:mb-0"
-                style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+                style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
               >
                 {d.title}
               </span>
               <span
                 className="hidden md:block text-[10px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {d.area}
               </span>
               <span
                 className="hidden md:block text-[10px]"
-                style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
               >
                 {d.deadline}
               </span>
@@ -137,7 +137,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                     onClick={(e) => { e.stopPropagation(); onViewMatch(); }}
                     className="text-[9px] tracking-[0.14em] uppercase flex items-center gap-1.5 transition-opacity hover:opacity-80"
                     style={{
-                      fontFamily: "Space Mono, monospace",
+                      fontFamily: "Geist Mono, ui-monospace, monospace",
                       color: RED,
                       borderBottom: `1px solid ${RED}`,
                     }}
@@ -147,7 +147,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 ) : (
                   <span
                     className="text-[10px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+                    style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
                   >
                     {d.applicants > 0 ? `${d.applicants} concl.` : "—"}
                   </span>
@@ -164,7 +164,7 @@ export function MyDemands({ onNew, onViewMatch }: { onNew: () => void; onViewMat
                 <div className="flex items-center justify-between mb-2">
                   <Label>Descrição da Demanda</Label>
                 </div>
-                <p className="text-[12px] leading-relaxed" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.7 }}>
+                <p className="text-[12px] leading-relaxed" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.7 }}>
                   Esta é uma descrição genérica da sua demanda publicada. Você pode ver todos os matches gerados pela curadoria acessando o botão 'Ver'.
                 </p>
               </div>

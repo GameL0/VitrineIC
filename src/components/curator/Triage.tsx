@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DEMAND_STATUS, KANBAN_COLS, StatusBadge } from "./StatusBadge";
 import { Mono, SkillTag } from "./ui";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
 import type { Demand, DemandStatus } from "@/types";
 
 
@@ -36,7 +36,7 @@ export function TriageCard({
           {demand.priority === "alta" && (
             <span
               className="text-[8px] tracking-[0.14em] uppercase px-1.5 py-0.5 flex-shrink-0"
-              style={{ fontFamily: "Space Mono, monospace", color: RED, border: `1px solid ${RED}`, borderRadius: "6px" }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: TERRACOTTA, border: `1px solid ${TERRACOTTA}`, borderRadius: "6px" }}
             >
               Alta
             </span>
@@ -44,13 +44,13 @@ export function TriageCard({
         </div>
         <p
           className="text-[13px] font-medium leading-tight mb-2"
-          style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
         >
           {demand.title}
         </p>
         <p
           className="text-[10px] mb-2"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}
         >
           {demand.company}
         </p>
@@ -59,7 +59,7 @@ export function TriageCard({
             <SkillTag key={s} small>{s}</SkillTag>
           ))}
           {demand.skills.length > 3 && (
-            <span className="text-[8px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+            <span className="text-[8px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
               +{demand.skills.length - 3}
             </span>
           )}
@@ -70,7 +70,7 @@ export function TriageCard({
       {open && (
         <div style={{ borderTop: `1px solid ${NAVY}12` }}>
           <div className="px-4 py-3">
-            <p className="text-[11px] leading-relaxed mb-3" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
+            <p className="text-[11px] leading-relaxed mb-3" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
               {demand.description}
             </p>
             <div className="flex flex-wrap gap-1 mb-4">
@@ -85,7 +85,7 @@ export function TriageCard({
                 onClick={(e) => { e.stopPropagation(); onStatus(s); }}
                 className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85"
                 style={{
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "Geist, Inter, system-ui, sans-serif",
                   border: `1px solid ${DEMAND_STATUS[s].color}40`,
                   color: demand.status === s ? OFFWHITE : DEMAND_STATUS[s].color,
                   background: demand.status === s ? DEMAND_STATUS[s].color : OFFWHITE,
@@ -111,10 +111,10 @@ export function TriageCard({
                 }}
                 className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85 mt-2"
                 style={{
-                  fontFamily: "Inter, sans-serif",
-                  border: `1px solid #dc2626`,
+                  fontFamily: "Geist, Inter, system-ui, sans-serif",
+                  border: `1px solid ${TERRACOTTA}`,
                   color: OFFWHITE,
-                  background: "#dc2626",
+                  background: TERRACOTTA,
                   borderRadius: "10px"
                 }}
               >
@@ -164,21 +164,21 @@ export function Triage({
       <div className="mb-10 flex items-end justify-between flex-wrap gap-4">
         <div>
           <p className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
             <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
             Fila de Triagem
           </p>
-          <h1 className="text-4xl" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+          <h1 className="text-4xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
             Demandas Recebidas
           </h1>
         </div>
         <div className="flex gap-5 flex-wrap">
           {KANBAN_COLS.map((col) => (
             <div key={col} className="text-right">
-              <p className="text-2xl leading-none" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+              <p className="text-2xl leading-none" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                 {demands.filter((d) => d.status === col).length}
               </p>
-              <p className="text-[9px] mt-1" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+              <p className="text-[9px] mt-1" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                 {DEMAND_STATUS[col].label}
               </p>
             </div>
@@ -204,7 +204,7 @@ export function Triage({
               style={{ borderBottom: `1px solid ${NAVY}18`, background: `${NAVY}04` }}
             >
               <StatusBadge status={col} />
-              <span className="ml-auto text-[9px]" style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}>
+              <span className="ml-auto text-[9px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
                 {demands.filter((d) => d.status === col).length}
               </span>
             </div>
@@ -221,7 +221,7 @@ export function Triage({
               ))}
               {demands.filter((d) => d.status === col).length === 0 && (
                 <div className="flex items-center justify-center h-24 border-2 border-dashed rounded-[12px] opacity-50 pointer-events-none" style={{ borderColor: NAVY }}>
-                  <span className="text-[9px] uppercase tracking-widest" style={{ fontFamily: "Space Mono, monospace", color: NAVY }}>
+                  <span className="text-[9px] uppercase tracking-widest" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>
                     Solte aqui
                   </span>
                 </div>

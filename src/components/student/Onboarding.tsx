@@ -30,13 +30,13 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
         <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
         <span
           className="text-[12px] tracking-[0.2em] uppercase font-semibold"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}
         >
           VitrineIC
         </span>
         <span
           className="text-[9px] tracking-[0.18em] uppercase ml-2"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           · Configuração inicial
         </span>
@@ -76,7 +76,7 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
           <button
             onClick={() => setStep(Math.max(0, step - 1))}
             className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
             disabled={step === 0}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -88,14 +88,14 @@ export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) 
           <div className="flex items-center gap-3">
             <span
               className="text-[9px] tracking-[0.14em]"
-              style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
             >
               {step + 1} / 4
             </span>
             <button
               onClick={next}
               className="flex items-center gap-3 px-8 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-88"
-              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
             >
               {step === 3 ? "Concluir" : "Próximo"}
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

@@ -16,7 +16,7 @@ export function StepIndicator({ current }: { current: number }) {
               <span
                 className="text-[22px] leading-none transition-all"
                 style={{
-                  fontFamily: "DM Serif Display, Georgia, serif",
+                  fontFamily: "Inter Tight, Geist, system-ui, sans-serif",
                   color: i < current ? RED : i === current ? NAVY : `${NAVY}30`,
                 }}
               >
@@ -26,7 +26,7 @@ export function StepIndicator({ current }: { current: number }) {
             <span
               className="text-[9px] tracking-[0.16em] uppercase whitespace-nowrap"
               style={{
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "Geist Mono, ui-monospace, monospace",
                 color: i === current ? NAVY : `${NAVY}30`,
               }}
             >

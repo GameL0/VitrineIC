@@ -42,14 +42,14 @@ export function Projects() {
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
             Portfólio Pessoal
           </p>
           <h1
             className="text-4xl"
-            style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+            style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
           >
             Meus Projetos
           </h1>
@@ -58,7 +58,7 @@ export function Projects() {
           <button
             onClick={() => setIsAdding(true)}
             className="flex items-center gap-3 px-6 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all"
-            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "8px" }}
+            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "8px" }}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M6 2v8M2 6h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -73,7 +73,7 @@ export function Projects() {
           className="p-8 mb-10 transition-all"
           style={{ background: OFFWHITE, border: `1px solid ${NAVY}30`, borderRadius: "16px", boxShadow: "0 4px 24px rgba(0,0,0,0.04)" }}
         >
-          <h3 className="text-xl mb-6" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+          <h3 className="text-xl mb-6" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
             Novo Projeto ou Pesquisa
           </h3>
           <div className="flex flex-col gap-5">
@@ -119,14 +119,14 @@ export function Projects() {
             <button
               onClick={saveProject}
               className="px-8 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all"
-              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "8px" }}
+              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "8px" }}
             >
               Publicar
             </button>
             <button
               onClick={() => { setIsAdding(false); setForm({}); }}
               className="px-6 py-3 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-60"
-              style={{ color: NAVY, fontFamily: "Space Mono, monospace" }}
+              style={{ color: NAVY, fontFamily: "Geist Mono, ui-monospace, monospace" }}
             >
               Cancelar
             </button>
@@ -139,7 +139,7 @@ export function Projects() {
           className="flex flex-col items-center justify-center p-12 text-center"
           style={{ border: `1px dashed ${NAVY}30`, borderRadius: "16px" }}
         >
-          <p className="text-[14px] mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.5 }}>
+          <p className="text-[14px] mb-4" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}>
             Você ainda não publicou nenhum projeto.
           </p>
         </div>
@@ -153,13 +153,13 @@ export function Projects() {
             >
               <div className="flex-1">
                 <div className="flex items-center gap-4 mb-2">
-                  <h4 className="text-xl font-medium" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+                  <h4 className="text-xl font-medium" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                     {p.title}
                   </h4>
                   <span
                     className="px-2.5 py-1 text-[9px] tracking-[0.1em] uppercase"
                     style={{
-                      fontFamily: "Space Mono, monospace",
+                      fontFamily: "Geist Mono, ui-monospace, monospace",
                       color: NAVY,
                       background: p.phase === "Publicado" ? `${NAVY}10` : "transparent",
                       border: `1px solid ${NAVY}30`,
@@ -171,7 +171,7 @@ export function Projects() {
                 </div>
                 <p
                   className="text-[13px] leading-relaxed max-w-2xl"
-                  style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.65 }}
+                  style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}
                 >
                   {p.description}
                 </p>

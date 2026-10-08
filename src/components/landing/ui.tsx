@@ -7,7 +7,7 @@ export function Divider({ label }: { label: string }) {
       <div style={{ flex: 1, height: "1px", background: `${NAVY}22` }} />
       <span
         className="text-[10px] tracking-[0.18em] uppercase"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+        style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.4 }}
       >
         {label}
       </span>
@@ -21,30 +21,14 @@ export function InputField({ label, type = "text", placeholder }: { label: strin
     <div className="mb-4">
       <label
         className="block text-[10px] tracking-[0.18em] uppercase mb-1.5"
-        style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.55 }}
+        style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.55 }}
       >
         {label}
       </label>
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full px-3 py-2.5 text-sm bg-transparent outline-none transition-colors"
-        style={{
-          border: `1px solid ${NAVY}44`,
-          borderRadius: "8px",
-          fontFamily: "Inter, sans-serif",
-          color: NAVY,
-        }}
-        onFocus={(e) => {
-          e.currentTarget.style.borderColor = NAVY;
-          e.currentTarget.style.outline = `2px solid ${NAVY}`;
-          e.currentTarget.style.backgroundColor = "#F5F4F0"; // OFFWHITE
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.borderColor = `${NAVY}44`;
-          e.currentTarget.style.outline = "none";
-          e.currentTarget.style.backgroundColor = "transparent";
-        }}
+        className="vt-input"
       />
     </div>
   );
@@ -70,14 +54,14 @@ export function SSOButton({
       <span className="flex-1">
         <span
           className="block text-[13px] font-medium"
-          style={{ fontFamily: "Inter, sans-serif", color: NAVY }}
+          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}
         >
           {label}
         </span>
         {sub && (
           <span
             className="block text-[10px] mt-0.5"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.4 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.4 }}
           >
             {sub}
           </span>

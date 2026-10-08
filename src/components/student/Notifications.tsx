@@ -31,7 +31,7 @@ export function Notifications() {
         <button
           onClick={() => { setSelected(null); setReply(""); }}
           className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 mb-8"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
@@ -47,14 +47,14 @@ export function Notifications() {
             <div>
               <span
                 className="text-[10px] tracking-widest uppercase mb-3 inline-block"
-                style={{ fontFamily: "Space Mono, monospace", color: selected.type === "CONVITE" ? RED : `${NAVY}80` }}
+                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: selected.type === "CONVITE" ? RED : `${NAVY}80` }}
               >
                 {selected.type}
               </span>
-              <h2 className="text-3xl mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>
+              <h2 className="text-3xl mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
                 {selected.project}
               </h2>
-              <p className="text-[14px]" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.6 }}>
+              <p className="text-[14px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.6 }}>
                 Enviado por <strong style={{ fontWeight: 600 }}>{selected.from}</strong> em {selected.time}
               </p>
             </div>
@@ -79,7 +79,7 @@ export function Notifications() {
           </div>
 
           <div className="mb-10">
-            <p className="text-[15px] leading-relaxed whitespace-pre-wrap" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>
+            <p className="text-[15px] leading-relaxed whitespace-pre-wrap" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>
               {selected.content}
             </p>
           </div>
@@ -96,7 +96,7 @@ export function Notifications() {
             <div className="mt-4 flex justify-end">
               <button
                 className="px-8 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-90"
-                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "8px" }}
+                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "8px" }}
               >
                 Enviar Resposta
               </button>
@@ -113,13 +113,13 @@ export function Notifications() {
         <div>
           <h1
             className="text-4xl md:text-[44px] leading-tight"
-            style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+            style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
           >
             Notificações
           </h1>
           <p
             className="text-base mt-2"
-            style={{ fontFamily: "Inter, sans-serif", fontWeight: 300, color: `${NAVY}99` }}
+            style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", fontWeight: 300, color: `${NAVY}99` }}
           >
             Fique por dentro das atualizações do seu perfil e propostas.
           </p>
@@ -127,7 +127,7 @@ export function Notifications() {
         <button
           onClick={markAllRead}
           className="text-[12px] uppercase tracking-widest transition-opacity hover:opacity-70 underline underline-offset-4"
-          style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
         >
           Marcar todas como lidas
         </button>
@@ -138,7 +138,7 @@ export function Notifications() {
           onClick={() => setFilter("todas")}
           className="px-4 py-2 text-[12px] transition-all"
           style={{
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "Geist, Inter, system-ui, sans-serif",
             background: filter === "todas" ? NAVY : "transparent",
             color: filter === "todas" ? OFFWHITE : NAVY,
             border: filter === "todas" ? "none" : `1px solid ${NAVY}30`,
@@ -151,7 +151,7 @@ export function Notifications() {
           onClick={() => setFilter("nao-lidas")}
           className="px-4 py-2 text-[12px] transition-all flex items-center gap-2"
           style={{
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "Geist, Inter, system-ui, sans-serif",
             background: filter === "nao-lidas" ? NAVY : "transparent",
             color: filter === "nao-lidas" ? OFFWHITE : NAVY,
             border: filter === "nao-lidas" ? "none" : `1px solid ${NAVY}30`,
@@ -172,7 +172,7 @@ export function Notifications() {
         }}
       >
         {filteredNotifs.length === 0 ? (
-          <div className="p-10 text-center" style={{ color: `${NAVY}60`, fontFamily: "Inter" }}>
+          <div className="p-10 text-center" style={{ color: `${NAVY}60`, fontFamily: "Geist, Inter, system-ui, sans-serif" }}>
             Nenhuma notificação encontrada.
           </div>
         ) : (
@@ -213,7 +213,7 @@ export function Notifications() {
                   <div className="flex items-center gap-2 mb-1">
                     <span
                       className="text-[10px] tracking-widest uppercase"
-                      style={{ fontFamily: "Space Mono, monospace", color: n.type === "CONVITE" ? RED : `${NAVY}80` }}
+                      style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: n.type === "CONVITE" ? RED : `${NAVY}80` }}
                     >
                       {n.type}
                     </span>
@@ -221,16 +221,16 @@ export function Notifications() {
                       <div className="w-1.5 h-1.5 rounded-full" style={{ background: RED }} />
                     )}
                   </div>
-                  <h4 className="text-[15px] font-medium mb-1" style={{ fontFamily: "Inter, sans-serif", color: NAVY }}>
+                  <h4 className="text-[15px] font-medium mb-1" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>
                     {n.project}
                   </h4>
-                  <p className="text-[13px] truncate max-w-[300px] md:max-w-md" style={{ fontFamily: "Inter, sans-serif", color: `${NAVY}80` }}>
+                  <p className="text-[13px] truncate max-w-[300px] md:max-w-md" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: `${NAVY}80` }}>
                     {n.content}
                   </p>
                 </div>
 
                 {/* Timestamp */}
-                <div className="text-[11px] uppercase flex flex-col items-end gap-2" style={{ fontFamily: "Space Mono, monospace", color: `${NAVY}50` }}>
+                <div className="text-[11px] uppercase flex flex-col items-end gap-2" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: `${NAVY}50` }}>
                   {n.time}
                   <span className="text-[9px] text-blue-500 opacity-60">Ver mensagem</span>
                 </div>

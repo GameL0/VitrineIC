@@ -28,13 +28,13 @@ export function Step3({
     <div>
       <h2
         className="text-3xl mb-2"
-        style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+        style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
       >
         Competências de Idiomas
       </h2>
       <p
         className="text-sm mb-10"
-        style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 300 }}
+        style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 300 }}
       >
         Adicione os idiomas que você domina e seus respectivos níveis de proficiência.
       </p>
@@ -46,7 +46,7 @@ export function Step3({
 
       <div className="max-w-3xl mt-10">
         <Label>Certificados (Opcional)</Label>
-        <p className="text-[11px] mb-4" style={{ fontFamily: "Inter, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 500 }}>
+        <p className="text-[11px] mb-4" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 500 }}>
           Armazene aqui seus certificados de idiomas (ex: TOEFL, IELTS) em PDF.
         </p>
         
@@ -65,7 +65,7 @@ export function Step3({
                   </svg>
                   <span
                     className="text-[11px]"
-                    style={{ fontFamily: "Space Mono, monospace", color: NAVY }}
+                    style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
                   >
                     {d}
                   </span>
@@ -97,7 +97,7 @@ export function Step3({
           </svg>
           <span
             className="text-[10px] tracking-[0.14em] uppercase font-semibold"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.8 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.8 }}
           >
             Anexar certificado
           </span>

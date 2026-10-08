@@ -32,14 +32,14 @@ export function Profile({ profile, onSave }: { profile: any; onSave: (d: any) =>
         <div>
           <p
             className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Space Mono, monospace", color: NAVY, opacity: 0.5 }}
+            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
           >
             <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
             Configurações
           </p>
           <h1
             className="text-4xl"
-            style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}
+            style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
           >
             Meu Perfil
           </h1>
@@ -47,7 +47,7 @@ export function Profile({ profile, onSave }: { profile: any; onSave: (d: any) =>
         <button
           onClick={() => onSave(data)}
           className="px-8 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-90"
-          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Inter, sans-serif", borderRadius: "10px" }}
+          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
         >
           Salvar Alterações
         </button>
@@ -58,7 +58,7 @@ export function Profile({ profile, onSave }: { profile: any; onSave: (d: any) =>
         <div className="md:col-span-8 flex flex-col gap-10">
           
           <div className="flex flex-col gap-5 p-8" style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px" }}>
-            <h3 className="text-xl mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>Informações Básicas</h3>
+            <h3 className="text-xl mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>Informações Básicas</h3>
             <div className="grid md:grid-cols-2 gap-5">
               <Input label="Nome completo" value={data.name || ""} onChange={(v) => setData({ ...data, name: v })} />
               <Input label="Telefone para Contato" placeholder="(00) 00000-0000" value={data.phone || ""} onChange={(v) => setData({ ...data, phone: v })} mono />
@@ -79,7 +79,7 @@ export function Profile({ profile, onSave }: { profile: any; onSave: (d: any) =>
           </div>
 
           <div className="flex flex-col gap-5 p-8" style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px" }}>
-            <h3 className="text-xl mb-2" style={{ fontFamily: "DM Serif Display, Georgia, serif", color: NAVY }}>Áreas e Competências</h3>
+            <h3 className="text-xl mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>Áreas e Competências</h3>
             <div className="mb-4">
               <MultiSelect
                 label="Áreas de interesse"
