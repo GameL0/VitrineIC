@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DEMAND_STATUS, KANBAN_COLS, StatusBadge } from "./StatusBadge";
 import { Mono, SkillTag } from "./ui";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { NAVY, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
 import type { Demand, DemandStatus } from "@/types";
 
 
@@ -36,7 +36,7 @@ export function TriageCard({
           {demand.priority === "alta" && (
             <span
               className="text-[8px] tracking-[0.14em] uppercase px-1.5 py-0.5 flex-shrink-0"
-              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: "#b4432f", border: "1px solid #b4432f", borderRadius: "6px" }}
+              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: TERRACOTTA, border: `1px solid ${TERRACOTTA}`, borderRadius: "6px" }}
             >
               Alta
             </span>
@@ -112,9 +112,9 @@ export function TriageCard({
                 className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85 mt-2"
                 style={{
                   fontFamily: "Geist, Inter, system-ui, sans-serif",
-                  border: `1px solid #b4432f`,
+                  border: `1px solid ${TERRACOTTA}`,
                   color: OFFWHITE,
-                  background: "#b4432f",
+                  background: TERRACOTTA,
                   borderRadius: "10px"
                 }}
               >

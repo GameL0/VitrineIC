@@ -1,5 +1,5 @@
 import { LEVELS, LEVEL_SHORT } from "@/data/skills";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { MOSS, NAVY, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
 import type { SkillLevel } from "@/types";
 
 const MONO = "Geist Mono, ui-monospace, monospace";
@@ -7,9 +7,9 @@ const MONO = "Geist Mono, ui-monospace, monospace";
 const STEPS: SkillLevel[] = [1, 2, 3, 4];
 
 const LEVEL_COLORS: Record<SkillLevel, string> = {
-  1: "#2f6b4f", // Verde
+  1: MOSS, // Verde
   2: "#c0672b", // Laranja
-  3: "#b4432f", // Vermelho
+  3: TERRACOTTA, // Vermelho
   4: "#7e22ce", // Roxo
 };
 

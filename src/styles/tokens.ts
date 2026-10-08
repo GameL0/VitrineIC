@@ -14,3 +14,22 @@ export const OFFWHITE = "#f3f1ec";
 export const STONE = "#e6e2d9";
 /** Azul claro para texto e acento sobre fundo escuro. */
 export const SKY = "#8da9c4";
+/** Branco dos cards. */
+export const WHITE = "#ffffff";
+
+/**
+ * Cores de status do guia de estilos ("Estilos/Cores VitrineIC" no Figma).
+ * Usadas em pílulas com fundo a 10% e texto na cor cheia.
+ */
+export const SLATE = "#4a6a9c"; // novo
+export const OCHRE = "#b7791f"; // em análise / aguardo
+export const MOSS = "#2f6b4f"; // aprovado / aceito
+export const TERRACOTTA = "#b4432f"; // rejeitado / prioridade alta / erro
+
+/** Degraus de transparência do azul-marinho no guia, como sufixo hex. */
+export const NAVY_ALPHA = {
+  8: `${NAVY}14`,
+  13: `${NAVY}21`,
+  50: `${NAVY}80`,
+  65: `${NAVY}a6`,
+} as const;
