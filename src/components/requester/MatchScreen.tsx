@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { MOSS, NAVY, OCHRE, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
 import { PublicProfile } from "@/components/public/PublicProfile";
 
 export function MatchScreen({ onBack }: { onBack?: () => void }) {
@@ -7,8 +7,8 @@ export function MatchScreen({ onBack }: { onBack?: () => void }) {
 
   // Mock atualizado para demonstrar estudantes que aceitaram e os que demonstraram interesse
   const [applicantStatuses, setApplicantStatuses] = useState([
-    { id: "std-1", name: "João Pereira", status: "Aceitou convite", type: "accepted", color: "#2f6b4f", course: "Engenharia da Computação · 5º sem" },
-    { id: "std-2", name: "Maria Clara", status: "Em aguardo", type: "waiting", color: "#b7791f", course: "Ciência da Computação · 7º sem" },
+    { id: "std-1", name: "João Pereira", status: "Aceitou convite", type: "accepted", color: MOSS, course: "Engenharia da Computação · 5º sem" },
+    { id: "std-2", name: "Maria Clara", status: "Em aguardo", type: "waiting", color: OCHRE, course: "Ciência da Computação · 7º sem" },
     { id: "std-3", name: "Carlos Silva", status: "Interesse enviado", type: "interested", color: "#3b82f6", course: "Inteligência Artificial · 3º sem" },
     { id: "std-4", name: "Ana Beatriz", status: "Interesse enviado", type: "interested", color: "#3b82f6", course: "Ciência da Computação · 4º sem" },
   ]);
@@ -101,10 +101,10 @@ export function MatchScreen({ onBack }: { onBack?: () => void }) {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    setApplicantStatuses(applicantStatuses.map(s => s.id === student.id ? { ...s, type: "accepted", status: "Aceitou convite", color: "#2f6b4f" } : s));
+                    setApplicantStatuses(applicantStatuses.map(s => s.id === student.id ? { ...s, type: "accepted", status: "Aceitou convite", color: MOSS } : s));
                   }}
                   className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase font-bold rounded-[8px] transition-opacity hover:opacity-85"
-                  style={{ background: "#2f6b4f", color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
+                  style={{ background: MOSS, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
                 >
                   Aceitar
                 </button>
@@ -114,7 +114,7 @@ export function MatchScreen({ onBack }: { onBack?: () => void }) {
                     setApplicantStatuses(applicantStatuses.filter(s => s.id !== student.id));
                   }}
                   className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase font-bold rounded-[8px] transition-opacity hover:opacity-85"
-                  style={{ border: `1px solid #b4432f`, color: "#b4432f", background: "transparent", fontFamily: "Geist, Inter, system-ui, sans-serif" }}
+                  style={{ border: `1px solid ${TERRACOTTA}`, color: TERRACOTTA, background: "transparent", fontFamily: "Geist, Inter, system-ui, sans-serif" }}
                 >
                   Recusar
                 </button>

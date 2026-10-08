@@ -9,12 +9,48 @@
   --color-ink: #0b2545;
   --color-navy-mid: #13315c;
   --color-navy-soft: #134074;
-  --color-moss: #2f6b4f;
   --color-sky: #8da9c4;
+  --color-white: #ffffff;
+
+  /* Status (guia de estilos do Figma, "Estilos/Cores VitrineIC") */
+  --color-slate: #4a6a9c;
+  --color-ochre: #b7791f;
+  --color-moss: #2f6b4f;
+  --color-terracotta: #b4432f;
+
+  /* Escala tipográfica do guia */
+  --text-hero: 72px;
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.035em;
+  --text-page: 56px;
+  --text-page--line-height: 1;
+  --text-page--letter-spacing: -0.035em;
+  --text-section: 36px;
+  --text-section--line-height: 1.05;
+  --text-section--letter-spacing: -0.03em;
+  --text-lead: 18px;
+  --text-lead--line-height: 1.5;
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+  --text-label: 11px;
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: 0.08em;
+
   --font-serif: 'Inter Tight', 'Geist', system-ui, sans-serif;
   --font-display: 'Inter Tight', 'Geist', system-ui, sans-serif;
   --font-sans: 'Geist', 'Inter', system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
+}
+
+:root {
+  --vt-shadow-card:
+    0 1px 1px rgba(11, 37, 69, 0.04),
+    0 2px 4px rgba(11, 37, 69, 0.04),
+    0 8px 24px -8px rgba(11, 37, 69, 0.08);
+  --vt-shadow-card-hover:
+    0 1px 1px rgba(11, 37, 69, 0.05),
+    0 6px 12px rgba(11, 37, 69, 0.06),
+    0 24px 48px -12px rgba(11, 37, 69, 0.16);
 }
 
 *, *::before, *::after {
@@ -110,18 +146,130 @@ div[style*="max-width: 32rem"] {
   border-radius: 20px !important;
 }
 
-/* Cards: sombra suave em camadas, sem contorno pesado. */
+/* Cards (guia: raio 16, borda navy 8%): sombra em camadas; no hover a sombra
+   cresce, sem escala. */
 div[style*="border-radius: 16px"],
-button[style*="border-radius: 16px"] {
-  box-shadow:
-    0 1px 1px rgba(11, 37, 69, 0.03),
-    0 2px 4px rgba(11, 37, 69, 0.03),
-    0 12px 32px -16px rgba(11, 37, 69, 0.14);
+button[style*="border-radius: 16px"],
+.vt-card {
+  box-shadow: var(--vt-shadow-card);
+  transition: box-shadow 0.2s ease;
 }
+
+button[style*="border-radius: 16px"]:hover,
+div[style*="border-radius: 16px"][class*="cursor-pointer"]:hover,
+.vt-card-interactive:hover {
+  box-shadow: var(--vt-shadow-card-hover);
+}
+
+.vt-card {
+  background: #ffffff;
+  border: 1px solid rgba(11, 37, 69, 0.08);
+  border-radius: 16px;
+}
+
+/* Botões desabilitados ficam a 40%, como no guia. */
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Componentes do guia de estilos (Figma: "Estilos/Cores VitrineIC")
+   ========================================= */
+
+/* Botões: 40px de altura, raio 10, Geist 13. */
+.vt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.vt-btn-primary { background: #0b2545; color: #f3f1ec; }
+.vt-btn-primary:hover:not(:disabled) { background: #13315c; }
+.vt-btn-secondary { background: transparent; color: #0b2545; border-color: rgba(11, 37, 69, 0.2); }
+.vt-btn-secondary:hover:not(:disabled) { background: rgba(255, 255, 255, 0.6); border-color: rgba(11, 37, 69, 0.5); }
+.vt-btn-danger { background: transparent; color: #b4432f; border-color: rgba(180, 67, 47, 0.3); }
+.vt-btn-danger:hover:not(:disabled) { background: rgba(255, 255, 255, 0.6); border-color: rgba(11, 37, 69, 0.5); }
+.vt-btn-cream { background: #f3f1ec; color: #0b2545; }
+
+/* Inputs: fundo branco, borda navy 15%; foco com borda navy e anel de 4px;
+   erro em terracota; desabilitado com texto a 40%. */
+.vt-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #0b2545;
+  border: 1px solid rgba(11, 37, 69, 0.15);
+  border-radius: 10px;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+  resize: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.vt-input::placeholder { color: rgba(11, 37, 69, 0.35); }
+.vt-input:focus { border-color: #0b2545; box-shadow: 0 0 0 4px rgba(11, 37, 69, 0.08); }
+.vt-input[aria-invalid="true"] { border-color: #b4432f; }
+.vt-input[aria-invalid="true"]:focus { box-shadow: 0 0 0 4px rgba(180, 67, 47, 0.1); }
+.vt-input:disabled { color: rgba(11, 37, 69, 0.4); cursor: not-allowed; }
+.vt-input-mono { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; }
+
+/* Tags: pílula com contorno navy 13% e texto a 70%; selecionada é sólida. */
+.vt-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid rgba(11, 37, 69, 0.13);
+  border-radius: 999px;
+  color: rgba(11, 37, 69, 0.7);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.vt-pill-selected { background: #0b2545; border-color: #0b2545; color: #f3f1ec; }
+
+/* Status: pílula com fundo tingido (10%) e texto na cor do status.
+   A cor vem de --vt-status no style do elemento. */
+.vt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vt-status) 10%, transparent);
+  color: var(--vt-status);
+  font-family: 'Geist Mono', ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.vt-status::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: currentColor;
+}
+.vt-status-solid { background: #0b2545; color: #f3f1ec; }
 
 /* =========================================
    Superfícies texturizadas (pedra)
    Ruído fractal em SVG + manchas radiais, no lugar de fotos.
+   Painéis destacados usam raio 24 (guia); o rodapé fica reto.
    ========================================= */
 
 .vt-stone {

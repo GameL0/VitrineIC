@@ -1,29 +1,26 @@
-import { Mono } from "./ui";
-import { NAVY } from "@/styles/tokens";
+import type * as React from "react";
+import { MOSS, NAVY, OCHRE, SLATE, TERRACOTTA } from "@/styles/tokens";
 import type { DemandStatus } from "@/types";
 
 export const DEMAND_STATUS: Record<DemandStatus, { label: string; color: string; shape: "circle" | "square" | "diamond" }> = {
-  nova:       { label: "Nova",         color: "#4a6a9c",    shape: "diamond" },
-  em_analise: { label: "Em Análise",   color: "#b7791f",    shape: "circle"  },
-  aprovada:   { label: "Aprovada",     color: "#2f6b4f",    shape: "square"  },
-  rejeitada:  { label: "Rejeitada",    color: "#b4432f",    shape: "diamond" },
-  matched:    { label: "Matched",      color: NAVY,         shape: "square"  },
+  nova:       { label: "Nova",         color: SLATE,      shape: "diamond" },
+  em_analise: { label: "Em Análise",   color: OCHRE,      shape: "circle"  },
+  aprovada:   { label: "Aprovada",     color: MOSS,       shape: "square"  },
+  rejeitada:  { label: "Rejeitada",    color: TERRACOTTA, shape: "diamond" },
+  matched:    { label: "Matched",      color: NAVY,       shape: "square"  },
 };
 
 export const KANBAN_COLS: DemandStatus[] = ["nova", "em_analise", "aprovada", "rejeitada", "matched"];
 
-export function StatusBadge({ status, size = 8 }: { status: DemandStatus; size?: number }) {
+/** Pílula de status do guia: fundo tingido a 10%; "Matched" é sólida. */
+export function StatusBadge({ status }: { status: DemandStatus; size?: number }) {
   const cfg = DEMAND_STATUS[status];
   return (
-    <div className="flex items-center gap-1.5 whitespace-nowrap">
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ flexShrink: 0 }}>
-        {cfg.shape === "circle" && <circle cx={size/2} cy={size/2} r={size/2-0.5} fill={cfg.color} />}
-        {cfg.shape === "square" && <rect x={0.5} y={0.5} width={size-1} height={size-1} fill={cfg.color} />}
-        {cfg.shape === "diamond" && <polygon points={`${size/2},0.5 ${size-0.5},${size/2} ${size/2},${size-0.5} 0.5,${size/2}`} fill={cfg.color} />}
-      </svg>
-      <span className="text-[9px] tracking-[0.14em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: cfg.color }}>
-        {cfg.label}
-      </span>
-    </div>
+    <span
+      className={status === "matched" ? "vt-status vt-status-solid" : "vt-status"}
+      style={{ "--vt-status": cfg.color } as React.CSSProperties}
+    >
+      {cfg.label}
+    </span>
   );
 }

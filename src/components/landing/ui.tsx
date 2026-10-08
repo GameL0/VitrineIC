@@ -28,23 +28,7 @@ export function InputField({ label, type = "text", placeholder }: { label: strin
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full px-3 py-2.5 text-sm bg-transparent outline-none transition-colors"
-        style={{
-          border: `1px solid ${NAVY}44`,
-          borderRadius: "8px",
-          fontFamily: "Geist, Inter, system-ui, sans-serif",
-          color: NAVY,
-        }}
-        onFocus={(e) => {
-          e.currentTarget.style.borderColor = NAVY;
-          e.currentTarget.style.outline = `2px solid ${NAVY}`;
-          e.currentTarget.style.backgroundColor = "#f3f1ec"; // OFFWHITE
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.borderColor = `${NAVY}44`;
-          e.currentTarget.style.outline = "none";
-          e.currentTarget.style.backgroundColor = "transparent";
-        }}
+        className="vt-input"
       />
     </div>
   );

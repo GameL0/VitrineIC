@@ -35,19 +35,7 @@ export function Input({
   value?: string;
   onChange?: (v: string) => void;
 }) {
-  const base: React.CSSProperties = {
-    fontFamily: mono ? "Geist Mono, ui-monospace, monospace" : "Geist, Inter, system-ui, sans-serif",
-    color: NAVY,
-    fontSize: mono ? "12px" : "13px",
-    border: `1px solid ${NAVY}35`,
-    borderRadius: "8px",
-    background: "transparent",
-    width: "100%",
-    outline: "none",
-    padding: "10px 12px",
-    resize: "none",
-    transition: "border-color 0.15s",
-  };
+  const cls = mono ? "vt-input vt-input-mono" : "vt-input";
   return (
     <div>
       {label && <Label>{label}</Label>}
@@ -55,37 +43,17 @@ export function Input({
         <textarea
           rows={rows}
           placeholder={placeholder}
-          style={base}
+          className={cls}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = NAVY;
-            e.currentTarget.style.outline = `2px solid ${NAVY}`;
-            e.currentTarget.style.backgroundColor = OFFWHITE;
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = `${NAVY}35`;
-            e.currentTarget.style.outline = "none";
-            e.currentTarget.style.backgroundColor = "transparent";
-          }}
         />
       ) : (
         <input
           type={type}
           placeholder={placeholder}
-          style={base}
+          className={cls}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = NAVY;
-            e.currentTarget.style.outline = `2px solid ${NAVY}`;
-            e.currentTarget.style.backgroundColor = OFFWHITE;
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = `${NAVY}35`;
-            e.currentTarget.style.outline = "none";
-            e.currentTarget.style.backgroundColor = "transparent";
-          }}
         />
       )}
     </div>
@@ -109,16 +77,9 @@ export function SelectField({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
+
+        className="vt-input"
         style={{
-          fontFamily: "Geist, Inter, system-ui, sans-serif",
-          color: NAVY,
-          fontSize: "13px",
-          border: `1px solid ${NAVY}35`,
-          borderRadius: "8px",
-          background: OFFWHITE,
-          width: "100%",
-          outline: "none",
-          padding: "10px 12px",
           appearance: "none",
           cursor: "pointer",
         }}

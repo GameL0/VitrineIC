@@ -89,7 +89,7 @@ export default function LandingPage({
           <div className="hidden md:block md:col-span-4 pt-4">
             <div
               className="vt-stone p-8 flex flex-col justify-between"
-              style={{ borderRadius: "20px", minHeight: "320px" }}
+              style={{ borderRadius: "24px", minHeight: "320px" }}
             >
               <span
                 className="inline-flex items-center gap-2 self-start px-3 py-1 text-[10px] uppercase"
