@@ -2,7 +2,7 @@
  * DADOS FICTÍCIOS — insumos qualitativos do painel de impacto (ACE1).
  *
  * Os números do painel NÃO ficam aqui: são derivados de `@/data/students`,
- * `@/data/demands` e `@/data/invitations` em tempo de render, para que o
+ * `@/data/demands` e `@/data/interests` em tempo de render, para que o
  * indicador nunca divirja da base. Só o que não dá para derivar mora aqui.
  */
 
@@ -16,16 +16,19 @@ export interface Testimonial {
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    quote:
-      "Eu tinha o projeto parado no GitHub havia meses. Em duas semanas na vitrine recebi um convite de uma demanda que usava exatamente a stack que eu estudava.",
-    author: "Rafael Moreira Santos",
-    role: "Ciência da Computação · 5º sem",
+    quote: "A curadoria nos sugeriu uma estudante com justificativa, e era exatamente o perfil que precisávamos.",
+    author: "Fernanda Rocha",
+    role: "CTO · Mangue Tech",
   },
   {
-    quote:
-      "O que nos convenceu foi a curadoria. Não recebemos trinta candidaturas para filtrar: recebemos uma indicação com justificativa técnica escrita por alguém do Instituto.",
-    author: "TechBr Soluções",
-    role: "Solicitante · Eng. de Software",
+    quote: "Meu projeto de TCC virou meu primeiro contrato como desenvolvedor.",
+    author: "João Pedro Lins",
+    role: "Engenharia da Computação",
+  },
+  {
+    quote: "Sem pilha de currículos: só falamos com quem tinha aceitado a demanda.",
+    author: "André Malta",
+    role: "Sócio · Sururu Labs",
   },
 ];
 

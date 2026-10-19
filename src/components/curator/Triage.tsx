@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { DEMAND_STATUS, KANBAN_COLS, StatusBadge } from "./StatusBadge";
-import { Mono, SkillTag } from "./ui";
-import { NAVY, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
+import { SkillTag } from "./ui";
+import { ClockIcon } from "@/components/app/Icons";
+import { StatusPill } from "@/components/app/StatusPill";
+import { PageHead } from "@/components/public/PageHead";
+import { PAGE } from "@/components/public/layout";
+import { removeDemand, setDemandStatus } from "@/lib/store";
+import { TERRACOTTA } from "@/styles/tokens";
 import type { Demand, DemandStatus } from "@/types";
 
-
+/** Card do kanban: id, prioridade, título, empresa, skills e escopo. Clique abre as ações. */
 export function TriageCard({
   demand,
   onStatus,
@@ -20,108 +25,71 @@ export function TriageCard({
 
   return (
     <div
-      className="mb-2 transition-all cursor-grab active:cursor-grabbing"
+      className="vt-card cursor-grab overflow-hidden active:cursor-grabbing"
       draggable
       onDragStart={() => onDragStart(demand.id)}
-      style={{ border: `1px solid ${NAVY}18`, background: OFFWHITE, borderRadius: "16px", overflow: "hidden" }}
     >
-      <div
-        className="px-4 py-3"
-        onClick={() => setOpen(!open)}
-        onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = `${NAVY}04`)}
-        onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
-      >
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <Mono dim>{demand.id}</Mono>
-          {demand.priority === "alta" && (
-            <span
-              className="text-[8px] tracking-[0.14em] uppercase px-1.5 py-0.5 flex-shrink-0"
-              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: TERRACOTTA, border: `1px solid ${TERRACOTTA}`, borderRadius: "6px" }}
-            >
-              Alta
-            </span>
-          )}
+      <div className="flex cursor-pointer flex-col gap-3 p-4" onClick={() => setOpen(!open)}>
+        <div className="flex items-center justify-between gap-2">
+          <span className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.08em] text-navy/45">{demand.id}</span>
+          {demand.priority === "alta" && <StatusPill color={TERRACOTTA}>Alta</StatusPill>}
         </div>
-        <p
-          className="text-[13px] font-medium leading-tight mb-2"
-          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-        >
-          {demand.title}
-        </p>
-        <p
-          className="text-[10px] mb-2"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}
-        >
-          {demand.company}
-        </p>
-        <div className="flex flex-wrap gap-1 mb-2">
-          {demand.skills.slice(0, 3).map((s) => (
-            <SkillTag key={s} small>{s}</SkillTag>
+        <p className="font-sans text-[15px] leading-[1.3] text-navy">{demand.title}</p>
+        <p className="font-sans text-[13px] text-navy/55">{demand.company}</p>
+        <div className="flex flex-wrap gap-1.5">
+          {demand.skills.slice(0, 2).map((s) => (
+            <SkillTag key={s}>{s}</SkillTag>
           ))}
-          {demand.skills.length > 3 && (
-            <span className="text-[8px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-              +{demand.skills.length - 3}
-            </span>
+          {demand.skills.length > 2 && (
+            <span className="self-center font-mono text-[10px] text-navy/45">+{demand.skills.length - 2}</span>
           )}
         </div>
-        <Mono dim>{demand.scope}</Mono>
+        <p className="flex items-center gap-1.5 border-t border-navy/8 pt-3 font-sans text-[12px] text-navy/55">
+          <ClockIcon />
+          {demand.scope}
+        </p>
       </div>
 
       {open && (
-        <div style={{ borderTop: `1px solid ${NAVY}12` }}>
-          <div className="px-4 py-3">
-            <p className="text-[11px] leading-relaxed mb-3" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
-              {demand.description}
-            </p>
-            <div className="flex flex-wrap gap-1 mb-4">
-              {demand.skills.map((s) => <SkillTag key={s} small>{s}</SkillTag>)}
-            </div>
-          </div>
-          
-          <div className="p-2 flex flex-col gap-2" style={{ background: `${NAVY}03`, borderTop: `1px solid ${NAVY}10` }}>
-            {(["em_analise", "aprovada", "rejeitada"] as DemandStatus[]).map((s) => (
-              <button
-                key={s}
-                onClick={(e) => { e.stopPropagation(); onStatus(s); }}
-                className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85"
-                style={{
-                  fontFamily: "Geist, Inter, system-ui, sans-serif",
-                  border: `1px solid ${DEMAND_STATUS[s].color}40`,
-                  color: demand.status === s ? OFFWHITE : DEMAND_STATUS[s].color,
-                  background: demand.status === s ? DEMAND_STATUS[s].color : OFFWHITE,
-                  borderRadius: "10px"
-                }}
-              >
-                <span>Mover para {DEMAND_STATUS[s].label}</span>
-                {demand.status === s && (
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M2 6l3 3 5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                )}
-              </button>
-            ))}
-            
+        <div className="border-t border-navy/8 bg-navy/[0.02] p-3">
+          <p className="mb-3 px-1 font-sans text-[12px] leading-[1.55] text-navy/65">{demand.description}</p>
+          <div className="flex flex-col gap-1.5">
+            {(["em_analise", "aprovada", "rejeitada"] as DemandStatus[]).map((s) => {
+              const current = demand.status === s;
+              return (
+                <button
+                  key={s}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onStatus(s);
+                  }}
+                  className={`flex h-9 items-center justify-between border px-3 font-sans text-[12px] transition-colors ${
+                    current ? "text-white" : "bg-white hover:bg-navy/[0.03]"
+                  }`}
+                  style={{
+                    borderColor: `color-mix(in srgb, ${DEMAND_STATUS[s].color} 35%, transparent)`,
+                    background: current ? DEMAND_STATUS[s].color : undefined,
+                    color: current ? undefined : DEMAND_STATUS[s].color,
+                  }}
+                >
+                  Mover para {DEMAND_STATUS[s].label.toLowerCase()}
+                  {current && <span aria-hidden="true">✓</span>}
+                </button>
+              );
+            })}
+
             {demand.status === "rejeitada" && onDelete && (
               <button
-                onClick={(e) => { 
-                  e.stopPropagation(); 
+                onClick={(e) => {
+                  e.stopPropagation();
                   if (window.confirm("Você tem certeza que deseja excluir esta demanda?")) {
-                    onDelete(); 
+                    onDelete();
                   }
                 }}
-                className="w-full py-2.5 px-4 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-85 mt-2"
-                style={{
-                  fontFamily: "Geist, Inter, system-ui, sans-serif",
-                  border: `1px solid ${TERRACOTTA}`,
-                  color: OFFWHITE,
-                  background: TERRACOTTA,
-                  borderRadius: "10px"
-                }}
+                className="mt-1 flex h-9 items-center justify-center px-3 font-sans text-[12px] text-white"
+                style={{ background: TERRACOTTA }}
               >
-                <span>Excluir Demanda</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
+                Excluir demanda
               </button>
             )}
           </div>
@@ -130,22 +98,12 @@ export function TriageCard({
     </div>
   );
 }
-export function Triage({
-  demands,
-  setDemands,
-}: {
-  demands: Demand[];
-  setDemands: (d: Demand[]) => void;
-}) {
+
+export function Triage({ demands }: { demands: Demand[] }) {
   const [draggedId, setDraggedId] = useState<string | null>(null);
 
-  const updateStatus = (id: string, status: DemandStatus) => {
-    setDemands(demands.map((d) => (d.id === id ? { ...d, status } : d)));
-  };
-
-  const deleteDemand = (id: string) => {
-    setDemands(demands.filter(d => d.id !== id));
-  };
+  const updateStatus = (id: string, status: DemandStatus) => setDemandStatus(id, status);
+  const deleteDemand = (id: string) => removeDemand(id);
 
   const handleDrop = (e: React.DragEvent, status: DemandStatus) => {
     e.preventDefault();
@@ -159,57 +117,44 @@ export function Triage({
     e.preventDefault(); // Necessary to allow dropping
   };
 
-  return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-      <div className="mb-10 flex items-end justify-between flex-wrap gap-4">
-        <div>
-          <p className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-            <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
-            Fila de Triagem
-          </p>
-          <h1 className="text-4xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-            Demandas Recebidas
-          </h1>
-        </div>
-        <div className="flex gap-5 flex-wrap">
-          {KANBAN_COLS.map((col) => (
-            <div key={col} className="text-right">
-              <p className="text-2xl leading-none" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-                {demands.filter((d) => d.status === col).length}
-              </p>
-              <p className="text-[9px] mt-1" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                {DEMAND_STATUS[col].label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+  const [dropTarget, setDropTarget] = useState<DemandStatus | null>(null);
+  const count = (col: DemandStatus) => demands.filter((d) => d.status === col).length;
 
-      {/* Kanban */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-0" style={{ border: `1px solid ${NAVY}18`, borderRadius: "16px", overflow: "hidden" }}>
-        {KANBAN_COLS.map((col, ci) => (
-          <div
-            key={col}
-            onDrop={(e) => handleDrop(e, col)}
-            onDragOver={handleDragOver}
-            style={{ borderLeft: ci > 0 ? `1px solid ${NAVY}18` : "none", transition: "background 0.2s" }}
-            onDragEnter={(e) => { (e.currentTarget as HTMLElement).style.background = `${NAVY}03` }}
-            onDragLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
-            onDropCapture={(e) => { (e.currentTarget as HTMLElement).style.background = "transparent" }}
-          >
-            {/* Column header */}
-            <div
-              className="px-4 py-3 flex items-center gap-2"
-              style={{ borderBottom: `1px solid ${NAVY}18`, background: `${NAVY}04` }}
-            >
+  return (
+    <main className={`${PAGE} pb-20`}>
+      <PageHead eyebrow="Curadoria" title="Triagem de demandas." />
+
+      <div className="-mx-5 overflow-x-auto px-5 pb-2 md:mx-0 md:px-0">
+        <div className="grid min-w-[1100px] grid-cols-5 gap-3">
+          {KANBAN_COLS.map((col) => (
+            <div key={col} className="vt-card flex items-center justify-between px-4 py-4">
               <StatusBadge status={col} />
-              <span className="ml-auto text-[9px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                {demands.filter((d) => d.status === col).length}
+              <span className="font-display text-[28px] font-medium tracking-[-0.02em] text-navy">
+                {String(count(col)).padStart(2, "0")}
               </span>
             </div>
-            {/* Cards */}
-            <div className="p-3 min-h-[500px]">
+          ))}
+
+          {KANBAN_COLS.map((col) => (
+            <div
+              key={col}
+              onDrop={(e) => {
+                handleDrop(e, col);
+                setDropTarget(null);
+              }}
+              onDragOver={handleDragOver}
+              onDragEnter={() => setDropTarget(col)}
+              onDragLeave={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node)) setDropTarget(null);
+              }}
+              className={`flex min-h-[460px] flex-col gap-3 rounded-2xl p-3 transition-colors ${
+                dropTarget === col ? "bg-navy/[0.09]" : "bg-navy/[0.045]"
+              }`}
+            >
+              <div className="flex items-center justify-between px-1 pt-1 font-mono text-[10px] uppercase tracking-[0.08em] text-navy/55">
+                <span>{DEMAND_STATUS[col].label}</span>
+                <span>{count(col)}</span>
+              </div>
               {demands.filter((d) => d.status === col).map((d) => (
                 <TriageCard
                   key={d.id}
@@ -219,17 +164,15 @@ export function Triage({
                   onDelete={() => deleteDemand(d.id)}
                 />
               ))}
-              {demands.filter((d) => d.status === col).length === 0 && (
-                <div className="flex items-center justify-center h-24 border-2 border-dashed rounded-[12px] opacity-50 pointer-events-none" style={{ borderColor: NAVY }}>
-                  <span className="text-[9px] uppercase tracking-widest" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>
-                    Solte aqui
-                  </span>
+              {count(col) === 0 && (
+                <div className="pointer-events-none grid h-24 place-items-center rounded-xl border border-dashed border-navy/20 font-mono text-[10px] uppercase tracking-[0.08em] text-navy/40">
+                  Solte aqui
                 </div>
               )}
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

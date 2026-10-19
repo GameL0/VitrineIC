@@ -16,8 +16,9 @@ export const STUDENTS: Student[] = [
     gpa: "9.1",
     bio: "Interesse em sistemas distribuídos e aprendizado de máquina aplicado a infraestrutura. Busco projetos de iniciação científica em detecção de anomalias.",
     interests: ["Inteligência Artificial", "Redes & Sistemas", "Banco de Dados"],
-    languages: [{ name: "Inglês", conversacao: 3, leitura: 3, escuta: 3 }, { name: "Espanhol", conversacao: 2, leitura: 2, escuta: 2 }],
+    languages: [{ name: "Inglês", level: 3 }, { name: "Espanhol", level: 2 }],
     skills: ["Python", "PyTorch", "Docker", "PostgreSQL", "Node.js", "scikit-learn", "MQTT"],
+    skillLevels: { Python: 3, PyTorch: 3, Docker: 2, PostgreSQL: 2 },
     projects: [
       {
         id: "PRJ-001",
@@ -39,6 +40,9 @@ export const STUDENTS: Student[] = [
       },
     ],
     github: "github.com/rafaelms",
+    email: "estudante@ic.ufal.br",
+    unit: "IC",
+    onboardedAt: "2026-03-01",
     availability: "Imediata",
   },
   {
@@ -50,8 +54,9 @@ export const STUDENTS: Student[] = [
     gpa: "8.7",
     bio: "Foco em visualização de dados e sustentabilidade. Já trabalhei com métricas ESG para pequenas empresas e quero seguir em dados aplicados a impacto social.",
     interests: ["Banco de Dados", "Sistemas Web", "HCI & Design"],
-    languages: [{ name: "Inglês", conversacao: 4, leitura: 4, escuta: 4 }, { name: "Francês", conversacao: 2, leitura: 2, escuta: 2 }],
+    languages: [{ name: "Inglês", level: 4 }, { name: "Francês", level: 2 }],
     skills: ["Python", "React", "AWS", "PostgreSQL", "scikit-learn", "Pandas", "SQL"],
+    skillLevels: { Python: 3, React: 2, AWS: 1, PostgreSQL: 2 },
     projects: [
       {
         id: "PRJ-003",
@@ -64,6 +69,9 @@ export const STUDENTS: Student[] = [
       },
     ],
     github: "github.com/isadoralc",
+    email: "isadoralc@ic.ufal.br",
+    unit: "IC",
+    onboardedAt: "2026-03-01",
     availability: "Imediata",
   },
   {
@@ -75,8 +83,9 @@ export const STUDENTS: Student[] = [
     gpa: "8.3",
     bio: "Gosto de compiladores e de ensino de programação. Meu projeto atual nasceu de monitoria: queria uma linguagem que desse mensagens de erro compreensíveis para calouros.",
     interests: ["Engenharia de Software", "Linguagens", "Sistemas Web"],
-    languages: [{ name: "Inglês", conversacao: 3, leitura: 3, escuta: 3 }, { name: "Japonês", conversacao: 3, leitura: 3, escuta: 3 }],
+    languages: [{ name: "Inglês", level: 3 }, { name: "Japonês", level: 3 }],
     skills: ["Python", "FastAPI", "Docker", "PostgreSQL", "React", "TypeScript"],
+    skillLevels: { Python: 3, FastAPI: 2, Docker: 2, PostgreSQL: 1 },
     projects: [
       {
         id: "PRJ-004",
@@ -89,6 +98,9 @@ export const STUDENTS: Student[] = [
       },
     ],
     github: "github.com/brunoty",
+    email: "brunoty@ic.ufal.br",
+    unit: "IC",
+    onboardedAt: "2026-03-01",
     availability: "Após 15/out",
   },
   {
@@ -100,8 +112,9 @@ export const STUDENTS: Student[] = [
     gpa: "9.4",
     bio: "Trabalho com visão computacional aplicada a reabilitação motora, em parceria com o laboratório de robótica. Procuro demandas na área de saúde.",
     interests: ["Inteligência Artificial", "Sistemas Embarcados", "Computação Gráfica"],
-    languages: [{ name: "Inglês", conversacao: 4, leitura: 4, escuta: 4 }, { name: "Libras", conversacao: 3, leitura: 3, escuta: 3 }],
+    languages: [{ name: "Inglês", level: 4 }, { name: "Libras", level: 3 }],
     skills: ["Python", "OpenCV", "PyTorch", "FastAPI", "Docker", "C++"],
+    skillLevels: { Python: 4, OpenCV: 3, PyTorch: 3, FastAPI: 2 },
     projects: [
       {
         id: "PRJ-005",
@@ -114,7 +127,11 @@ export const STUDENTS: Student[] = [
       },
     ],
     github: "github.com/fernandaob",
+    email: "fernandaob@ic.ufal.br",
+    unit: "IC",
+    onboardedAt: "2026-03-01",
     availability: "Imediata",
+    inProject: true,
   },
   {
     id: "STU-005",
@@ -125,8 +142,9 @@ export const STUDENTS: Student[] = [
     gpa: "7.9",
     bio: "Começando em ciência de dados. Estou montando um projeto de manutenção preditiva e procuro alguém mais experiente para orientar.",
     interests: ["Banco de Dados", "Redes & Sistemas", "Inteligência Artificial"],
-    languages: [{ name: "Inglês", conversacao: 2, leitura: 2, escuta: 2 }],
+    languages: [{ name: "Inglês", level: 2 }],
     skills: ["Python", "SQL", "Pandas", "scikit-learn", "React"],
+    skillLevels: { Python: 2, SQL: 2, Pandas: 2, "scikit-learn": 1 },
     projects: [
       {
         id: "PRJ-006",
@@ -139,19 +157,9 @@ export const STUDENTS: Student[] = [
       },
     ],
     github: "github.com/lucashp",
+    email: "lucashp@ic.ufal.br",
+    unit: "IC",
+    onboardedAt: "2026-03-01",
     availability: "Imediata",
   },
 ];
-
-/** Projetos de todos os estudantes, achatados para o catálogo público. */
-export const ALL_PROJECTS = STUDENTS.flatMap((student) =>
-  student.projects.map((project) => ({ ...project, student })),
-);
-
-export function findStudent(id: string) {
-  return STUDENTS.find((s) => s.id === id);
-}
-
-export function findProject(id: string) {
-  return ALL_PROJECTS.find((p) => p.id === id);
-}

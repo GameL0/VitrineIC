@@ -1,139 +1,109 @@
 import { useState } from "react";
-import { STUDENTS } from "@/data/students";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { INSTITUTION } from "@/data/institution";
+import { useVitrine } from "@/lib/store";
+import { isProfileVisible } from "@/lib/profile";
+import { InProjectBadge } from "@/components/app/InProjectBadge";
+import { PageHead } from "./PageHead";
+import { PAGE } from "./layout";
 
-const MONO = "Geist Mono, ui-monospace, monospace";
-const SANS = "Geist, Inter, system-ui, sans-serif";
-const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
+function SearchIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+      className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-navy/55"
+    >
+      <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M10.5 10.5 14 14" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
 
+/** Diretório público de estudantes, com busca por nome, curso ou tecnologia. */
 export function StudentsDirectory({ onOpenProfile }: { onOpenProfile: (id: string) => void }) {
   const [query, setQuery] = useState("");
+  const { inProject, students } = useVitrine();
+  const visible = students.filter(isProfileVisible);
 
   const q = query.trim().toLowerCase();
   const shown = q
-    ? STUDENTS.filter(
+    ? visible.filter(
         (s) =>
           s.name.toLowerCase().includes(q) ||
           s.course.toLowerCase().includes(q) ||
           s.skills.some((sk) => sk.toLowerCase().includes(q)),
       )
-    : STUDENTS;
+    : visible;
 
   return (
-    <div className="px-8 md:px-16 py-14 max-w-screen-xl mx-auto">
-      <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
-        <div>
-          <p
-            className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-          >
-            <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
-            Diretório
-          </p>
-          <h1
-            className="text-5xl md:text-6xl leading-none mb-5"
-            style={{ fontFamily: SERIF, color: NAVY, letterSpacing: "-0.01em" }}
-          >
-            Estudantes.
-          </h1>
-          <p
-            className="text-base leading-[1.7] max-w-xl"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.65, fontWeight: 300 }}
-          >
-            Quem está construindo no Instituto de Computação, com suas
-            competências, projetos e disponibilidade.
-          </p>
-        </div>
-
-        <div style={{ minWidth: "240px" }}>
-          <label
-            className="block text-[9px] tracking-[0.18em] uppercase mb-1.5"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-          >
-            Buscar por nome, curso ou skill
-          </label>
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="ex.: Python, robótica…"
-            className="w-full px-3 py-2.5 text-sm bg-transparent outline-none transition-colors"
-            style={{ border: `1px solid ${NAVY}44`, borderRadius: "8px", fontFamily: SANS, color: NAVY }}
-            onFocus={(e) => (e.currentTarget.style.borderColor = NAVY)}
-            onBlur={(e) => (e.currentTarget.style.borderColor = `${NAVY}44`)}
-          />
-        </div>
-      </div>
+    <main className={`${PAGE} pb-20 md:pb-28`}>
+      <PageHead
+        eyebrow="Diretório"
+        title={`Estudantes da ${INSTITUTION.universityShort}.`}
+        lead="Perfis públicos de quem está construindo. O contato é liberado quando estudante e solicitante aceitam."
+        aside={
+          <div className="relative w-full md:w-[288px] md:shrink-0">
+            <SearchIcon />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Buscar por nome ou tecnologia"
+              aria-label="Buscar estudantes por nome, curso ou tecnologia"
+              className="h-11 w-full rounded-[10px] border border-navy/15 bg-white pr-4 pl-10 font-sans text-sm text-navy outline-none transition-colors placeholder:text-navy/55 focus:border-navy"
+            />
+          </div>
+        }
+      />
 
       {shown.length === 0 ? (
-        <p
-          className="py-20 text-center text-[11px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-        >
+        <p className="py-20 text-center font-mono text-[11px] uppercase tracking-[0.08em] text-navy/65">
           Nenhum estudante encontrado
         </p>
       ) : (
-        <div>
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {shown.map((student) => (
             <button
               key={student.id}
               onClick={() => onOpenProfile(student.id)}
-              className="w-full text-left flex items-start gap-6 py-7 px-1 transition-colors"
-              style={{ borderTop: `1px solid ${NAVY}18` }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}04`)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              className="vt-card vt-card-interactive flex min-w-0 flex-col gap-4 p-6 text-left"
             >
-              <div
-                className="flex items-center justify-center flex-shrink-0"
-                style={{ width: "44px", height: "44px", background: NAVY, borderRadius: "10px" }}
-              >
-                <span
-                  className="text-[12px] tracking-[0.1em]"
-                  style={{ fontFamily: MONO, color: OFFWHITE }}
-                >
-                  {student.initials}
+              <div className="flex items-center gap-4">
+                <span className="grid size-12 shrink-0 place-items-center rounded-[13px] bg-navy font-display text-xl font-medium text-offwhite">
+                  {student.name[0]}
                 </span>
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <h2 className="text-xl leading-snug" style={{ fontFamily: SERIF, color: NAVY }}>
-                  {student.name}
-                </h2>
-                <p
-                  className="text-[10px] tracking-[0.14em] uppercase mb-3"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-                >
-                  {student.course} · {student.semester} · {student.projects.length}{" "}
-                  {student.projects.length === 1 ? "projeto" : "projetos"}
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {student.skills.slice(0, 6).map((s) => (
-                    <span
-                      key={s}
-                      className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
-                      style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.55, borderRadius: "6px" }}
-                    >
-                      {s}
-                    </span>
-                  ))}
+                <div className="min-w-0">
+                  <h2 className="truncate font-display text-lg font-medium tracking-[-0.01em] text-navy">
+                    {student.name}
+                  </h2>
+                  <p className="truncate font-sans text-[13px] text-navy/65">
+                    {student.course} · {student.semester}
+                  </p>
                 </div>
               </div>
 
-              <div className="hidden md:block text-right flex-shrink-0">
-                <p
-                  className="text-[9px] tracking-[0.16em] uppercase mb-1"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-                >
-                  Disponibilidade
-                </p>
-                <p className="text-[12px]" style={{ fontFamily: SANS, color: NAVY, opacity: 0.6 }}>
-                  {student.availability}
-                </p>
+              {inProject[student.id] && (
+                <div>
+                  <InProjectBadge />
+                </div>
+              )}
+
+              <p className="line-clamp-2 font-sans text-sm leading-[1.5] text-navy/65">{student.bio}</p>
+
+              <div className="flex flex-wrap gap-1.5">
+                {student.skills.slice(0, 3).map((skill) => (
+                  <span key={skill} className="vt-pill">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </button>
           ))}
-          <div style={{ borderTop: `1px solid ${NAVY}18` }} />
         </div>
       )}
-    </div>
+    </main>
   );
 }

@@ -1,97 +1,131 @@
-import { useState } from "react";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
-import { Input, SelectField, Label } from "./ui";
+import { useState, type FormEvent } from "react";
+import { Input, Label } from "./ui";
+import { ArrowIcon, CheckIcon } from "@/components/app/Icons";
+import { PageHead } from "@/components/public/PageHead";
+import { PAGE } from "@/components/public/layout";
+import { REQUESTER_KIND_LABEL } from "@/data/companies";
+import { renameAccount, useSession } from "@/lib/auth";
+import { updateCompany } from "@/lib/store";
+import { email, first, required, useValidation } from "@/lib/validate";
+import type { RequesterKind } from "@/types";
 
-const TYPES = [
-  "Professor Pesquisador",
-  "Empresa de Tecnologia",
-  "Empresa Tradicional",
-  "Órgão Público",
-  "Autônomo/Pessoa Física",
-  "Outro",
-];
+const KINDS = Object.entries(REQUESTER_KIND_LABEL) as [RequesterKind, string][];
 
+/**
+ * Perfil do solicitante logado: é o que o estudante vê antes de aceitar um
+ * contato. O nome da organização é a chave das demandas e não muda aqui.
+ */
 export function Profile() {
+  const session = useSession();
+  const company = session?.company;
   const [data, setData] = useState({
-    name: "Ana Silva",
-    email: "ana.silva@empresa.com",
-    phone: "(11) 99999-9999",
-    type: "Empresa de Tecnologia",
-    description: "Empresa focada no desenvolvimento de soluções escaláveis em nuvem para o setor da saúde.",
-    photo: ""
+    contactName: session?.account.name ?? "",
+    contactEmail: company?.contactEmail ?? "",
+    kind: company?.kind ?? ("empresa" as RequesterKind),
+    city: company?.city ?? "",
+    site: company?.site ?? "",
+    description: company?.description ?? "",
   });
+  const [saved, setSaved] = useState(false);
+
+  const { validate, field } = useValidation<"contactName" | "contactEmail" | "city">(() => ({
+    contactName: required(data.contactName, "Informe o nome do responsável."),
+    contactEmail: first(required(data.contactEmail, "Informe o e-mail de contato."), email(data.contactEmail)),
+    city: required(data.city, "Informe a cidade."),
+  }));
+
+  if (!company) return null;
+
+  const set = (patch: Partial<typeof data>) => {
+    setData({ ...data, ...patch });
+    setSaved(false);
+  };
+
+  const save = (e: FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    updateCompany(company.name, {
+      contactName: data.contactName.trim(),
+      contactEmail: data.contactEmail.trim().toLowerCase(),
+      kind: data.kind,
+      type: company.kind === data.kind ? company.type : REQUESTER_KIND_LABEL[data.kind],
+      city: data.city.trim(),
+      site: data.site.trim().replace(/^https?:\/\//, ""),
+      description: data.description.trim(),
+    });
+    renameAccount(data.contactName);
+    setSaved(true);
+  };
 
   return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-      <div className="flex items-center justify-between mb-10">
-        <div>
-          <p
-            className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-          >
-            <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
-            Configurações
-          </p>
-          <h1
-            className="text-4xl"
-            style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-          >
-            Perfil do Solicitante
-          </h1>
-        </div>
-        <button
-          className="px-8 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all hover:opacity-90"
-          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
-        >
-          Salvar Alterações
-        </button>
-      </div>
+    <main className={`${PAGE} pb-20`}>
+      <PageHead eyebrow="Solicitante" title="Meu perfil." lead="É o que o estudante vê antes de aceitar um contato." />
 
-      <div className="grid md:grid-cols-12 gap-12">
-        <div className="md:col-span-8 flex flex-col gap-10">
-          <div className="flex flex-col gap-5 p-8" style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px" }}>
-            <h3 className="text-xl mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>Informações da Conta</h3>
-            <div className="grid md:grid-cols-2 gap-5">
-              <Input label="Nome / Razão Social" value={data.name} onChange={(v) => setData({ ...data, name: v })} />
-              <Input label="E-mail de Contato" value={data.email} onChange={(v) => setData({ ...data, email: v })} mono />
-            </div>
-            <div className="grid md:grid-cols-2 gap-5">
-              <Input label="Telefone para Contato" value={data.phone} onChange={(v) => setData({ ...data, phone: v })} mono />
-              <SelectField label="Tipo de Entidade" options={TYPES} value={data.type} onChange={(v) => setData({ ...data, type: v })} />
-            </div>
-            <Input label="Descrição do Solicitante" textarea rows={4} value={data.description} onChange={(v) => setData({ ...data, description: v })} />
+      <form onSubmit={save} noValidate className="vt-card p-6 md:p-8">
+        <div className="mb-8 flex items-center gap-4">
+          <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-navy font-display text-2xl font-medium text-offwhite">
+            {company.name.trim()[0] || "?"}
+          </span>
+          <div className="min-w-0">
+            <p className="font-display text-[22px] font-medium tracking-[-0.01em] text-navy">{company.name}</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/55">
+              {company.type} · desde {company.since}
+            </p>
           </div>
         </div>
 
-        <div className="md:col-span-4 flex flex-col gap-6">
-          <div className="flex flex-col items-center justify-center p-8" style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px" }}>
-            <div
-              className="w-32 h-32 rounded-full mb-4 flex items-center justify-center bg-gray-200 overflow-hidden"
-              style={{ border: `1px solid ${NAVY}30` }}
-            >
-              {data.photo ? (
-                <img src={data.photo} alt="Foto de Perfil" className="w-full h-full object-cover" />
-              ) : (
-                <span className="text-4xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>AS</span>
-              )}
-            </div>
-            <button
-              className="px-4 py-2 text-[10px] tracking-[0.1em] uppercase font-medium cursor-pointer"
-              style={{ border: `1px solid ${NAVY}40`, color: NAVY, borderRadius: "8px" }}
-            >
-              Alterar Foto
-            </button>
-            <div className="w-full mt-6">
-              <Input
-                label="Site ou Links Adicionais"
-                placeholder="https://..."
-                value={(data as any).links || ""}
-                onChange={(v) => setData({ ...data, links: v } as any)}
-              />
-            </div>
+        <div className="mb-6">
+          <Label>Você representa</Label>
+          <div className="flex flex-wrap gap-2">
+            {KINDS.map(([kind, label]) => (
+              <button
+                key={kind}
+                type="button"
+                aria-pressed={data.kind === kind}
+                onClick={() => set({ kind })}
+                className={`vt-pill ${data.kind === kind ? "vt-pill-selected" : ""}`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
-      </div>
-    </div>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          <Input label="Responsável" value={data.contactName} onChange={(v) => set({ contactName: v })} {...field("contactName")} />
+          <Input
+            label="E-mail de contato"
+            type="email"
+            value={data.contactEmail}
+            onChange={(v) => set({ contactEmail: v })}
+            hint="O estudante só vê depois que os dois aceitam o contato."
+            {...field("contactEmail")}
+          />
+          <Input label="Cidade" value={data.city} onChange={(v) => set({ city: v })} {...field("city")} />
+          <Input label="Site (opcional)" placeholder="suaorganizacao.com.br" value={data.site} onChange={(v) => set({ site: v })} />
+          <div className="md:col-span-2">
+            <Input
+              label="Descrição"
+              textarea
+              rows={4}
+              placeholder="O que a organização faz e que tipo de demanda costuma ter."
+              value={data.description}
+              onChange={(v) => set({ description: v })}
+            />
+          </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-end gap-4">
+          {saved && (
+            <span role="status" className="flex items-center gap-1.5 font-sans text-[13px] text-moss">
+              <CheckIcon /> Alterações salvas
+            </span>
+          )}
+          <button type="submit" className="vt-btn vt-btn-primary">
+            Salvar alterações <ArrowIcon />
+          </button>
+        </div>
+      </form>
+    </main>
   );
 }

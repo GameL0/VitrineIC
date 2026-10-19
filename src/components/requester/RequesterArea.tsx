@@ -7,35 +7,57 @@ import { SuccessScreen } from "./SuccessScreen";
 import { Profile } from "./Profile";
 import { AvailableStudents } from "./AvailableStudents";
 import { Team } from "./Team";
-import { Notifications } from "./Notifications";
-import { OFFWHITE } from "@/styles/tokens";
+import { Inbox, INBOX_MESSAGES } from "./Inbox";
+import { useCurrentRequester } from "@/lib/auth";
+import { useVitrine } from "@/lib/store";
 
 export default function RequesterArea({ onBack }: { onBack: () => void }) {
-  const [view, setView] = useState<"dashboard" | "new" | "success" | "matches" | "profile" | "available_students" | "team" | "notifications">("available_students");
+  const [view, setView] = useState<"dashboard" | "new" | "success" | "matches" | "profile" | "available_students" | "team" | "inbox">("available_students");
   const [protocol, setProtocol] = useState("");
+  const [matchDemand, setMatchDemand] = useState<string | null>(null);
+  const { demands, interests } = useVitrine();
+  const requester = useCurrentRequester();
 
-  const handleSetView = (v: string) => setView(v as typeof view);
+  const myIds = new Set(demands.filter((d) => d.company === requester).map((d) => d.id));
+  const awaitingMe = interests.filter((i) => myIds.has(i.demandId) && i.status === "aguardando_solicitante").length;
+
+  const handleSetView = (v: string) => {
+    if (v === "matches") setMatchDemand(null);
+    setView(v as typeof view);
+    window.scrollTo(0, 0);
+  };
 
   return (
-    <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
-      <NavBar view={view} setView={handleSetView} onBack={onBack} />
-      
+    <div className="min-h-screen bg-offwhite">
+      <NavBar
+        view={view}
+        setView={handleSetView}
+        onBack={onBack}
+        unreadCount={INBOX_MESSAGES.filter((m) => m.unread).length}
+        awaitingMe={awaitingMe}
+      />
+
       {view === "available_students" && (
         <AvailableStudents />
       )}
 
       {view === "dashboard" && (
         <MyDemands
-          onNew={() => setView("new")}
-          onViewMatch={() => setView("matches")}
+          onNew={() => handleSetView("new")}
+          onViewMatch={(id) => {
+            setMatchDemand(id);
+            setView("matches");
+            window.scrollTo(0, 0);
+          }}
         />
       )}
 
       {view === "new" && (
         <NewDemandWizard
+          onCancel={() => handleSetView("dashboard")}
           onSuccess={(p) => {
             setProtocol(p);
-            setView("success");
+            handleSetView("success");
           }}
         />
       )}
@@ -43,15 +65,21 @@ export default function RequesterArea({ onBack }: { onBack: () => void }) {
       {view === "success" && (
         <SuccessScreen
           protocol={protocol}
-          onDashboard={() => setView("dashboard")}
+          onDashboard={() => handleSetView("dashboard")}
         />
       )}
 
-      {view === "matches" && <MatchScreen onBack={() => setView("dashboard")} />}
+      {view === "matches" && (
+        <MatchScreen
+          key={matchDemand ?? "todas"}
+          demandId={matchDemand}
+          onBack={matchDemand ? () => handleSetView("dashboard") : undefined}
+        />
+      )}
 
       {view === "team" && <Team />}
-      
-      {view === "notifications" && <Notifications />}
+
+      {view === "inbox" && <Inbox />}
 
       {view === "profile" && <Profile />}
     </div>

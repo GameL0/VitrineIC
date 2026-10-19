@@ -19,21 +19,20 @@ O que separa "tela pintada" de "funcionalidade":
 
 | Fluxo | Estado |
 |---|---|
-| Triagem e match (curadoria) | **Funcional** — muda estado, decisão persiste na sessão |
+| Triagem e sugestão (curadoria) | **Funcional** — muda estado e cria sugestões que as outras áreas veem |
 | Cadastro de projeto (laboratório) | **Funcional** — a lista cresce de verdade |
-| Convites do estudante (aceitar/recusar) | **Funcional** — muda estado, badge e contadores |
+| Interesses do estudante (candidatar, aceitar, recusar) | **Funcional** — store compartilhado entre as áreas |
 | Catálogo público, perfis e impacto | **Funcional** — derivados de `data/students.ts` |
-| Onboarding do estudante | **Navegável** — os 3 passos avançam; o digitado não alimenta o perfil |
-| Nova demanda (wizard) | **Navegável** — 4 passos e protocolo, sem gravar na lista |
-| Matches do solicitante | **Estático** — lista fixa, não vem da curadoria |
+| Onboarding do estudante | **Funcional** — 4 passos gravam no `Student` a cada "Continuar"; dá para pular e voltar pelo painel |
+| Nova demanda (wizard) | **Funcional** — grava a demanda como `nova` na triagem |
+| Interessados do solicitante (aceitar, recusar, convidar) | **Funcional** — store compartilhado entre as áreas |
 | Notificações | **Estático** |
-| Autenticação | **Fachada** — "Acessar" entra sem validar; SSO decorativo |
+| Autenticação | **Simulada (localStorage)** — login, cadastro de estudante e solicitante, sessão que sobrevive ao reload; curadoria só com conta da lista. Senha em texto puro |
 | Nav pública (Projetos, Estudantes, Impacto) | **Funcional** — levam às páginas públicas |
 
-**O eixo curadoria → convite → conexão funciona ponta a ponta**, assim como o
-catálogo público. O que segue estático é o lado do solicitante: o wizard de
-demanda não grava e a tela de matches não vem da curadoria — porque `requester`
-lê uma base própria (ver `03-dominio.md`).
+**O fluxo de match funciona ponta a ponta nas três portas** (candidatura,
+convite e sugestão), com aceite dos dois lados antes de liberar o contato. As
+três áreas leem a mesma base de demandas e interesses (ver `03-dominio.md`).
 
 Ao receber uma tarefa, confira nessa tabela o que já existe: pedir para "salvar
 a demanda" pode significar implementar persistência do zero, não ajustar um
@@ -45,14 +44,14 @@ formulário.
 |---|---|
 | Vitrine de projetos | ✅ `student/Lab.tsx` |
 | Mural de demandas | ✅ `requester/Dashboard.tsx` |
-| Match apontando 1 pessoa | ✅ `curator/Matchmaking.tsx` |
-| Crivo humano | ✅ triagem + confirmação com justificativa |
-| Contato após o match | ✅ convite, aceite e conexão estabelecida |
+| Sugestão da curadoria | ✅ `curator/Matchmaking.tsx`, com justificativa obrigatória |
+| Crivo humano | ✅ triagem + sugestão justificada + acompanhamento |
+| Contato após o match | ✅ liberado com o aceite de estudante e solicitante |
 | Vitrine pública (sem login) | ✅ catálogo, projeto e perfil público |
 | Indicadores para a ACE1 | ✅ `public/Impact.tsx`, derivados da base |
 | Avisos de demandas compatíveis | ⚠️ notificações abrem os convites, mas são fixas |
-| Persistência | ❌ tudo em memória |
-| Autenticação | ⚠️ só UI |
+| Persistência | ⚠️ só no navegador (`lib/persist.ts`), sem backend |
+| Autenticação | ⚠️ simulada no navegador, sem servidor |
 
 **As três peças inegociáveis existem.** O crivo humano deixou de ser espaço
 reservado no design e virou fila de triagem com estados, passo de seleção e
@@ -62,20 +61,16 @@ justificativa do curador.
 
 Em ordem de dependência:
 
-1. **Unificar os dados** — uma fonte de demandas e estudantes para as três
-   áreas. Maior risco estrutural: quanto mais telas sobre bases paralelas, mais
-   caro o conserto.
-2. **Decidir a divergência de escopo** — empresa ou universidade — e alinhar
-   README e código.
-3. **Persistência**, nem que seja `localStorage`, para o estado sobreviver ao
-   reload.
-4. **Tipar o perfil do estudante** e definir a tradução entre os dois
-   vocabulários de status.
-5. **Extrair o compartilhado** (`NavBar`, `Label`, `Input`, `Rule`,
+1. **Backend de verdade** para contas e dados: hoje `lib/persist.ts` e
+   `lib/auth.ts` são o ponto de troca, e a senha fica em texto puro.
+2. **Unificar "Meus projetos"** do estudante com `student.projects`: a lista
+   do laboratório ainda é local à área.
+3. **Conferir os cursos das unidades fora do IC** em `data/institution.ts`.
+4. **Extrair o compartilhado** (`NavBar`, `Label`, `Input`, `Rule`,
    `StatusBadge`) antes que as cópias divirjam mais.
-6. **Evoluir o `scoreStudent`** aproveitando os níveis de proficiência já
+5. **Evoluir o `scoreStudent`** aproveitando os níveis de proficiência já
    coletados e normalizando nomes de tecnologia.
-7. **Roteamento por URL.**
+6. **Roteamento por URL.**
 
 ## Perguntas ainda abertas
 
@@ -85,8 +80,6 @@ sem resposta e afetam implementação:
 - O público é só do IC ou de outros institutos? Define o modelo de autenticação.
 - Quem faz o crivo: equipe, professor, comitê de alunos? Define papéis e
   permissões.
-- O que acontece depois do match aprovado? Define se existe módulo de
-  mensageria ou se a plataforma encerra ali.
 - Que impacto a ACE1 precisa demonstrar: usuários, projetos, matches,
   depoimentos? Define que métricas instrumentar.
 

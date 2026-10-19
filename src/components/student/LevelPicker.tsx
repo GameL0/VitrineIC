@@ -1,5 +1,5 @@
-import { LEVELS, LEVEL_SHORT } from "@/data/skills";
-import { MOSS, NAVY, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
+import { LEVELS } from "@/data/skills";
+import { MOSS, NAVY, TERRACOTTA } from "@/styles/tokens";
 import type { SkillLevel } from "@/types";
 
 const MONO = "Geist Mono, ui-monospace, monospace";
@@ -14,27 +14,25 @@ const LEVEL_COLORS: Record<SkillLevel, string> = {
 };
 
 /**
- * Seletor de proficiência em quatro segmentos rotulados.
+ * Seletor de proficiência: quatro pílulas, a escolhida em navy sólido.
+ * Setas do teclado sobem e descem o nível.
  */
 export function LevelPicker({
   value,
   onChange,
   name,
   labels = LEVELS,
-  short = LEVEL_SHORT,
 }: {
   value: SkillLevel;
   onChange: (level: SkillLevel) => void;
   name: string;
   labels?: readonly string[];
-  short?: Record<SkillLevel, string>;
 }) {
   return (
     <div
       role="radiogroup"
       aria-label={`Proficiência em ${name}`}
-      className="flex"
-      style={{ border: `1px solid ${NAVY}60`, borderRadius: "8px", overflow: "hidden" }}
+      className="flex flex-wrap gap-1.5"
       onKeyDown={(e) => {
         if (e.key === "ArrowRight" || e.key === "ArrowUp") {
           e.preventDefault();
@@ -48,8 +46,6 @@ export function LevelPicker({
     >
       {STEPS.map((step) => {
         const active = step === value;
-        const filled = step <= value;
-        const color = LEVEL_COLORS[step];
         return (
           <button
             key={step}
@@ -57,17 +53,8 @@ export function LevelPicker({
             role="radio"
             aria-checked={active}
             tabIndex={active ? 0 : -1}
-            title={labels[step - 1]}
             onClick={() => onChange(step)}
-            className="px-2.5 py-1.5 text-[9px] tracking-[0.12em] uppercase transition-all font-bold"
-            style={{
-              fontFamily: MONO,
-              minWidth: "42px",
-              borderLeft: step > 1 ? `1px solid ${NAVY}40` : "none",
-              background: active ? color : filled ? `${color}20` : "transparent",
-              color: active ? OFFWHITE : filled ? color : NAVY,
-              opacity: active ? 1 : filled ? 1 : 0.6,
-            }}
+            className={`vt-pill ${active ? "vt-pill-selected" : ""}`}
           >
             {labels[step - 1]}
           </button>

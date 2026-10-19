@@ -1,23 +1,21 @@
 import type * as React from "react";
-import { NAVY, OCHRE, RED } from "@/styles/tokens";
-import type { StatusKey } from "@/types";
+import { MOSS, NAVY, OCHRE, RED, TERRACOTTA } from "@/styles/tokens";
+import type { DemandStatus } from "@/types";
 
-export const STATUS_MAP: Record<StatusKey, { label: string; color: string; shape: "circle" | "square" | "diamond" }> = {
-  analise:      { label: "Em Análise",       color: OCHRE,        shape: "diamond" },
-  buscando:     { label: "Buscando Alunos",  color: RED,          shape: "circle"  },
-  em_andamento: { label: "Em Andamento",     color: RED,          shape: "square"  },
-  concluido:    { label: "Concluído",        color: NAVY,         shape: "square"  },
-  cancelado:    { label: "Cancelado",        color: `${NAVY}80`,  shape: "diamond" },
+/** Rótulos do solicitante para o vocabulário único de status da demanda. */
+export const STATUS_MAP: Record<DemandStatus, { label: string; color: string }> = {
+  nova:             { label: "Em Análise",           color: OCHRE },
+  em_analise:       { label: "Em Análise",           color: OCHRE },
+  aprovada:         { label: "Recebendo interesses", color: RED },
+  rejeitada:        { label: "Rejeitada",            color: TERRACOTTA },
+  contato_liberado: { label: "Contato liberado",     color: MOSS },
 };
 
-/** Pílula de status do guia: fundo tingido a 10%; "Concluído" é sólida. */
-export function StatusBadge({ status }: { status: StatusKey }) {
+/** Pílula de status do guia: fundo tingido a 10%. */
+export function StatusBadge({ status }: { status: DemandStatus }) {
   const cfg = STATUS_MAP[status];
   return (
-    <span
-      className={status === "concluido" ? "vt-status vt-status-solid" : "vt-status"}
-      style={{ "--vt-status": cfg.color } as React.CSSProperties}
-    >
+    <span className="vt-status" style={{ "--vt-status": cfg.color ?? NAVY } as React.CSSProperties}>
       {cfg.label}
     </span>
   );

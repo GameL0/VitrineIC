@@ -249,7 +249,7 @@ export const ALL_SKILLS: SkillDef[] = [
  * tecnologias: mostra ~12 relevantes para quem está preenchendo. O catálogo
  * completo continua acessível sob demanda.
  */
-export const SUGGESTED_BY_COURSE: Record<Course, string[]> = {
+export const SUGGESTED_BY_COURSE: Record<Course, string[] | undefined> = {
   "Ciência da Computação": [
     "Algoritmos", "Estruturas de Dados", "Python", "Java", "Git", "SQL",
     "Sistemas Operacionais", "Compiladores", "Sistemas Distribuídos",
@@ -273,10 +273,7 @@ export const POPULAR_SKILLS = [
 
 /** Atalhos a exibir: os do curso, ou os populares como retaguarda. */
 export function suggestedFor(course?: string): string[] {
-  const list = course && course in SUGGESTED_BY_COURSE
-    ? SUGGESTED_BY_COURSE[course as Course]
-    : POPULAR_SKILLS;
-  return list;
+  return (course && SUGGESTED_BY_COURSE[course]) || POPULAR_SKILLS;
 }
 
 export const SKILL_CATEGORIES = Array.from(new Set(ALL_SKILLS.map((s) => s.cat)));

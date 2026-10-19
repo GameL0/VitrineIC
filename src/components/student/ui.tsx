@@ -1,14 +1,10 @@
+import { FieldError, FieldHint, invalidProps } from "@/components/app/FieldError";
 import * as React from "react";
 import { NAVY, OFFWHITE, RED, WHITE } from "@/styles/tokens";
 
 export function Label({ children }: { children: React.ReactNode }) {
   return (
-    <span
-      className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold"
-      style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.85 }}
-    >
-      {children}
-    </span>
+    <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65">{children}</span>
   );
 }
 
@@ -21,7 +17,18 @@ export function Input({
   rows = 3,
   value,
   onChange,
+  id,
+  error,
+  hint,
+  maxLength,
+  inputMode,
 }: {
+  id?: string;
+  /** Mensagem de erro; liga `aria-invalid` e `aria-describedby`. */
+  error?: string;
+  hint?: React.ReactNode;
+  maxLength?: number;
+  inputMode?: "numeric" | "text" | "email" | "url";
   label?: string;
   type?: string;
   placeholder?: string;
@@ -34,9 +41,12 @@ export function Input({
   const cls = mono ? "vt-input vt-input-mono" : "vt-input";
   return (
     <div>
-      {label && <Label>{label}</Label>}
+      {label && (id ? <label htmlFor={id}><Label>{label}</Label></label> : <Label>{label}</Label>)}
       {textarea ? (
         <textarea
+          id={id}
+          maxLength={maxLength}
+          {...invalidProps(id, error)}
           rows={rows}
           placeholder={placeholder}
           className={cls}
@@ -45,6 +55,10 @@ export function Input({
         />
       ) : (
         <input
+          id={id}
+          maxLength={maxLength}
+          inputMode={inputMode}
+          {...invalidProps(id, error)}
           type={type}
           placeholder={placeholder}
           className={cls}
@@ -52,6 +66,7 @@ export function Input({
           onChange={(e) => onChange?.(e.target.value)}
         />
       )}
+      {id && error ? <FieldError id={id}>{error}</FieldError> : hint ? <FieldHint>{hint}</FieldHint> : null}
     </div>
   );
 }
@@ -62,40 +77,67 @@ export function Select({
   value,
   onChange,
   multiple,
+  id,
+  error,
 }: {
+  id?: string;
+  error?: string;
   label?: string;
-  options: readonly string[];
+  /** Texto simples, ou valor e rótulo quando o que se grava difere do que se mostra. */
+  options: readonly (string | { value: string; label: string })[];
   value: string | string[];
   onChange: (v: any) => void;
   multiple?: boolean;
 }) {
   return (
     <div>
-      {label && <Label>{label}</Label>}
-      <select
-        value={value}
-        multiple={multiple}
-        onChange={(e) => {
-          if (multiple) {
-            const vals = Array.from(e.target.selectedOptions, option => option.value);
-            onChange(vals);
-          } else {
-            onChange(e.target.value);
-          }
-        }}
-        className="vt-input"
-        style={{
-          appearance: multiple ? "auto" : "none",
-          cursor: "pointer",
-        }}
-      >
-        {!multiple && <option value="">Selecione...</option>}
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
+      {label && (id ? <label htmlFor={id}><Label>{label}</Label></label> : <Label>{label}</Label>)}
+      <div className="relative">
+        <select
+          id={id}
+          {...invalidProps(id, error)}
+          value={value}
+          multiple={multiple}
+          onChange={(e) => {
+            if (multiple) {
+              const vals = Array.from(e.target.selectedOptions, option => option.value);
+              onChange(vals);
+            } else {
+              onChange(e.target.value);
+            }
+          }}
+          className="vt-input"
+          style={{
+            appearance: multiple ? "auto" : "none",
+            cursor: "pointer",
+            // .vt-input fica fora das camadas do Tailwind; o respiro da seta vai inline.
+            paddingRight: multiple ? undefined : 40,
+          }}
+        >
+          {!multiple && <option value="">Selecione...</option>}
+          {options.map((o) => {
+            const { value: v, label: l } = typeof o === "string" ? { value: o, label: o } : o;
+            return (
+              <option key={v} value={v}>
+                {l}
+              </option>
+            );
+          })}
+        </select>
+        {!multiple && (
+          <svg
+            width="10"
+            height="6"
+            viewBox="0 0 10 6"
+            fill="none"
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-navy/55"
+          >
+            <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </div>
+      {id && <FieldError id={id}>{error}</FieldError>}
     </div>
   );
 }
