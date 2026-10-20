@@ -35,25 +35,33 @@ O estudante existe em **três representações que não se conhecem**:
 Ao criar tipo para estudante, comece por `data/students.ts`, que é o shape mais
 completo, e note que `showcase.ts` precisa ser separado em pessoa + projeto.
 
-## Status: dois vocabulários
+## Status da demanda: um vocabulário só
 
-O mesmo conceito tem dois vocabulários, um por área, **sem tradução entre eles**:
+`DemandStatus` vale para as três áreas: `nova`, `em_analise`, `aprovada`,
+`rejeitada`, `contato_liberado`. Cada área escolhe o rótulo que mostra (o
+solicitante vê `aprovada` como "Recebendo interesses"). Não existe etapa de
+"concluída": depois do contato liberado o site não acompanha mais nada. O
+kanban da triagem mostra as cinco colunas.
 
-| Curadoria (`DemandStatus`) | Solicitante (`StatusKey`) |
-|---|---|
-| `nova` | `analise` |
-| `em_analise` | `buscando` |
-| `aprovada` | `em_andamento` |
-| `rejeitada` | `concluido` |
-| `matched` | `cancelado` |
+## Interesse — o fluxo de match
 
-São duas visões legítimas do ciclo de vida — a interna, de processo de triagem,
-e a externa, de acompanhamento. O que falta é o mapeamento, que é exatamente
-onde mora a regra de negócio. **Não invente a tradução sem combinar com a
-equipe.**
+Desenho completo em `fluxo/fluxo-match.md` (pasta do projeto). Um registro só,
+`Interest` em `src/types/index.ts`, para três portas:
 
-O kanban da triagem usa quatro das cinco: `KANBAN_COLS = ["nova", "em_analise",
-"aprovada", "matched"]` — `rejeitada` é ação, não coluna.
+| Origem | Quem cria | Caminho até o contato |
+|---|---|---|
+| `candidatura` | estudante, em Oportunidades | aguardando solicitante → contato liberado |
+| `convite` | solicitante, pela vitrine de estudantes | aguardando estudante → contato liberado |
+| `sugestao` | curadoria, no matchmaking, com justificativa obrigatória | aguardando estudante → aguardando solicitante → contato liberado |
+
+Qualquer recusa encerra o interesse (`recusado_estudante` ou
+`recusado_solicitante`) e o `refusalReason` fica visível ao solicitante e à
+curadoria, nunca ao estudante. O solicitante só vê uma sugestão depois que o
+estudante aceitou (`visibleToRequester`). A curadoria vê tudo, mas só age nas
+próprias sugestões. As transições moram em `src/lib/interest.ts`.
+
+O selo "em projeto" (`Student.inProject`) é marcado pelo estudante em Meus
+projetos e é o único dado que continua depois do contato.
 
 ## O algoritmo de match — `src/lib/match.ts`
 
@@ -101,25 +109,19 @@ protótipo. Nada deve ser tratado ou publicado como real.
 | Arquivo | Conteúdo | Usado por |
 |---|---|---|
 | `showcase.ts` | `stats`, `featuredStudents` (6) | landing |
-| `demands.ts` | `DEMANDS: Demand[]` | curadoria |
-| `requester-demands.ts` | `DEMANDS` | solicitante |
-| `students.ts` | `STUDENTS` (5) | curadoria, matchmaking |
-| `matched-students.ts` | `MATCHED_STUDENTS` | solicitante |
+| `demands.ts` | `DEMANDS: Demand[]` — base única | as três áreas e o impacto |
+| `interests.ts` | `INTERESTS: Interest[]` | as três áreas e o impacto |
+| `companies.ts` | perfil dos solicitantes, `CURRENT_REQUESTER` | solicitante, estudante |
+| `students.ts` | `STUDENTS` (5), `CURRENT_STUDENT_ID` | todas as áreas e páginas públicas |
 | `projects.ts` | `SAMPLE_PROJECTS`, `STATUS_CONFIG` | laboratório |
-| `notifications.ts` | `notifications` | dashboard do estudante |
+| `notifications.ts` | `notifications` | caixa de entrada do estudante |
 | `skills.ts` | `ALL_SKILLS` (catálogo + apelidos), `LEVELS`, busca e normalização | onboarding |
 
-### O problema central: três bases paralelas
+### Estado compartilhado — `src/lib/store.ts`
 
-`data/demands.ts` e `data/requester-demands.ts` são **listas independentes** de
-demanda, com IDs no mesmo formato (`VIC-2026-0041`) mas arrays distintos.
-Aprovar uma demanda na curadoria não muda nada no painel do solicitante. O mesmo
-vale para estudantes entre `students.ts`, `showcase.ts` e o onboarding.
-
-**O sistema encena a integração em vez de realizá-la.** Navegando, o fluxo
-parece completo; nenhum dado atravessa as fronteiras das áreas.
-
-Unificar isso é a prioridade estrutural número um: quanto mais telas nascerem
-sobre três bases paralelas, mais caro fica o conserto. Ao adicionar uma tela que
-consome demanda ou estudante, **não crie uma quarta base** — reutilize e
-sinalize a necessidade de unificação.
+Demandas, interesses e o selo "em projeto" vivem num store em memória
+(`useVitrine`), inicializado a partir de `src/data/`. Uma candidatura feita na
+área do estudante aparece na do solicitante e na da curadoria durante a sessão.
+Não há persistência: recarregar volta aos dados fictícios. Ao criar uma tela
+que consome demanda ou interesse, leia de `useVitrine` e altere pelas funções
+do store; **não crie outra base**.

@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Label, Mono, Rule, SkillTag } from "./ui";
-import { STUDENTS } from "@/data/students";
+import { Label, Mono, SkillTag } from "./ui";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
-import type { Demand } from "@/types";
+import { Avatar } from "@/components/app/Avatar";
+import { ArrowIcon } from "@/components/app/Icons";
+import { Modal } from "@/components/app/Modal";
+import type { Demand, Student } from "@/types";
 
 export function ConfirmModal({
   demand,
@@ -12,9 +13,9 @@ export function ConfirmModal({
   onConfirm,
 }: {
   demand: Demand;
-  student: typeof STUDENTS[0];
+  student: Student;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (justification: string) => void;
 }) {
   const [note, setNote] = useState("");
   const score = scoreStudent(student, demand);
@@ -23,171 +24,81 @@ export function ConfirmModal({
   );
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: "rgba(11,37,69,0.5)", backdropFilter: "blur(2px)" }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <div
-        className="w-full max-w-2xl"
-        style={{
-          background: OFFWHITE,
-          border: `1.5px solid ${RED}`,
-          outline: `1px solid ${RED}`,
-          outlineOffset: "3px",
-        }}
-      >
-        {/* Modal header */}
-        <div className="flex items-center justify-between px-8 py-5" style={{ borderBottom: `1px solid ${NAVY}15` }}>
-          <p className="text-[10px] tracking-[0.2em] uppercase flex items-center gap-3"
-            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-            <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-              <rect x="0.5" y="0.5" width="7" height="7" fill={RED} />
-            </svg>
-            Confirmação de Recomendação
-          </p>
-          <button
-            onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center"
-            style={{ color: NAVY, opacity: 0.5 }}
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-            </svg>
-          </button>
+    <Modal eyebrow="Sugestão da curadoria" title="Sugerir estudante." onClose={onClose} width="max-w-[640px]">
+      <div className="grid overflow-hidden rounded-2xl border border-navy/8 sm:grid-cols-2">
+        <div className="border-b border-navy/8 p-5 sm:border-r sm:border-b-0">
+          <Label>Demanda</Label>
+          <p className="font-display text-[17px] leading-[1.25] font-medium text-navy">{demand.title}</p>
+          <Mono dim>
+            {demand.id} · {demand.company}
+          </Mono>
         </div>
-
-        <div className="px-8 py-6">
-          {/* Pair display */}
-          <div className="grid grid-cols-2 gap-0 mb-6" style={{ border: `1px solid ${NAVY}15` }}>
-            <div className="px-5 py-5" style={{ borderRight: `1px solid ${NAVY}15` }}>
-              <Label>Demanda</Label>
-              <p className="text-[15px] leading-tight mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-                {demand.title}
-              </p>
-              <Mono dim>{demand.id} · {demand.company}</Mono>
-            </div>
-            <div className="px-5 py-5">
-              <Label>Estudante</Label>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 flex items-center justify-center flex-shrink-0" style={{ background: NAVY }}>
-                  <span className="text-[10px]" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>
-                    {student.initials}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-[15px] leading-tight" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-                    {student.name}
-                  </p>
-                  <Mono dim>{student.course} · {student.semester}</Mono>
-                </div>
-              </div>
+        <div className="p-5">
+          <Label>Estudante</Label>
+          <div className="flex items-center gap-3">
+            <Avatar name={student.name} />
+            <div className="min-w-0">
+              <p className="font-display text-[17px] leading-[1.25] font-medium text-navy">{student.name}</p>
+              <Mono dim>
+                {student.course} · {student.semester}
+              </Mono>
             </div>
           </div>
-
-          {/* Score + skills */}
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <Label>Compatibilidade técnica</Label>
-              <div className="flex items-center gap-3 mt-1">
-                <span className="text-3xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: score >= 70 ? RED : NAVY }}>
-                  {score}%
-                </span>
-                <div className="flex items-end gap-[2px]">
-                  {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} style={{
-                      width: "5px",
-                      height: `${5 + i * 2}px`,
-                      background: i < Math.round(score / 10) ? (score >= 70 ? RED : NAVY) : `${NAVY}15`,
-                    }} />
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="text-right">
-              <Label>Skills em comum</Label>
-              <div className="flex flex-wrap gap-1 justify-end mt-1">
-                {matchedSkills.map((s) => <SkillTag key={s} highlight small>{s}</SkillTag>)}
-              </div>
-            </div>
-          </div>
-
-          {/* Projects preview */}
-          {student.projects.length > 0 && (
-            <>
-              <Rule />
-              <Label>Projetos ativos do estudante</Label>
-              <div className="flex flex-col gap-1.5 mt-2">
-                {student.projects.map((p) => (
-                  <div key={p.title} className="flex items-center justify-between px-3 py-2" style={{ border: `1px solid ${NAVY}10` }}>
-                    <span className="text-[12px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}>
-                      {p.title}
-                    </span>
-                    <div className="flex gap-1">
-                      {p.stack.map((t) => <SkillTag key={t} small>{t}</SkillTag>)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          <Rule />
-
-          {/* Justification note */}
-          <div>
-            <Label>Nota de justificativa interna <span style={{ opacity: 0.5 }}>(opcional)</span></Label>
-            <textarea
-              rows={3}
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Registre o motivo técnico da seleção, critérios adicionais considerados..."
-              className="w-full px-3 py-2.5 text-[11px] outline-none transition-colors"
-              style={{
-                fontFamily: "Geist Mono, ui-monospace, monospace",
-                color: NAVY,
-                border: `1px solid ${NAVY}30`,
-                borderRadius: "8px",
-                background: "transparent",
-                resize: "none",
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = NAVY;
-                e.currentTarget.style.outline = `2px solid ${NAVY}`;
-                e.currentTarget.style.backgroundColor = OFFWHITE;
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = `${NAVY}30`;
-                e.currentTarget.style.outline = "none";
-                e.currentTarget.style.backgroundColor = "transparent";
-              }}
-            />
-          </div>
-        </div>
-
-        {/* CTA footer */}
-        <div className="px-8 pb-8">
-          <div className="flex gap-3">
-            <button
-              onClick={onConfirm}
-              className="flex-1 py-4 text-[11px] tracking-[0.22em] uppercase font-bold transition-opacity hover:opacity-88"
-              style={{ background: RED, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-            >
-              Confirmar Recomendação
-            </button>
-            <button
-              onClick={onClose}
-              className="px-6 py-4 text-[10px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-60 opacity-50"
-              style={{ border: `1px solid ${NAVY}40`, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-            >
-              Cancelar
-            </button>
-          </div>
-          <p className="text-[9px] mt-3 text-center" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-            O solicitante e o estudante receberão notificação automática por e-mail.
-          </p>
         </div>
       </div>
-    </div>
+
+      <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <Label>Compatibilidade técnica</Label>
+          <p className="font-display text-[32px] leading-none font-medium tracking-[-0.02em] text-navy">{score}%</p>
+        </div>
+        <div className="sm:text-right">
+          <Label>Skills em comum</Label>
+          <div className="flex flex-wrap gap-1.5 sm:justify-end">
+            {matchedSkills.length ? matchedSkills.map((s) => <SkillTag key={s} highlight>{s}</SkillTag>) : <Mono dim>nenhuma</Mono>}
+          </div>
+        </div>
+      </div>
+
+      {student.projects.length > 0 && (
+        <div className="mt-6">
+          <Label>Projetos do estudante</Label>
+          <ul className="divide-y divide-navy/8 rounded-xl border border-navy/8">
+            {student.projects.map((p) => (
+              <li key={p.title} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5">
+                <span className="font-sans text-[13px] text-navy/75">{p.title}</span>
+                <span className="flex gap-1">
+                  {p.stack.map((t) => <SkillTag key={t}>{t}</SkillTag>)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="mt-6">
+        <Label>Justificativa (obrigatória)</Label>
+        <textarea
+          rows={3}
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          placeholder="Por que este estudante combina com a demanda: projetos, skills, disponibilidade..."
+          className="vt-input"
+        />
+        <p className="mt-2 font-sans text-xs text-navy/50">O estudante e o solicitante leem este texto.</p>
+      </div>
+
+      <div className="mt-8 flex items-center justify-end gap-3">
+        <button onClick={onClose} className="rounded-[10px] px-3 py-2 font-sans text-sm text-navy/65 transition-colors hover:text-navy">
+          Cancelar
+        </button>
+        <button onClick={() => onConfirm(note)} disabled={!note.trim()} className="vt-btn vt-btn-primary">
+          Enviar sugestão <ArrowIcon />
+        </button>
+      </div>
+      <p className="mt-4 text-right font-sans text-xs text-navy/50">
+        O estudante responde primeiro. Se ele aceitar, a sugestão segue para o solicitante.
+      </p>
+    </Modal>
   );
 }

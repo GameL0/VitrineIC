@@ -1,202 +1,196 @@
 import { useState } from "react";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
-import { OPPORTUNITIES, type Opportunity } from "@/data/opportunities";
+import { scoreStudent } from "@/lib/match";
+import { isProfileVisible } from "@/lib/profile";
+import { createInterest, findActiveInterest, useVitrine } from "@/lib/store";
+import { ArrowIcon, BuildingIcon, ClockIcon } from "@/components/app/Icons";
+import { InterestStatusPill } from "@/components/app/InterestStatusPill";
+import { BackButton } from "@/components/public/BackButton";
+import { Eyebrow } from "@/components/public/Eyebrow";
+import { PageHead } from "@/components/public/PageHead";
+import { PAGE } from "@/components/public/layout";
+import type { Demand, Student } from "@/types";
 
-export function Opportunities({ profile, onOpenNotifications }: { profile: any; onOpenNotifications: () => void }) {
-  const [selected, setSelected] = useState<Opportunity | null>(null);
+function Meta({ demand }: { demand: Demand }) {
+  return (
+    <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[13px] text-navy/60">
+      <span className="flex items-center gap-1.5">
+        <BuildingIcon />
+        {demand.company}
+      </span>
+      <span aria-hidden="true">·</span>
+      <span className="flex items-center gap-1.5">
+        <ClockIcon />
+        prazo {demand.deadline}
+      </span>
+    </p>
+  );
+}
 
-  if (selected) {
+/** Botão de candidatura com a nota opcional; se já houver interesse, mostra o andamento. */
+function Apply({ demand, student, onGoToInterests }: { demand: Demand; student: Student; onGoToInterests: () => void }) {
+  const { interests } = useVitrine();
+  const studentId = student.id;
+  const [writing, setWriting] = useState(false);
+  const [note, setNote] = useState("");
+  const existing = findActiveInterest(interests, demand.id, studentId);
+
+  if (existing) {
     return (
-      <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-        <button
-          onClick={() => setSelected(null)}
-          className="flex items-center gap-2 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 mb-8"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-        >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-          </svg>
-          Voltar para Oportunidades
+      <div className="mt-6 flex flex-col items-start gap-3">
+        <InterestStatusPill status={existing.status} viewer="estudante" />
+        <button onClick={onGoToInterests} className="font-sans text-[13px] text-navy/65 underline underline-offset-4 hover:text-navy">
+          Ver em Interesses
         </button>
-
-        <div className="mb-10">
-          <div className="flex items-center gap-4 mb-3">
-            <h1
-              className="text-4xl"
-              style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-            >
-              {selected.title}
-            </h1>
-            <div
-              className="px-3 py-1 flex items-center gap-1.5"
-              style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px" }}
-            >
-              <div className="w-1.5 h-1.5 rounded-full" style={{ background: RED }} />
-              <span
-                className="text-[10px] tracking-[0.14em] uppercase font-bold"
-                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED }}
-              >
-                Match {selected.compatibility}%
-              </span>
-            </div>
-            <div
-              className="px-3 py-1 flex items-center gap-1.5"
-              style={{ border: `1px solid ${NAVY}40`, background: `${NAVY}05`, borderRadius: "6px" }}
-            >
-              <span
-                className="text-[10px] tracking-[0.14em] uppercase font-bold"
-                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
-              >
-                {selected.origin}
-              </span>
-            </div>
-          </div>
-          <p
-            className="text-[14px] max-w-2xl leading-relaxed mt-4"
-            style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.7 }}
-          >
-            {selected.description}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 mt-12">
-          <div className="flex flex-col gap-6">
-            <div>
-              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                Responsável
-              </span>
-              <p className="text-[15px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>{selected.responsible}</p>
-            </div>
-            <div>
-              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                Duração Prevista
-              </span>
-              <p className="text-[15px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>{selected.duration}</p>
-            </div>
-            <div>
-              <span className="block text-[10px] tracking-[0.15em] uppercase mb-1.5 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                Tipo de Contrato
-              </span>
-              <p className="text-[15px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>{selected.contractType}</p>
-            </div>
-          </div>
-
-          <div>
-            <span className="block text-[10px] tracking-[0.15em] uppercase mb-3 font-semibold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-              Competências Desejadas
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {selected.skills.map((s) => (
-                <span
-                  key={s}
-                  className="px-3 py-1 text-[11px] tracking-[0.1em] uppercase"
-                  style={{
-                    fontFamily: "Geist Mono, ui-monospace, monospace",
-                    color: NAVY,
-                    border: `1px solid ${NAVY}30`,
-                    background: `${NAVY}05`,
-                    borderRadius: "6px",
-                  }}
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-12">
-              <button
-                className="w-full md:w-auto flex items-center justify-center gap-3 px-8 py-4 text-[11px] tracking-[0.18em] uppercase font-semibold transition-all hover:opacity-90"
-                style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
-              >
-                Tenho Interesse
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     );
   }
 
+  if (!isProfileVisible(student)) {
+    return (
+      <div className="mt-6 flex flex-col items-start gap-2">
+        <button disabled aria-describedby={`apply-hint-${demand.id}`} className="vt-btn vt-btn-primary">
+          Candidatar-se <ArrowIcon />
+        </button>
+        <p id={`apply-hint-${demand.id}`} className="font-sans text-xs text-navy/55">
+          Complete seu perfil para se candidatar.
+        </p>
+      </div>
+    );
+  }
+
+  if (!writing) {
+    return (
+      <button onClick={() => setWriting(true)} className="vt-btn vt-btn-primary mt-6 self-start">
+        Candidatar-se <ArrowIcon />
+      </button>
+    );
+  }
+
   return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-      <div className="mb-10">
-        <p
-          className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-        >
-          <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
-          Oportunidades
-        </p>
-        <h1
-          className="text-4xl mb-3"
-          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-        >
-          Projetos com Vagas Abertas
-        </h1>
-        <p
-          className="text-[14px] max-w-2xl"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
-        >
-          Explore projetos que estão buscando estudantes. O nível de compatibilidade
-          indica o quão próximo o seu perfil está das exigências da vaga.
-        </p>
+    <div className="mt-6 flex flex-col gap-3">
+      <label className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65">Por que você? (opcional)</label>
+      <textarea
+        rows={3}
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        placeholder="Um projeto seu que tenha a ver, uma tecnologia que você domina..."
+        className="vt-input"
+      />
+      <div className="flex flex-wrap items-center gap-3">
+        <button onClick={() => createInterest(demand.id, studentId, "candidatura", note)} className="vt-btn vt-btn-primary">
+          Enviar candidatura <ArrowIcon />
+        </button>
+        <button onClick={() => setWriting(false)} className="rounded-[10px] px-3 py-2 font-sans text-sm text-navy/65 hover:text-navy">
+          Cancelar
+        </button>
       </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {OPPORTUNITIES.sort((a, b) => b.compatibility - a.compatibility).map((opp) => (
-          <div
-            key={opp.id}
-            className="flex flex-col p-6 transition-all hover:-translate-y-1 cursor-pointer"
-            onClick={() => setSelected(opp)}
-            style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}
-          >
-            <div className="flex items-start justify-between mb-4 gap-4">
-              <div>
-                <h3 className="text-xl font-medium leading-tight mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-                  {opp.title}
-                </h3>
-                <span className="px-2 py-1 text-[8px] uppercase tracking-widest font-bold" style={{ background: `${NAVY}10`, color: NAVY, borderRadius: "4px", fontFamily: "Geist Mono, ui-monospace, monospace" }}>
-                  {opp.origin}
-                </span>
-              </div>
-              <div
-                className="px-2.5 py-1 flex items-center gap-1.5 flex-shrink-0"
-                style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px" }}
-              >
-                <span
-                  className="text-[9px] tracking-[0.14em] uppercase font-bold"
-                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED }}
-                >
-                  {opp.compatibility}% Match
-                </span>
-              </div>
-            </div>
-            
-            <p
-              className="text-[13px] leading-relaxed mb-6 flex-1"
-              style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}
-            >
-              {opp.description}
-            </p>
-
-            <button
-              onClick={() => setSelected(opp)}
-              className="mt-auto self-start flex items-center gap-2 px-5 py-2.5 text-[10px] tracking-[0.16em] uppercase font-semibold transition-colors"
-              style={{ background: "transparent", border: `1px solid ${NAVY}40`, color: NAVY, borderRadius: "8px" }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = `${NAVY}08`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
-            >
-              Saiba Mais
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-              </svg>
-            </button>
-          </div>
-        ))}
-      </div>
+      <p className="font-sans text-xs text-navy/50">A candidatura vai direto ao solicitante. O contato só é liberado se ele aceitar.</p>
     </div>
+  );
+}
+
+/** Demandas aprovadas pela curadoria, abertas a candidatura. */
+export function Opportunities({
+  student,
+  onGoToInterests,
+}: {
+  student: Student;
+  onGoToInterests: () => void;
+}) {
+  const { demands } = useVitrine();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const firstName = student.name.trim().split(" ")[0];
+  const selected = demands.find((d) => d.id === selectedId);
+
+  if (selected) {
+    return (
+      <main className={`${PAGE} pt-8 pb-20`}>
+        <BackButton label="Voltar para oportunidades" onClick={() => setSelectedId(null)} />
+
+        <section className="vt-card mt-10 overflow-hidden">
+          <div className="vt-stone flex flex-col gap-4 px-6 py-8 md:px-10 md:py-10">
+            <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.08em] text-sky">
+              <span>{selected.id}</span>
+              <span>{selected.area}</span>
+            </div>
+            <h1 className="font-display text-[32px] font-medium leading-[1.1] tracking-[-0.025em] text-offwhite md:text-[40px]">
+              {selected.title}
+            </h1>
+            <p className="max-w-[640px] font-sans text-[15px] leading-[1.6] text-offwhite/75">{selected.description}</p>
+          </div>
+
+          <div className="grid gap-10 px-6 py-8 md:grid-cols-2 md:px-10">
+            <dl className="flex flex-col gap-5">
+              {[
+                ["Quem pede", selected.company],
+                ["Duração prevista", selected.scope],
+                ["Prazo", selected.deadline],
+              ].map(([label, value]) => (
+                <div key={label}>
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/55">{label}</dt>
+                  <dd className="mt-1 font-sans text-[15px] text-navy">{value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="flex flex-col gap-4">
+              <Eyebrow>Competências desejadas</Eyebrow>
+              <div className="flex flex-wrap gap-1.5">
+                {selected.skills.map((s) => (
+                  <span key={s} className="vt-pill">
+                    {s}
+                  </span>
+                ))}
+              </div>
+              <Apply demand={selected} student={student} onGoToInterests={onGoToInterests} />
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  const open = demands
+    .filter((d) => d.status === "aprovada")
+    .map((d) => ({ demand: d, score: scoreStudent(student, d) }))
+    .sort((a, b) => b.score - a.score);
+
+  return (
+    <main className={`${PAGE} pb-20`}>
+      <PageHead
+        eyebrow={firstName ? `Olá, ${firstName}` : "Oportunidades"}
+        title="Oportunidades abertas."
+        lead="Demandas aprovadas pela curadoria. Candidate-se às que combinam com você, ou espere um convite do solicitante ou uma sugestão da curadoria."
+      />
+
+      <div className="grid gap-5 md:grid-cols-2">
+        {open.map(({ demand, score }) => (
+          <button
+            key={demand.id}
+            onClick={() => setSelectedId(demand.id)}
+            className="vt-card vt-card-interactive flex flex-col gap-4 p-6 text-left"
+          >
+            <div className="flex w-full items-center justify-between gap-3">
+              <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/50">{demand.area}</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/50">{score}% compatível</span>
+            </div>
+            <h3 className="font-display text-xl font-medium leading-[1.25] tracking-[-0.015em] text-navy">{demand.title}</h3>
+            <Meta demand={demand} />
+            <div className="flex flex-wrap gap-1.5">
+              {demand.skills.map((s) => (
+                <span key={s} className="vt-pill">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </button>
+        ))}
+        {open.length === 0 && (
+          <p className="col-span-full rounded-2xl border border-dashed border-navy/20 p-12 text-center font-sans text-sm text-navy/55">
+            Nenhuma demanda aberta no momento.
+          </p>
+        )}
+      </div>
+    </main>
   );
 }

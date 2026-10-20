@@ -1,11 +1,19 @@
-import { findProject } from "@/data/students";
-import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { findProject, useVitrine } from "@/lib/store";
+import { isProfileVisible } from "@/lib/profile";
+import { BackButton } from "./BackButton";
+import { Eyebrow } from "./Eyebrow";
+import { ProjectStatusPill } from "./ProjectStatusPill";
+import { PAGE } from "./layout";
 
-const MONO = "Geist Mono, ui-monospace, monospace";
-const SANS = "Geist, Inter, system-ui, sans-serif";
-const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
+function Arrow() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
 
+/** Página pública de um projeto: capa, descrição, stack, autoria e chamada para parceria. */
 export function ProjectDetail({
   id,
   onBack,
@@ -17,195 +25,95 @@ export function ProjectDetail({
   onOpenProfile: (studentId: string) => void;
   onSignIn: () => void;
 }) {
+  useVitrine();
   const project = findProject(id);
 
-  if (!project) {
+  if (!project || !isProfileVisible(project.student)) {
     return (
-      <div className="px-8 md:px-16 py-24 max-w-screen-xl mx-auto text-center">
-        <p
-          className="text-[11px] tracking-[0.16em] uppercase mb-6"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-        >
-          Projeto não encontrado
-        </p>
-        <button
-          onClick={onBack}
-          className="text-[10px] tracking-[0.18em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
-        >
+      <main className={`${PAGE} flex flex-col items-center gap-6 py-24`}>
+        <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-navy/65">Projeto não encontrado</p>
+        <button onClick={onBack} className="vt-btn vt-btn-secondary">
           Voltar ao catálogo
         </button>
-      </div>
+      </main>
     );
   }
 
   const { student } = project;
-  const status = STATUS_CONFIG[project.status];
 
   return (
-    <div className="px-8 md:px-16 py-10 max-w-screen-lg mx-auto">
-      <button
-        onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50 flex items-center gap-2 mb-10"
-        style={{ fontFamily: MONO, color: NAVY }}
-      >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
-        Projetos
-      </button>
+    <main className={`${PAGE} pt-8 pb-20 md:pb-28`}>
+      <BackButton label="Projetos" onClick={onBack} />
 
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-5">
-          <span
-            className="text-[9px] tracking-[0.16em] uppercase px-2 py-1"
-            style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.6 }}
-          >
-            {project.area}
-          </span>
-          {status && (
-            <span
-              className="text-[9px] tracking-[0.16em] uppercase"
-              style={{ fontFamily: MONO, color: RED, opacity: 0.8 }}
-            >
-              {status.label}
-            </span>
-          )}
-          <span
-            className="text-[9px] tracking-[0.14em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-          >
-            {project.year} · {project.id}
-          </span>
+      <header className="pt-8">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="vt-pill">{project.area}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65">{project.year}</span>
+          <ProjectStatusPill status={project.status} />
         </div>
-
-        <h1
-          className="text-4xl md:text-5xl leading-[1.1] mb-6"
-          style={{ fontFamily: SERIF, color: NAVY, letterSpacing: "-0.01em" }}
-        >
+        <h1 className="mt-6 max-w-[860px] font-display text-[36px] font-medium leading-[1.02] tracking-[-0.025em] text-navy md:text-[56px]">
           {project.title}
         </h1>
+      </header>
 
-        <p
-          className="text-base md:text-lg leading-[1.7] max-w-2xl"
-          style={{ fontFamily: SANS, color: NAVY, opacity: 0.7, fontWeight: 300 }}
-        >
-          {project.description}
-        </p>
+      <div className="vt-stone relative mt-10 h-[220px] rounded-3xl md:h-[380px]">
+        <span className="absolute bottom-6 left-6 font-mono text-[10px] uppercase tracking-[0.08em] text-sky">
+          VIC · {project.id.replace("PRJ-", "P")} · capa do projeto
+        </span>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-px mb-12" style={{ background: `${NAVY}18` }}>
-        <div className="p-6 md:col-span-2" style={{ background: OFFWHITE }}>
-          <p
-            className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-          >
-            Stack técnica
+      <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_340px]">
+        <div>
+          <Eyebrow>Descrição</Eyebrow>
+          <p className="mt-4 max-w-[740px] font-sans text-[17px] leading-[1.6] text-navy/65">
+            {project.description}
           </p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.stack.map((t) => (
-              <span
-                key={t}
-                className="text-[10px] tracking-[0.12em] uppercase px-2.5 py-1.5"
-                style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.75 }}
-              >
-                {t}
-              </span>
-            ))}
+
+          <div className="mt-10">
+            <Eyebrow>Stack</Eyebrow>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.stack.map((tech) => (
+                <span key={tech} className="vt-pill">
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="p-6" style={{ background: OFFWHITE }}>
-          <p
-            className="text-[9px] tracking-[0.2em] uppercase mb-4"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
+        <aside className="flex flex-col gap-5">
+          <button
+            onClick={() => onOpenProfile(student.id)}
+            className="vt-card vt-card-interactive flex flex-col gap-3 p-6 text-left"
           >
-            Disponibilidade
-          </p>
-          <p className="text-lg" style={{ fontFamily: SERIF, color: NAVY }}>
-            {student.availability}
-          </p>
-        </div>
-      </div>
+            <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65">Autoria</span>
+            <span className="flex items-center gap-3">
+              <span className="grid size-12 shrink-0 place-items-center rounded-[13px] bg-navy font-display text-xl font-medium text-offwhite">
+                {student.name[0]}
+              </span>
+              <span className="min-w-0">
+                <span className="block truncate font-sans text-[15px] text-navy">{student.name}</span>
+                <span className="block truncate font-sans text-[13px] text-navy/65">
+                  {student.course} · {student.semester}
+                </span>
+              </span>
+            </span>
+          </button>
 
-      {/* Autoria */}
-      <p
-        className="text-[9px] tracking-[0.2em] uppercase mb-4"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-      >
-        Desenvolvido por
-      </p>
-      <button
-        onClick={() => onOpenProfile(student.id)}
-        className="w-full text-left flex items-start gap-5 p-6 transition-colors"
-        style={{ border: `1px solid ${NAVY}18` }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = `${NAVY}05`)}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-      >
-        <div
-          className="flex items-center justify-center flex-shrink-0"
-          style={{ width: "48px", height: "48px", background: NAVY }}
-        >
-          <span
-            className="text-[13px] tracking-[0.1em]"
-            style={{ fontFamily: MONO, color: OFFWHITE }}
-          >
-            {student.initials}
-          </span>
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg leading-snug" style={{ fontFamily: SERIF, color: NAVY }}>
-            {student.name}
-          </h3>
-          <p
-            className="text-[11px] mb-3"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
-          >
-            {student.course} · {student.semester}
-          </p>
-          <p
-            className="text-[12px] leading-relaxed"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.6 }}
-          >
-            {student.bio}
-          </p>
-        </div>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          style={{ color: NAVY, opacity: 0.5, flexShrink: 0, marginTop: "4px" }}
-        >
-          <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-        </svg>
-      </button>
-
-      <div
-        className="mt-12 p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
-        style={{ background: NAVY }}
-      >
-        <div>
-          <p
-            className="text-[9px] tracking-[0.22em] uppercase mb-2"
-            style={{ fontFamily: MONO, color: OFFWHITE, opacity: 0.5 }}
-          >
-            Interessado neste projeto?
-          </p>
-          <h3 className="text-2xl leading-tight" style={{ fontFamily: SERIF, color: OFFWHITE }}>
-            Publique uma demanda e a curadoria faz a ponte.
-          </h3>
-        </div>
-        <button
-          onClick={onSignIn}
-          className="flex-shrink-0 px-7 py-3.5 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity"
-          style={{ background: OFFWHITE, color: NAVY, fontFamily: SANS }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          Acessar Plataforma
-        </button>
+          <section className="vt-stone rounded-2xl p-6">
+            <Eyebrow onDark>Parceria</Eyebrow>
+            <h2 className="mt-5 font-display text-2xl font-medium leading-[1.25] tracking-[-0.02em] text-offwhite">
+              Sua empresa tem uma demanda parecida?
+            </h2>
+            <p className="mt-4 font-sans text-sm font-light leading-[1.5] text-offwhite/65">
+              Publique a demanda e a curadoria indica o estudante mais compatível.
+            </p>
+            <button onClick={onSignIn} className="vt-btn vt-btn-cream mt-5">
+              Publicar demanda <Arrow />
+            </button>
+          </section>
+        </aside>
       </div>
-    </div>
+    </main>
   );
 }

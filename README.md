@@ -42,9 +42,9 @@ própria arquitetura do produto.
 
 ## Quem usa
 
-- **Estudantes** do IC/UFAL — dos cursos de Ciência da Computação, Engenharia
-  da Computação e Inteligência Artificial — expondo projetos e recebendo
-  convites
+- **Estudantes** de qualquer instituto da UFAL (e-mail `*.ufal.br`) expondo
+  projetos e recebendo convites. O projeto nasceu no IC, mas a vitrine é da
+  universidade inteira
 - **Solicitantes** publicando demandas e acompanhando o andamento
 - **Curadoria** triando demandas, escolhendo o candidato e confirmando a conexão
 
@@ -55,16 +55,28 @@ A aplicação tem uma área pública e três áreas de uso.
 | | |
 |---|---|
 | **Público** | landing, catálogo de projetos, diretório de estudantes, perfil público e painel de indicadores da extensão |
-| **Estudante** | cadastro em três passos, dashboard, laboratório de projetos, convites recebidos e conexão estabelecida |
+| **Estudante** | cadastro, onboarding em quatro passos (pode pular e voltar), oportunidades, interesses, laboratório de projetos e perfil |
 | **Solicitante** | mural de demandas, assistente de nova demanda em quatro passos, protocolo e matches recebidos |
-| **Curadoria** | fila de triagem em kanban, matchmaking com ranqueamento, confirmação com justificativa e registro do match |
+| **Curadoria** | login próprio (sem cadastro aberto), fila de triagem em kanban, matchmaking com ranqueamento, confirmação com justificativa e registro do match |
 
 Os indicadores do painel de extensão são apurados a partir da própria base, e
 não digitados, para que não divirjam do que o restante do sistema mostra.
 
-**Ainda não há backend.** Os dados são fictícios e vivem em memória: recarregar
-a página reinicia o estado. A autenticação é apenas interface. Persistência e
-integração entre as áreas são os próximos passos.
+**Ainda não há backend.** Os dados de exemplo são fictícios. Contas, sessão e
+tudo o que se cria na demonstração ficam salvos **só no `localStorage` deste
+navegador**; o botão "Restaurar dados de exemplo", no rodapé, volta ao estado
+inicial. Perfil de estudante sem nenhuma competência não aparece na vitrine.
+
+### Contas de demonstração
+
+| Papel | E-mail | Senha |
+|---|---|---|
+| Estudante | `estudante@ic.ufal.br` | `demo1234` |
+| Solicitante | `contato@techbr.com.br` | `demo1234` |
+| Curadoria | `curadoria@ic.ufal.br` | `demo1234` |
+
+> **Atenção:** o login é uma simulação. A senha fica em texto puro no
+> navegador e não é protegida. Não use uma senha real ao criar conta.
 
 ## Rodando o projeto
 

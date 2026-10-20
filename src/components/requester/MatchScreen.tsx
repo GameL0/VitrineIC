@@ -1,146 +1,203 @@
+import type * as React from "react";
 import { useState } from "react";
-import { MOSS, NAVY, OCHRE, OFFWHITE, RED, TERRACOTTA } from "@/styles/tokens";
+import { useCurrentRequester } from "@/lib/auth";
+import { ORIGIN_LABEL, visibleToRequester } from "@/lib/interest";
+import { findStudent, respondInterest, studentEmail, useVitrine } from "@/lib/store";
+import { Avatar } from "@/components/app/Avatar";
+import { FilterPill } from "@/components/app/FilterPill";
+import { ArrowIcon } from "@/components/app/Icons";
+import { InProjectBadge } from "@/components/app/InProjectBadge";
+import { InterestStatusPill } from "@/components/app/InterestStatusPill";
+import { RefuseModal } from "@/components/app/RefuseModal";
+import { BackButton } from "@/components/public/BackButton";
+import { Eyebrow } from "@/components/public/Eyebrow";
+import { PageHead } from "@/components/public/PageHead";
 import { PublicProfile } from "@/components/public/PublicProfile";
+import { PAGE } from "@/components/public/layout";
+import type { Demand, Interest } from "@/types";
 
-export function MatchScreen({ onBack }: { onBack?: () => void }) {
+/** Card de interessado no formato do Figma: avatar, curso, status, nota e ação embaixo. */
+function InterestCard({
+  interest,
+  demand,
+  inProject,
+  onOpen,
+  children,
+}: {
+  interest: Interest;
+  demand: Demand;
+  inProject: boolean;
+  onOpen: () => void;
+  children?: React.ReactNode;
+}) {
+  const student = findStudent(interest.studentId);
+  if (!student) return null;
+
+  const noteTitle = interest.origin === "sugestao" ? "Justificativa da curadoria" : interest.origin === "convite" ? "Sua mensagem" : "Nota do estudante";
+
+  return (
+    <article className="vt-card flex flex-col gap-5 p-6">
+      <div className="flex items-start gap-4">
+        <Avatar name={student.name} size="lg" />
+        <div className="min-w-0 flex-1">
+          <p className="font-display text-lg font-medium tracking-[-0.01em] text-navy">{student.name}</p>
+          <p className="font-sans text-[13px] text-navy/55">
+            {student.course} · {student.semester}
+          </p>
+        </div>
+        <InterestStatusPill status={interest.status} viewer="solicitante" />
+      </div>
+
+      <p className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.08em] text-navy/50">
+        {ORIGIN_LABEL[interest.origin]} · {demand.title} · {interest.createdAt}
+        {inProject && <InProjectBadge />}
+      </p>
+
+      {interest.justification && (
+        <div className="flex flex-col gap-1.5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/55">{noteTitle}</p>
+          <p className="font-sans text-sm leading-[1.6] text-navy/75">"{interest.justification}"</p>
+        </div>
+      )}
+
+      {interest.status === "contato_liberado" && (
+        <p className="rounded-xl bg-moss/[0.07] px-4 py-3 font-sans text-sm text-navy">
+          <span className="mr-2 font-mono text-[10px] uppercase tracking-[0.08em] text-moss">Contato</span>
+          {studentEmail(student)}
+        </p>
+      )}
+
+      {interest.refusalReason && (interest.status === "recusado_estudante" || interest.status === "recusado_solicitante") && (
+        <p className="font-sans text-[13px] text-navy/60">Motivo: {interest.refusalReason}</p>
+      )}
+
+      <div className="flex flex-wrap gap-2 border-t border-navy/8 pt-5">
+        <button onClick={onOpen} className="vt-btn vt-btn-secondary flex-1">
+          Ver perfil <ArrowIcon />
+        </button>
+        {children}
+      </div>
+    </article>
+  );
+}
+
+function Section({ title, empty, children }: { title: string; empty: string; children: React.ReactNode[] }) {
+  return (
+    <section className="mt-14 first:mt-0">
+      <Eyebrow>{title}</Eyebrow>
+      {children.length > 0 ? (
+        <div className="mt-6 grid gap-5 md:grid-cols-2">{children}</div>
+      ) : (
+        <p className="mt-6 font-sans text-sm text-navy/55">{empty}</p>
+      )}
+    </section>
+  );
+}
+
+/**
+ * Interessados nas demandas do solicitante: candidaturas e sugestões que
+ * esperam a resposta dele, convites que ele enviou, contatos liberados e
+ * recusas. Sugestões só aparecem depois que o estudante aceitou.
+ */
+export function MatchScreen({ demandId, onBack }: { demandId?: string | null; onBack?: () => void }) {
+  const { demands, interests, inProject } = useVitrine();
+  const requester = useCurrentRequester();
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
-
-  // Mock atualizado para demonstrar estudantes que aceitaram e os que demonstraram interesse
-  const [applicantStatuses, setApplicantStatuses] = useState([
-    { id: "std-1", name: "João Pereira", status: "Aceitou convite", type: "accepted", color: MOSS, course: "Engenharia da Computação · 5º sem" },
-    { id: "std-2", name: "Maria Clara", status: "Em aguardo", type: "waiting", color: OCHRE, course: "Ciência da Computação · 7º sem" },
-    { id: "std-3", name: "Carlos Silva", status: "Interesse enviado", type: "interested", color: "#3b82f6", course: "Inteligência Artificial · 3º sem" },
-    { id: "std-4", name: "Ana Beatriz", status: "Interesse enviado", type: "interested", color: "#3b82f6", course: "Ciência da Computação · 4º sem" },
-  ]);
+  const [filter, setFilter] = useState<string>(demandId ?? "todas");
+  const [refusing, setRefusing] = useState<Interest | null>(null);
 
   if (selectedStudentId) {
     return <PublicProfile id={selectedStudentId} onBack={() => setSelectedStudentId(null)} onOpenProject={() => {}} />;
   }
 
-  const acceptedOrWaiting = applicantStatuses.filter(s => s.type === "accepted" || s.type === "waiting");
-  const interested = applicantStatuses.filter(s => s.type === "interested");
+  const myDemands = demands.filter(
+    (d) => d.company === requester && (d.status === "aprovada" || d.status === "contato_liberado"),
+  );
+  const byId = new Map(myDemands.map((d) => [d.id, d]));
+  const mine = interests.filter(
+    (i) => byId.has(i.demandId) && visibleToRequester(i) && (filter === "todas" || i.demandId === filter),
+  );
+
+  const card = (i: Interest, actions?: React.ReactNode) => (
+    <InterestCard
+      key={i.id}
+      interest={i}
+      demand={byId.get(i.demandId)!}
+      inProject={!!inProject[i.studentId]}
+      onOpen={() => setSelectedStudentId(i.studentId)}
+    >
+      {actions}
+    </InterestCard>
+  );
+
+  const awaiting = mine.filter((i) => i.status === "aguardando_solicitante");
+  const invites = mine.filter((i) => i.origin === "convite" && i.status === "aguardando_estudante");
+  const released = mine.filter((i) => i.status === "contato_liberado");
+  const refused = mine.filter((i) => i.status === "recusado_estudante" || i.status === "recusado_solicitante");
 
   return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-      <div className="mb-10">
-        {onBack && (
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 mb-6 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
-            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.6 }}
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
-            Voltar para Minhas Demandas
-          </button>
+    <main className={`${PAGE} pb-20 ${onBack ? "pt-8" : ""}`}>
+      {onBack && <BackButton label="Voltar para minhas demandas" onClick={onBack} />}
+      <PageHead
+        eyebrow="Interessados"
+        title="Quem quer trabalhar com você."
+        lead="Candidaturas dos estudantes, sugestões da curadoria e os convites que você enviou. O contato é liberado quando você e o estudante aceitam."
+      />
+
+      <div className="mb-10 flex flex-wrap gap-2">
+        <FilterPill active={filter === "todas"} onClick={() => setFilter("todas")}>
+          Todas as demandas
+        </FilterPill>
+        {myDemands.map((d) => (
+          <FilterPill key={d.id} active={filter === d.id} onClick={() => setFilter(d.id)}>
+            {d.title}
+          </FilterPill>
+        ))}
+      </div>
+
+      <Section title="Aguardando sua resposta" empty="Nenhuma candidatura ou sugestão esperando você.">
+        {awaiting.map((i) =>
+          card(
+            i,
+            <>
+              <button onClick={() => respondInterest(i.id, "solicitante", true)} className="vt-btn vt-btn-primary">
+                Aceitar
+              </button>
+              <button onClick={() => setRefusing(i)} className="vt-btn vt-btn-danger">
+                Recusar
+              </button>
+            </>,
+          ),
         )}
-        <p
-          className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-        >
-          <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
-          Status das Solicitações
-        </p>
-        <h1
-          className="text-4xl mb-3"
-          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-        >
-          Estudantes Conectados
-        </h1>
-        <p
-          className="text-[13px] max-w-xl"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
-        >
-          Acompanhe o status das conexões que a curadoria estabeleceu, bem como estudantes que demonstraram interesse diretamente no seu projeto.
-        </p>
-      </div>
+      </Section>
 
-      {/* Convites da Curadoria */}
-      <h3 className="text-xl mb-4 mt-8" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>Recomendações da Curadoria</h3>
-      <div className="flex flex-col gap-4 mb-10">
-        {acceptedOrWaiting.map((student) => (
-          <div key={student.id} onClick={() => setSelectedStudentId(student.id)} className="flex flex-col md:flex-row md:items-center justify-between p-6 gap-4 cursor-pointer hover:-translate-y-1 transition-all" style={{ background: OFFWHITE, borderRadius: "12px", border: `1px solid ${NAVY}15` }}>
-            <div>
-              <span className="text-[16px] font-medium block mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>{student.name}</span>
-              <span className="text-[10px] opacity-60" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>{student.course}</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="px-4 py-2 text-[11px] uppercase font-bold tracking-widest rounded-[8px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", background: `${student.color}15`, color: student.color, border: `1px solid ${student.color}40` }}>
-                {student.status}
-              </span>
-              {student.type === "accepted" && (
-                <button
-                  onClick={(e) => { e.stopPropagation(); alert("Abrindo modal de contato..."); }}
-                  className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase font-bold rounded-[8px] transition-opacity hover:opacity-85"
-                  style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-                >
-                  Entrar em contato
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
-        {acceptedOrWaiting.length === 0 && <p className="text-[12px] opacity-50" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>Nenhum estudante recomendado ainda.</p>}
-      </div>
+      <Section title="Contato liberado" empty="Nenhum contato liberado ainda.">
+        {released.map((i) => card(i))}
+      </Section>
 
-      {/* Interessados Diretos */}
-      <h3 className="text-xl mb-4" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>Candidatos Voluntários (Interessados)</h3>
-      <div className="flex flex-col gap-4">
-        {interested.map((student) => (
-          <div key={student.id} onClick={() => setSelectedStudentId(student.id)} className="flex flex-col md:flex-row md:items-center justify-between p-6 gap-4 cursor-pointer hover:-translate-y-1 transition-all" style={{ background: OFFWHITE, borderRadius: "12px", border: `1px solid ${NAVY}15` }}>
-            <div>
-              <span className="text-[16px] font-medium block mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>{student.name}</span>
-              <span className="text-[10px] opacity-60" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>{student.course}</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="px-4 py-2 text-[11px] uppercase font-bold tracking-widest rounded-[8px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", background: `${student.color}15`, color: student.color, border: `1px solid ${student.color}40` }}>
-                {student.status}
-              </span>
-              <div className="flex gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setApplicantStatuses(applicantStatuses.map(s => s.id === student.id ? { ...s, type: "accepted", status: "Aceitou convite", color: MOSS } : s));
-                  }}
-                  className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase font-bold rounded-[8px] transition-opacity hover:opacity-85"
-                  style={{ background: MOSS, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-                >
-                  Aceitar
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setApplicantStatuses(applicantStatuses.filter(s => s.id !== student.id));
-                  }}
-                  className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase font-bold rounded-[8px] transition-opacity hover:opacity-85"
-                  style={{ border: `1px solid ${TERRACOTTA}`, color: TERRACOTTA, background: "transparent", fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-                >
-                  Recusar
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-        {interested.length === 0 && <p className="text-[12px] opacity-50" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>Nenhum novo interessado.</p>}
-      </div>
+      <Section title="Convites enviados" empty="Nenhum convite aguardando resposta. Convide estudantes pela vitrine.">
+        {invites.map((i) => card(i))}
+      </Section>
 
-      <div
-        className="mt-8 px-6 py-5 flex items-center gap-4"
-        style={{ border: `1px dashed ${NAVY}20`, borderRadius: "12px" }}
-        >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: NAVY, opacity: 0.5, flexShrink: 0 }}>
-          <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.1" />
-          <path d="M8 5v4M8 11v1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-        </svg>
-        <p
-          className="text-[11px] leading-relaxed"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}
-        >
-          Novos matches são notificados por e-mail. Após confirmar interesse, o estudante
-          receberá seus dados de contato e o projeto poderá ser formalizado.
-        </p>
-      </div>
-    </div>
+      <Section title="Recusas" empty="Nenhuma recusa.">
+        {refused.map((i) => card(i))}
+      </Section>
+
+      <p className="mt-12 rounded-xl border border-dashed border-navy/15 px-5 py-4 font-sans text-[13px] leading-[1.6] text-navy/55">
+        Depois que o contato é liberado, vocês combinam direto. O site não acompanha estágio ou projeto a partir daí; o
+        estudante só marca o selo "em projeto" no perfil.
+      </p>
+
+      {refusing && (
+        <RefuseModal
+          title={`Recusar ${findStudent(refusing.studentId)?.name ?? "estudante"}?`}
+          onClose={() => setRefusing(null)}
+          onConfirm={(reason) => {
+            respondInterest(refusing.id, "solicitante", false, reason);
+            setRefusing(null);
+          }}
+        />
+      )}
+    </main>
   );
 }

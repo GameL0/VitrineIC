@@ -1,87 +1,64 @@
-import { useState } from "react";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { ClockIcon } from "@/components/app/Icons";
+import { StatusPill } from "@/components/app/StatusPill";
+import { PageHead } from "@/components/public/PageHead";
+import { PAGE } from "@/components/public/layout";
+import { useVitrine } from "@/lib/store";
+import { TERRACOTTA } from "@/styles/tokens";
 import type { Demand } from "@/types";
 
 export function MatchmakingHub({ demands, onSelect }: { demands: Demand[], onSelect: (d: Demand) => void }) {
+  const { interests } = useVitrine();
   const approvedDemands = demands.filter(d => d.status === "aprovada");
+  const countFor = (id: string) => interests.filter((i) => i.demandId === id).length;
 
   return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto h-full overflow-y-auto">
-      <div className="mb-10">
-        <p
-          className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-        >
-          <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
-          Curadoria Ativa
-        </p>
-        <h1
-          className="text-4xl mb-3"
-          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-        >
-          Análise de Matches
-        </h1>
-        <p
-          className="text-[14px] max-w-2xl"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.55, fontWeight: 300 }}
-        >
-          Selecione uma demanda aprovada para analisar os perfis dos estudantes,
-          recomendar candidatos para a empresa e gerenciar oportunidades.
-        </p>
-      </div>
+    <main className={`${PAGE} pb-20`}>
+      <PageHead
+        eyebrow="Curadoria ativa"
+        title="Análise de matches."
+        lead="Escolha uma demanda aprovada para comparar os estudantes e sugerir quem combina, com justificativa."
+      />
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {approvedDemands.map((d) => (
           <button
             key={d.id}
             onClick={() => onSelect(d)}
-            className="flex flex-col text-left p-6 transition-all hover:-translate-y-1"
-            style={{ background: OFFWHITE, border: `1px solid ${NAVY}20`, borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}
+            className="vt-card vt-card-interactive flex flex-col gap-4 p-6 text-left"
           >
-            <div className="flex items-center justify-between mb-4 w-full">
-               <span className="text-[10px] tracking-widest uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                 {d.id}
-               </span>
-               <span className="px-2 py-0.5 text-[9px] tracking-[0.14em] uppercase font-bold" style={{ border: `1px solid ${RED}`, background: `${RED}08`, borderRadius: "6px", color: RED, fontFamily: "Geist Mono, ui-monospace, monospace" }}>
-                 {d.priority === 'alta' ? 'Alta Prioridade' : 'Normal'}
-               </span>
+            <div className="flex w-full items-center justify-between gap-3">
+              <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/45">{d.id}</span>
+              {d.priority === "alta" && <StatusPill color={TERRACOTTA}>Alta</StatusPill>}
             </div>
-            
-            <h3 className="text-xl leading-tight mb-2" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-              {d.title}
-            </h3>
-            
-            <p className="text-[12px] line-clamp-3 mb-6 flex-1" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}>
-              {d.description}
-            </p>
-
-            <div className="flex flex-wrap gap-1.5 mt-auto">
+            <div>
+              <h3 className="font-display text-xl font-medium leading-[1.25] tracking-[-0.015em] text-navy">{d.title}</h3>
+              <p className="mt-1 font-sans text-[13px] text-navy/55">{d.company}</p>
+            </div>
+            <p className="line-clamp-3 font-sans text-[13px] leading-[1.55] text-navy/65">{d.description}</p>
+            <div className="mt-auto flex flex-wrap gap-1.5">
               {d.skills.slice(0, 3).map((skill: string) => (
-                <span
-                  key={skill}
-                  className="px-2 py-0.5 text-[9px] tracking-[0.1em] uppercase"
-                  style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, border: `1px solid ${NAVY}20`, borderRadius: "6px" }}
-                >
+                <span key={skill} className="vt-pill">
                   {skill}
                 </span>
               ))}
               {d.skills.length > 3 && (
-                <span className="px-2 py-0.5 text-[9px] tracking-[0.1em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                  +{d.skills.length - 3}
-                </span>
+                <span className="self-center font-mono text-[10px] text-navy/45">+{d.skills.length - 3}</span>
               )}
             </div>
+            <p className="flex w-full items-center gap-1.5 border-t border-navy/8 pt-4 font-sans text-[12px] text-navy/55">
+              <ClockIcon />
+              {d.scope}
+              <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.08em]">{countFor(d.id)} interesses</span>
+            </p>
           </button>
         ))}
 
         {approvedDemands.length === 0 && (
-          <div className="col-span-full p-12 text-center" style={{ border: `1px dashed ${NAVY}30`, borderRadius: "16px" }}>
-             <p className="text-[14px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}>
-               Não há nenhuma demanda aprovada no momento. Aprove demandas na tela de Análise de Projetos.
-             </p>
+          <div className="col-span-full rounded-2xl border border-dashed border-navy/20 p-12 text-center font-sans text-sm text-navy/55">
+            Não há nenhuma demanda aprovada no momento. Aprove demandas na tela de Análise de projetos.
           </div>
         )}
       </div>
-    </div>
+    </main>
   );
 }

@@ -4,107 +4,118 @@ import { Step2 } from "./Step2";
 import { Step3 } from "./Step3";
 import { Step4 } from "./Step4";
 import { StepIndicator } from "./StepIndicator";
-import { NAVY, OFFWHITE } from "@/styles/tokens";
+import { ArrowIcon } from "@/components/app/Icons";
+import { Eyebrow } from "@/components/public/Eyebrow";
+import { Logo } from "@/components/public/Logo";
+import { PAGE } from "@/components/public/layout";
+import { renameAccount } from "@/lib/auth";
+import { BIO_MAX, fromDraft, toDraft, type ProfileDraft } from "@/lib/profile";
+import { updateStudent } from "@/lib/store";
+import { digits, maxLength, required, useValidation } from "@/lib/validate";
+import type { Student } from "@/types";
 
-export function Onboarding({ onComplete }: { onComplete: (data: any) => void }) {
+const TITLES = ["Conte quem você é.", "Suas competências técnicas.", "Idiomas.", "Seu portfólio."];
+
+export type OnboardingField = "name" | "unit" | "course" | "matricula" | "bio";
+
+/**
+ * Onboarding do estudante, depois do cadastro. Cada "Continuar" grava o que o
+ * passo mudou, para que sair no meio não perca nada. "Pular por agora" leva ao
+ * painel; o perfil só aparece na vitrine com ao menos uma competência.
+ */
+export function Onboarding({
+  student,
+  onDone,
+}: {
+  student: Student;
+  onDone: () => void;
+}) {
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<ProfileDraft>(() => toDraft(student));
 
-  const next = () => {
-    if (step < 3) setStep(step + 1);
-    else onComplete(formData);
+  // Só o passo 1 tem campos com regra; os outros são livres.
+  const { validate, field } = useValidation<OnboardingField>(() =>
+    step === 0
+      ? {
+          name: required(formData.name, "Informe seu nome."),
+          unit: required(formData.unit, "Escolha o instituto."),
+          course: required(formData.course, "Escolha o curso."),
+          matricula: digits(formData.matricula),
+          bio: maxLength(formData.bio, BIO_MAX),
+        }
+      : {},
+  );
+
+  const persist = (extra: Partial<Student> = {}) => {
+    updateStudent(student.id, { ...fromDraft(formData), ...extra });
+    if (formData.name.trim() !== student.name) renameAccount(formData.name);
   };
 
-  const update = (partial: any) => setFormData({ ...formData, ...partial });
+  const goTo = (target: number) => {
+    setStep(target);
+    window.scrollTo(0, 0);
+  };
+
+  const next = () => {
+    if (!validate()) return;
+    if (step < 3) {
+      persist();
+      goTo(step + 1);
+    } else {
+      persist({ onboardedAt: new Date().toISOString().slice(0, 10), onboardingSkipped: false });
+      onDone();
+    }
+  };
+
+  const skip = () => {
+    persist({ onboardingSkipped: true });
+    onDone();
+  };
+
+  const update = (partial: Partial<ProfileDraft>) => setFormData({ ...formData, ...partial });
 
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{ background: OFFWHITE }}
-    >
-      {/* Top bar */}
-      <div
-        className="w-full px-8 md:px-16 py-4 flex items-center gap-3"
-        style={{ borderBottom: `1px solid ${NAVY}15` }}
-      >
-        <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
-        <span
-          className="text-[12px] tracking-[0.2em] uppercase font-semibold"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}
-        >
-          VitrineIC
-        </span>
-        <span
-          className="text-[9px] tracking-[0.18em] uppercase ml-2"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-        >
-          · Configuração inicial
-        </span>
-      </div>
+    <div className="min-h-screen bg-offwhite">
+      <header className="sticky top-0 z-30 border-b border-navy/8 bg-offwhite/85 backdrop-blur-[8px]">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5 md:px-10">
+          <Logo />
+          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65">Onboarding</span>
+        </div>
+      </header>
 
-      <div className="flex-1 px-8 md:px-16 py-14 max-w-4xl w-full mx-auto">
+      <main className={`${PAGE} flex flex-col gap-8 py-10 md:gap-10 md:py-14`}>
         <StepIndicator current={step} />
 
-        <div className="min-h-[420px]">
-          {step === 0 && (
-            <Step1
-              data={formData}
-              setData={update}
-            />
-          )}
-          {step === 1 && (
-            <Step2
-              data={formData}
-              setData={update}
-            />
-          )}
-          {step === 2 && (
-            <Step3
-              data={formData}
-              setData={update}
-            />
-          )}
-          {step === 3 && (
-            <Step4
-              data={formData}
-              setData={update}
-            />
-          )}
-        </div>
+        <section className="vt-card p-6 md:p-10">
+          <Eyebrow>Passo {String(step + 1).padStart(2, "0")}</Eyebrow>
+          <h1 className="mt-4 mb-8 font-display text-[28px] font-medium leading-[1.1] tracking-[-0.025em] text-navy md:text-[36px]">
+            {TITLES[step]}
+          </h1>
 
-        <div className="flex items-center justify-between mt-12 pt-6" style={{ borderTop: `1px solid ${NAVY}15` }}>
-          <button
-            onClick={() => setStep(Math.max(0, step - 1))}
-            className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] uppercase transition-opacity hover:opacity-80"
-            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: step === 0 ? 0.3 : 1 }}
-            disabled={step === 0}
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
-            Anterior
-          </button>
+          {step === 0 && <Step1 data={formData} setData={update} field={field} email={student.email} />}
+          {step === 1 && <Step2 data={formData} setData={update} />}
+          {step === 2 && <Step3 data={formData} setData={update} />}
+          {step === 3 && <Step4 data={formData} setData={update} onGoToSkills={() => goTo(1)} />}
 
-          <div className="flex items-center gap-3">
-            <span
-              className="text-[9px] tracking-[0.14em]"
-              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-            >
-              {step + 1} / 4
-            </span>
+          <div className="mt-10 flex items-center justify-between gap-3 border-t border-navy/8 pt-6">
             <button
-              onClick={next}
-              className="flex items-center gap-3 px-8 py-3 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-88"
-              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "10px" }}
+              onClick={() => goTo(Math.max(0, step - 1))}
+              disabled={step === 0}
+              className="rounded-[10px] px-3 py-2 font-sans text-sm text-navy/65 transition-colors hover:text-navy disabled:text-navy/30"
             >
-              {step === 3 ? "Concluir" : "Próximo"}
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-              </svg>
+              Voltar
             </button>
+            <div className="flex items-center gap-2">
+              <button onClick={skip} className="vt-btn vt-btn-ghost">
+                Pular por agora
+              </button>
+              <button onClick={next} className="vt-btn vt-btn-primary">
+                {step === 3 ? "Concluir" : "Continuar"} <ArrowIcon />
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

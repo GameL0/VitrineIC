@@ -199,6 +199,10 @@ button:disabled {
 .vt-btn-danger { background: transparent; color: #b4432f; border-color: rgba(180, 67, 47, 0.3); }
 .vt-btn-danger:hover:not(:disabled) { background: rgba(255, 255, 255, 0.6); border-color: rgba(11, 37, 69, 0.5); }
 .vt-btn-cream { background: #f3f1ec; color: #0b2545; }
+.vt-btn-ghost { background: transparent; color: rgba(11, 37, 69, 0.65); }
+.vt-btn-ghost:hover:not(:disabled) { color: #0b2545; background: rgba(11, 37, 69, 0.05); }
+.vt-btn-outline-light { background: transparent; color: #f3f1ec; border-color: rgba(243, 241, 236, 0.3); }
+.vt-btn-outline-light:hover:not(:disabled) { border-color: rgba(243, 241, 236, 0.6); }
 
 /* Inputs: fundo branco, borda navy 15%; foco com borda navy e anel de 4px;
    erro em terracota; desabilitado com texto a 40%. */
@@ -220,6 +224,9 @@ button:disabled {
 .vt-input:focus { border-color: #0b2545; box-shadow: 0 0 0 4px rgba(11, 37, 69, 0.08); }
 .vt-input[aria-invalid="true"] { border-color: #b4432f; }
 .vt-input[aria-invalid="true"]:focus { box-shadow: 0 0 0 4px rgba(180, 67, 47, 0.1); }
+/* Sobre superfície escura (.vt-stone) o terracota não tem contraste: clareia. */
+.vt-stone .vt-field-error { color: #f2a99a; }
+.vt-stone .vt-field-error.border { border-color: rgba(242, 169, 154, 0.35); background: rgba(242, 169, 154, 0.08); }
 .vt-input:disabled { color: rgba(11, 37, 69, 0.4); cursor: not-allowed; }
 .vt-input-mono { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; }
 
@@ -313,4 +320,36 @@ button:disabled {
   mix-blend-mode: multiply;
   border-radius: inherit;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.38 0 0 0 0 0.33 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =========================================
+   Troca de unidade no cartão do hero (UnitsCard)
+   A que entra sobe e aparece; a que sai sobe e some, ao mesmo tempo.
+   ========================================= */
+
+@keyframes vt-unit-in {
+  from { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+@keyframes vt-unit-out {
+  from { opacity: 1; transform: none; filter: blur(0); }
+  to { opacity: 0; transform: translateY(-14px); filter: blur(6px); }
+}
+
+.vt-unit-in {
+  animation: vt-unit-in 650ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
+  will-change: opacity, transform, filter;
+}
+
+.vt-unit-out {
+  animation: vt-unit-out 350ms cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt-unit-in,
+  .vt-unit-out {
+    animation: none;
+  }
 }

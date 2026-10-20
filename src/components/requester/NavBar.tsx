@@ -1,70 +1,45 @@
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { AreaNav } from "@/components/app/AreaNav";
+import { UpdatesMenu } from "@/components/app/UpdatesMenu";
+import { REQUESTER_UPDATES } from "@/data/updates";
+import { useSession } from "@/lib/auth";
 
+/**
+ * Barra da área do solicitante, no modelo do Figma. "Nova demanda" só abre
+ * pelo botão em Minhas demandas, e a caixa de entrada é o ícone ao lado do sino.
+ */
 export function NavBar({
   view,
   setView,
   onBack,
+  unreadCount = 0,
+  awaitingMe = 0,
 }: {
   view: string;
   setView: (v: string) => void;
   onBack: () => void;
+  unreadCount?: number;
+  /** Candidaturas e sugestões esperando a resposta do solicitante. */
+  awaitingMe?: number;
 }) {
-  const navItems = [
-    { id: "available_students", label: "Estudantes Disponíveis" },
-    { id: "dashboard", label: "Minhas Demandas" },
-    { id: "new", label: "Nova Demanda" },
-    { id: "team", label: "Equipe" },
-    { id: "profile", label: "Meu Perfil" },
-    { id: "notifications", label: "Notificações" },
-  ];
+  const session = useSession();
+
   return (
-    <nav
-      className="w-full flex items-center justify-between px-8 md:px-12 py-4 sticky top-0 z-30"
-      style={{ background: OFFWHITE, borderBottom: `1px solid ${NAVY}15` }}
-    >
-      <div className="flex items-center gap-3">
-        <img src="/logo.jpg" alt="Logo ConectaIC" className="w-6 h-6 object-contain rounded-[4px]" style={{ background: NAVY }} />
-        <span
-          className="text-[12px] tracking-[0.2em] uppercase font-semibold"
-          style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}
-        >
-          VitrineIC
-        </span>
-        <span
-          className="text-[9px] tracking-[0.18em] uppercase ml-2"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-        >
-          · Área do Solicitante
-        </span>
-      </div>
-      <div className="hidden md:flex items-center gap-1">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setView(item.id)}
-            className="px-4 py-2 text-[10px] tracking-[0.16em] uppercase transition-all"
-            style={{
-              fontFamily: "Geist, Inter, system-ui, sans-serif",
-              color: NAVY,
-              background: view === item.id ? `${NAVY}08` : "transparent",
-              borderRadius: "10px",
-              fontWeight: view === item.id ? 600 : 400
-            }}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-      <button
-        onClick={onBack}
-        className="text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50 flex items-center gap-2"
-        style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
-      >
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M10 6H2M5 3L2 6l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-        </svg>
-        Sair
-      </button>
-    </nav>
+    <AreaNav
+      items={[
+        { id: "available_students", label: "Estudantes disponíveis" },
+        { id: "dashboard", label: "Minhas demandas" },
+        { id: "matches", label: "Interessados", badge: awaitingMe },
+        { id: "team", label: "Equipe" },
+        { id: "profile", label: "Meu perfil" },
+      ]}
+      active={view === "new" || view === "success" ? "dashboard" : view}
+      onSelect={setView}
+      avatar={session?.account.name ?? "Solicitante"}
+      onInbox={() => setView("inbox")}
+      inboxDot={unreadCount > 0}
+      inboxActive={view === "inbox"}
+      bell={<UpdatesMenu initial={REQUESTER_UPDATES} onOpen={setView} />}
+      onExit={onBack}
+    />
   );
 }
