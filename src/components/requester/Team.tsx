@@ -1,4 +1,7 @@
-import { NAVY, OFFWHITE } from "@/styles/tokens";
+import { Avatar } from "@/components/app/Avatar";
+import { PlusIcon } from "@/components/app/Icons";
+import { PageHead } from "@/components/public/PageHead";
+import { PAGE } from "@/components/public/layout";
 
 export function Team() {
   const teamMembers = [
@@ -7,36 +10,35 @@ export function Team() {
   ];
 
   return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-      <div className="mb-10">
-        <h1 className="text-4xl mb-3" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-          Minha Equipe
-        </h1>
-        <p className="text-[13px] max-w-xl" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5, fontWeight: 300 }}>
-          Veja os estudantes que estão atualmente alocados em seus projetos.
-        </p>
-      </div>
+    <main className={`${PAGE} pb-20`}>
+      <PageHead
+        eyebrow="Organização"
+        title="Equipe."
+        lead="Estudantes alocados nos seus projetos."
+        aside={
+          <button className="vt-btn vt-btn-primary self-start md:self-auto">
+            <PlusIcon /> Convidar membro
+          </button>
+        }
+      />
 
-      <div className="flex flex-col gap-4">
-        {teamMembers.map((member, idx) => (
-          <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between p-6 gap-4" style={{ background: OFFWHITE, borderRadius: "12px", border: `1px solid ${NAVY}15` }}>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full" style={{ background: NAVY }}>
-                <span className="text-[16px]" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>{member.name.charAt(0)}</span>
+      {teamMembers.length === 0 ? (
+        <p className="vt-card px-6 py-14 text-center font-sans text-sm text-navy/55">Sua equipe está vazia.</p>
+      ) : (
+        <ul className="vt-card divide-y divide-navy/8 overflow-hidden">
+          {teamMembers.map((member) => (
+            <li key={member.email} className="flex flex-wrap items-center gap-4 px-5 py-4 md:px-6">
+              <Avatar name={member.name} />
+              <div className="min-w-0 flex-1">
+                <p className="font-sans text-[15px] text-navy">{member.name}</p>
+                <p className="truncate font-sans text-[13px] text-navy/55">{member.email}</p>
               </div>
-              <div>
-                <span className="text-[16px] font-medium block mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>{member.name}</span>
-                <span className="text-[10px] opacity-60 uppercase tracking-wider block" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>{member.role}</span>
-              </div>
-            </div>
-            <div className="text-right">
-              <span className="text-[12px] block mb-1" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.8 }}>{member.project}</span>
-              <span className="text-[10px] opacity-50" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>{member.email}</span>
-            </div>
-          </div>
-        ))}
-        {teamMembers.length === 0 && <p className="text-[12px] opacity-50" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY }}>Sua equipe está vazia.</p>}
-      </div>
-    </div>
+              <p className="hidden font-sans text-[13px] text-navy/60 md:block">{member.project}</p>
+              <span className="vt-pill">{member.role}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </main>
   );
 }

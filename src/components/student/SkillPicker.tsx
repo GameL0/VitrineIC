@@ -2,8 +2,8 @@ import { useMemo, useRef, useState } from "react";
 import { LevelPicker } from "./LevelPicker";
 import { Label } from "./ui";
 import {
+  SUGGESTED_BY_COURSE,
   ALL_SKILLS,
-  LEVELS,
   SKILL_CATEGORIES,
   canonicalSkill,
   foldSkill,
@@ -11,16 +11,20 @@ import {
   searchSkills,
   suggestedFor,
 } from "@/data/skills";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
 import type { SkillLevel, StudentSkill } from "@/types";
-
-const MONO = "Geist Mono, ui-monospace, monospace";
-const SANS = "Geist, Inter, system-ui, sans-serif";
 
 const DEFAULT_LEVEL: SkillLevel = 2;
 
 /** Máximo de sugestões visíveis. Acima disso a escolha trava em vez de ajudar. */
 const MAX_SUGGESTIONS = 8;
+
+function PlusIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="text-navy/55">
+      <path d="M6 1.5v9M1.5 6h9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 /** Fold que preserva o comprimento, para destacar o trecho certo do nome. */
 function fold(s: string) {
@@ -39,7 +43,7 @@ function Predicted({ name, query }: { name: string; query: string }) {
   return (
     <>
       {name.slice(0, end)}
-      <strong style={{ fontWeight: 600 }}>{name.slice(end)}</strong>
+      <strong className="font-semibold">{name.slice(end)}</strong>
     </>
   );
 }
@@ -49,8 +53,8 @@ function Predicted({ name, query }: { name: string; query: string }) {
  *
  * Combina três padrões consolidados:
  *
- * 1. Token input — as escolhidas viram chips removíveis dentro do próprio
- *    campo, então não há um segundo painel competindo com o catálogo.
+ * 1. Lista com nível — as escolhidas viram linhas com o seletor de nível e
+ *    um botão de remover, abaixo do campo de busca.
  * 2. Busca estrita — no máximo oito sugestões, sem rolagem interna, com a
  *    parte prevista do nome em destaque.
  * 3. Divulgação progressiva — em vez das 195 tecnologias, atalhos relevantes
@@ -123,45 +127,20 @@ export function SkillPicker({
   };
 
   return (
-    <div className="max-w-3xl">
-      <Label>Competências</Label>
-
-      {/* ── Campo de tokens ── */}
-      <div
-        onClick={() => inputRef.current?.focus()}
-        className="flex flex-wrap items-center gap-1.5 px-2.5 py-2 mt-1.5 cursor-text"
-        style={{ border: `1px solid ${NAVY}60`, minHeight: "48px", borderRadius: "8px" }}
-      >
-        {value.map((s) => (
-          <span
-            key={s.name}
-            className="inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1"
-            style={{
-              fontFamily: MONO,
-              fontSize: "11px",
-              background: isCustomSkill(s.name) ? `${RED}0F` : `${NAVY}0C`,
-              border: `1px solid ${isCustomSkill(s.name) ? `${RED}55` : `${NAVY}40`}`,
-              color: NAVY, borderRadius: "6px" }}
-          >
-            {s.name}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                remove(s.name);
-              }}
-              aria-label={`Remover ${s.name}`}
-              className="w-3.5 h-3.5 flex items-center justify-center transition-opacity hover:opacity-100 opacity-50"
-              style={{ color: NAVY }}
-            >
-              <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                <line x1="1" y1="1" x2="7" y2="7" stroke="currentColor" strokeWidth="1.4" />
-                <line x1="7" y1="1" x2="1" y2="7" stroke="currentColor" strokeWidth="1.4" />
-              </svg>
-            </button>
-          </span>
-        ))}
-
+    <div>
+      {/* ── Busca ── */}
+      <div className="relative">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-navy/55"
+        >
+          <circle cx="7" cy="7" r="4.5" stroke="currentColor" strokeWidth="1.3" />
+          <path d="M10.5 10.5 14 14" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
         <input
           ref={inputRef}
           value={query}
@@ -170,35 +149,35 @@ export function SkillPicker({
             setHighlight(0);
           }}
           onKeyDown={onKeyDown}
-          placeholder={value.length === 0 ? "Digite uma competência e pressione Enter…" : ""}
-          className="flex-1 min-w-[180px] px-1 py-1 text-sm bg-transparent outline-none"
-          style={{ fontFamily: SANS, color: NAVY }}
+          placeholder="Buscar competência (ex.: Python, React, Docker)"
+          aria-label="Buscar competência"
+          className="vt-input"
+          // .vt-input fica fora das camadas do Tailwind; o respiro da lupa vai inline.
+          style={{ paddingLeft: 40, height: 44 }}
         />
       </div>
 
       {/* ── Sugestões da busca: no máximo oito, sem rolagem ── */}
       {query && (results.length > 0 || canAddCustom) && (
-        <div style={{ border: `1px solid ${NAVY}60`, borderTop: "none", borderRadius: "0 0 8px 8px", overflow: "hidden" }}>
+        <div className="mt-2 flex flex-col rounded-xl border border-navy/10 bg-white p-1 shadow-[0_12px_32px_-12px_rgba(11,37,69,0.25)]">
           {results.map((s, i) => (
             <button
               key={s.name}
               type="button"
               onMouseEnter={() => setHighlight(i)}
               onClick={() => add(s.name)}
-              className="w-full flex items-center justify-between gap-3 px-3 py-2 text-left transition-colors"
-              style={{
-                background: i === highlight ? `${NAVY}0A` : "transparent",
-                borderTop: i > 0 ? `1px solid ${NAVY}0D` : "none",
-              }}
+              className={`flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left transition-colors ${
+                i === highlight ? "bg-navy/5" : ""
+              }`}
             >
-              <span className="text-[13px]" style={{ fontFamily: SANS, color: NAVY }}>
+              <span className="font-sans text-sm text-navy">
                 <Predicted name={s.name} query={query} />
               </span>
-              <span
-                className="text-[9px] tracking-[0.12em] uppercase flex-shrink-0"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-              >
-                {s.cat}
+              <span className="flex shrink-0 items-center gap-3">
+                <span className="hidden font-mono text-[10px] uppercase tracking-[0.08em] text-navy/55 sm:inline">
+                  {s.cat}
+                </span>
+                <PlusIcon />
               </span>
             </button>
           ))}
@@ -207,16 +186,10 @@ export function SkillPicker({
             <button
               type="button"
               onClick={() => add(canonical)}
-              className="w-full flex items-center justify-between gap-3 px-3 py-2 text-left"
-              style={{ background: `${RED}08`, borderTop: results.length ? `1px solid ${NAVY}0D` : "none" }}
+              className="flex w-full items-center justify-between gap-3 rounded-lg bg-red/5 px-3 py-2 text-left"
             >
-              <span className="text-[13px]" style={{ fontFamily: SANS, color: NAVY }}>
-                Adicionar “{canonical}”
-              </span>
-              <span
-                className="text-[9px] tracking-[0.12em] uppercase flex-shrink-0"
-                style={{ fontFamily: MONO, color: RED, opacity: 0.8 }}
-              >
+              <span className="font-sans text-sm text-navy">Adicionar “{canonical}”</span>
+              <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.08em] text-red">
                 fora do catálogo
               </span>
             </button>
@@ -227,30 +200,11 @@ export function SkillPicker({
       {/* ── Atalhos pelo curso ── */}
       {!query && shortcuts.length > 0 && (
         <div className="mt-5">
-          <p
-            className="text-[9px] tracking-[0.18em] uppercase mb-2.5"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.7, borderRadius: "6px" }}
-          >
-            {course ? `Comuns em ${course}` : "Mais declaradas"}
-          </p>
+          <Label>{course && SUGGESTED_BY_COURSE[course] ? `Comuns em ${course}` : "Mais declaradas"}</Label>
           <div className="flex flex-wrap gap-1.5">
             {shortcuts.map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => add(name)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] tracking-[0.1em] uppercase transition-all"
-                style={{ fontFamily: MONO, border: `1px solid ${NAVY}60`, color: NAVY, opacity: 0.7 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = NAVY;
-                  e.currentTarget.style.opacity = "1";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = `${NAVY}60`;
-                  e.currentTarget.style.opacity = "0.7";
-                }}
-              >
-                <span style={{ color: RED }}>+</span>
+              <button key={name} type="button" onClick={() => add(name)} className="vt-pill">
+                <span className="text-red">+</span>
                 {name}
               </button>
             ))}
@@ -258,48 +212,38 @@ export function SkillPicker({
         </div>
       )}
 
-      {/* ── Níveis ── */}
+      {/* ── Escolhidas, com nível ── */}
       {value.length > 0 && (
-        <div className="mt-9">
-          <div className="flex items-baseline justify-between mb-1.5">
-            <Label>Nível de proficiência</Label>
-            <span
-              className="text-[10px] tracking-[0.14em] uppercase"
-              style={{ fontFamily: MONO, color: NAVY, opacity: 0.7 }}
+        <ul className="mt-7 border-t border-navy/8">
+          {value.map((s) => (
+            <li
+              key={s.name}
+              className="flex flex-col gap-3 border-b border-navy/8 py-3.5 sm:flex-row sm:items-center sm:justify-between"
             >
-              {value.length} {value.length === 1 ? "competência" : "competências"}
-            </span>
-          </div>
-          <div style={{ border: `1px solid ${NAVY}40`, borderRadius: "8px", overflow: "hidden" }}>
-            {value.map((s, i) => (
-              <div
-                key={s.name}
-                className="flex items-center justify-between gap-4 px-4 py-2.5"
-                style={{ borderTop: i > 0 ? `1px solid ${NAVY}10` : "none" }}
-              >
-                <span
-                  className="text-[12px] truncate"
-                  style={{ fontFamily: MONO, color: NAVY }}
-                >
-                  {s.name}
-                </span>
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <span
-                    className="hidden sm:inline text-[9px] tracking-[0.1em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-                  >
-                    {LEVELS[s.level - 1]}
+              <span className="flex min-w-0 items-center gap-2">
+                <span className="truncate font-sans text-[15px] text-navy">{s.name}</span>
+                {isCustomSkill(s.name) && (
+                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.08em] text-red">
+                    fora do catálogo
                   </span>
-                  <LevelPicker
-                    name={s.name}
-                    value={s.level}
-                    onChange={(level) => setLevel(s.name, level)}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+                )}
+              </span>
+              <span className="flex items-center gap-2">
+                <LevelPicker name={s.name} value={s.level} onChange={(level) => setLevel(s.name, level)} />
+                <button
+                  type="button"
+                  onClick={() => remove(s.name)}
+                  aria-label={`Remover ${s.name}`}
+                  className="grid size-7 shrink-0 place-items-center rounded-md text-navy/55 transition-colors hover:bg-navy/5 hover:text-navy"
+                >
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                    <path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </span>
+            </li>
+          ))}
+        </ul>
       )}
 
       {/* ── Catálogo completo, sob demanda ── */}
@@ -307,39 +251,22 @@ export function SkillPicker({
         <button
           type="button"
           onClick={() => setShowCatalog(!showCatalog)}
-          className="text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-50"
-          style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
+          className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65 underline underline-offset-4 transition-colors hover:text-navy"
         >
           {showCatalog ? "Ocultar catálogo" : `Ver catálogo completo (${ALL_SKILLS.length})`}
         </button>
 
         {showCatalog && (
-          <div className="flex flex-col gap-4 mt-5">
+          <div className="mt-5 flex flex-col gap-4">
             {SKILL_CATEGORIES.map((cat) => {
               const items = ALL_SKILLS.filter((s) => s.cat === cat && !has(s.name));
               if (items.length === 0) return null;
               return (
                 <div key={cat}>
-                  <span
-                    className="text-[9px] tracking-[0.18em] uppercase block mb-2"
-                    style={{ fontFamily: MONO, color: RED, opacity: 0.7 }}
-                  >
-                    {cat}
-                  </span>
+                  <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.08em] text-red">{cat}</span>
                   <div className="flex flex-wrap gap-1.5">
                     {items.map((s) => (
-                      <button
-                        key={s.name}
-                        type="button"
-                        onClick={() => add(s.name)}
-                        className="px-2.5 py-1 text-[10px] tracking-[0.1em] uppercase transition-all"
-                        style={{
-                          fontFamily: MONO,
-                          border: `1px solid ${NAVY}60`,
-                          color: NAVY, opacity: 0.6, borderRadius: "6px" }}
-                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
-                      >
+                      <button key={s.name} type="button" onClick={() => add(s.name)} className="vt-pill">
                         {s.name}
                       </button>
                     ))}
@@ -351,9 +278,9 @@ export function SkillPicker({
         )}
       </div>
 
-      <p className="text-[10px] mt-6" style={{ fontFamily: SANS, color: NAVY, opacity: 0.7 }}>
-        Não achou? Digite o nome e pressione Enter — a competência entra marcada
-        como fora do catálogo. Backspace remove a última.
+      <p className="mt-5 font-sans text-xs text-navy/55">
+        Não achou? Digite o nome e pressione Enter: a competência entra marcada como fora do catálogo.
+        Backspace com a busca vazia remove a última.
       </p>
     </div>
   );

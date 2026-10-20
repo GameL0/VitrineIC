@@ -1,52 +1,90 @@
 import { useState } from "react";
 import { Opportunities } from "./Opportunities";
-import { Projects } from "./Projects";
+import { Interests } from "./Interests";
+import { Projects, INITIAL_PROJECTS, type MyProject } from "./Projects";
 import { Profile } from "./Profile";
 import { NavBar } from "./NavBar";
-import { Notifications } from "./Notifications";
+import { Inbox } from "./Inbox";
 import { Onboarding } from "./Onboarding";
-import { Input } from "./ui";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { ArrowIcon } from "@/components/app/Icons";
+import { PAGE } from "@/components/public/layout";
 import { notifications as initialNotifications } from "@/data/notifications";
+import { useSession } from "@/lib/auth";
+import { isProfileVisible } from "@/lib/profile";
+import { useVitrine } from "@/lib/store";
 
 export default function StudentArea({ onBack }: { onBack: () => void }) {
-  const [onboarded, setOnboarded] = useState(false);
-  const [profile, setProfile] = useState<any>(null);
+  const session = useSession();
+  const student = session?.student;
+  const [resumeOnboarding, setResumeOnboarding] = useState(false);
   const [view, setView] = useState("opportunities");
+  const [projects, setProjects] = useState<MyProject[]>(INITIAL_PROJECTS);
+  const { interests } = useVitrine();
 
-  const unreadCount = initialNotifications.filter((n) => n.unread).length;
+  if (!student) return null;
 
-  if (!onboarded) {
+  // O onboarding abre logo depois do cadastro e some quando o estudante conclui
+  // ou pula; o aviso do painel permite voltar a ele.
+  if (resumeOnboarding || (!student.onboardedAt && !student.onboardingSkipped)) {
     return (
       <Onboarding
-        onComplete={(data) => {
-          setProfile(data);
-          setOnboarded(true);
+        student={student}
+        onDone={() => {
+          setResumeOnboarding(false);
+          setView("opportunities");
+          window.scrollTo(0, 0);
         }}
       />
     );
   }
 
+  const unreadCount = initialNotifications.filter((n) => n.unread).length;
+  const awaitingMe = interests.filter(
+    (i) => i.studentId === student.id && i.status === "aguardando_estudante",
+  ).length;
+
   return (
-    <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
+    <div className="min-h-screen bg-offwhite">
       <NavBar
         view={view}
         setView={setView}
         onBack={onBack}
         unreadCount={unreadCount}
+        awaitingMe={awaitingMe}
+        name={session.account.name}
       />
 
+      {!isProfileVisible(student) && (
+        <div className={`${PAGE} pt-6`}>
+          <div className="flex flex-col gap-4 rounded-2xl border border-ochre/30 bg-ochre/8 p-5 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="font-display text-lg font-medium tracking-[-0.01em] text-navy">
+                Complete seu perfil para aparecer na vitrine
+              </p>
+              <p className="mt-1 font-sans text-sm text-navy/65">
+                Sem nenhuma competência, você não aparece no diretório, não recebe convites e não pode se candidatar.
+              </p>
+            </div>
+            <button onClick={() => setResumeOnboarding(true)} className="vt-btn vt-btn-primary shrink-0 self-start md:self-auto">
+              Continuar onboarding <ArrowIcon />
+            </button>
+          </div>
+        </div>
+      )}
+
       {view === "opportunities" && (
-        <Opportunities profile={profile} onOpenNotifications={() => setView("notifications")} />
+        <Opportunities student={student} onGoToInterests={() => setView("interests")} />
       )}
 
-      {view === "projects" && <Projects />}
+      {view === "interests" && <Interests studentId={student.id} />}
 
-      {view === "notifications" && <Notifications />}
-
-      {view === "profile" && (
-        <Profile profile={profile} onSave={(d) => setProfile(d)} />
+      {view === "projects" && (
+        <Projects projects={projects} setProjects={setProjects} studentId={student.id} />
       )}
+
+      {view === "inbox" && <Inbox />}
+
+      {view === "profile" && <Profile student={student} email={session.account.email} projects={projects} />}
     </div>
   );
 }

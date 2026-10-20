@@ -1,8 +1,16 @@
 import { useState } from "react";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
-import { Input, Label, Select } from "./ui";
+import { Input, Select } from "./ui";
+import { ArrowIcon, ChevronIcon, PlusIcon } from "@/components/app/Icons";
+import { InProjectBadge } from "@/components/app/InProjectBadge";
+import { Modal } from "@/components/app/Modal";
+import { StatusPill } from "@/components/app/StatusPill";
+import { PageHead } from "@/components/public/PageHead";
+import { PAGE } from "@/components/public/layout";
+import { setInProject, useVitrine } from "@/lib/store";
+import { required, useValidation } from "@/lib/validate";
+import { MOSS, OCHRE, SLATE } from "@/styles/tokens";
 
-interface MyProject {
+export interface MyProject {
   id: string;
   title: string;
   description: string;
@@ -13,189 +21,218 @@ interface MyProject {
 
 const PHASES = ["Idealização", "Codificação", "Revisão", "Publicado"];
 
-export function Projects() {
-  const [projects, setProjects] = useState<MyProject[]>([
-    {
-      id: "p1",
-      title: "Classificador de Imagens Médicas",
-      description: "Modelo de redes neurais convolucionais para detecção precoce de anomalias em raios-x do tórax.",
-      phase: "Publicado",
-      link: "https://github.com/exemplo/med-ai",
-    }
-  ]);
+const PHASE_COLOR: Record<string, string> = {
+  Idealização: SLATE,
+  Codificação: OCHRE,
+  Revisão: OCHRE,
+  Publicado: MOSS,
+};
+
+export const INITIAL_PROJECTS: MyProject[] = [
+  {
+    id: "p1",
+    title: "Classificador de Imagens Médicas",
+    description: "Modelo de redes neurais convolucionais para detecção precoce de anomalias em raios-x do tórax.",
+    phase: "Publicado",
+    link: "https://github.com/exemplo/med-ai",
+    tools: "Python, PyTorch",
+  },
+];
+
+/**
+ * Selo "em projeto": o estudante avisa que já está alocado. É o único dado
+ * que o site mantém depois que um contato é liberado.
+ */
+function InProjectToggle({ studentId }: { studentId: string }) {
+  const { inProject } = useVitrine();
+  const on = !!inProject[studentId];
+
+  return (
+    <section className="vt-card mb-6 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between md:px-6">
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-3">
+          <p className="font-sans text-[15px] text-navy">Estou em projeto</p>
+          {on && <InProjectBadge />}
+        </div>
+        <p className="font-sans text-[13px] text-navy/55">
+          O selo aparece no seu perfil público e para quem consulta a vitrine.
+        </p>
+      </div>
+      <button
+        role="switch"
+        aria-checked={on}
+        onClick={() => setInProject(studentId, !on)}
+        className={`vt-btn shrink-0 self-start sm:self-auto ${on ? "vt-btn-secondary" : "vt-btn-primary"}`}
+      >
+        {on ? "Remover selo" : "Marcar em projeto"}
+      </button>
+    </section>
+  );
+}
+
+export function Projects({
+  projects,
+  setProjects,
+  studentId,
+}: {
+  projects: MyProject[];
+  setProjects: (p: MyProject[]) => void;
+  studentId: string;
+}) {
   const [isAdding, setIsAdding] = useState(false);
   const [form, setForm] = useState<Partial<MyProject>>({});
+  const [opened, setOpened] = useState<MyProject | null>(null);
 
-  const saveProject = () => {
-    if (!form.title || !form.description || !form.phase) return;
-    setProjects([
-      { ...form, id: `p-${Date.now()}` } as MyProject,
-      ...projects
-    ]);
+  const { validate, field, reset } = useValidation<"title" | "phase" | "description">(() => ({
+    title: required(form.title ?? "", "Dê um nome ao projeto."),
+    phase: required(form.phase ?? "", "Escolha a etapa."),
+    description: required(form.description ?? "", "Descreva o projeto."),
+  }));
+
+  const close = () => {
     setIsAdding(false);
     setForm({});
+    reset();
+  };
+
+  const saveProject = () => {
+    if (!validate()) return;
+    setProjects([{ ...form, id: `p-${Date.now()}` } as MyProject, ...projects]);
+    close();
   };
 
   return (
-    <div className="px-8 md:px-12 py-10 max-w-screen-xl mx-auto">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <p
-            className="text-[9px] tracking-[0.22em] uppercase mb-2 flex items-center gap-2"
-            style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}
-          >
-            <span className="inline-block w-4 rounded-full" style={{ height: "2px", background: RED }} />
-            Portfólio Pessoal
-          </p>
-          <h1
-            className="text-4xl"
-            style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-          >
-            Meus Projetos
-          </h1>
-        </div>
-        {!isAdding && (
-          <button
-            onClick={() => setIsAdding(true)}
-            className="flex items-center gap-3 px-6 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all"
-            style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "8px" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M6 2v8M2 6h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-            Adicionar Projeto
+    <main className={`${PAGE} pb-20`}>
+      <PageHead
+        eyebrow="Portfólio"
+        title="Meus projetos."
+        aside={
+          <button onClick={() => setIsAdding(true)} className="vt-btn vt-btn-primary self-start md:self-auto">
+            <PlusIcon /> Novo projeto <ArrowIcon />
           </button>
-        )}
-      </div>
+        }
+      />
+
+      <InProjectToggle studentId={studentId} />
+
+      {projects.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-navy/20 p-12 text-center font-sans text-sm text-navy/55">
+          Você ainda não publicou nenhum projeto.
+        </div>
+      ) : (
+        <ul className="vt-card divide-y divide-navy/8 overflow-hidden">
+          {projects.map((p, i) => (
+            <li key={p.id}>
+              <button
+                onClick={() => setOpened(p)}
+                className="flex w-full items-center gap-4 rounded-none! px-5 py-5 text-left transition-colors hover:bg-navy/[0.03] md:gap-6 md:px-6"
+              >
+                <span className="hidden w-14 shrink-0 font-mono text-[10px] uppercase tracking-[0.08em] text-navy/45 sm:block">
+                  P{String(projects.length - i).padStart(3, "0")}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="font-sans text-[15px] text-navy">{p.title}</p>
+                  <p className="truncate font-sans text-[13px] text-navy/55">{p.tools || p.description}</p>
+                </div>
+                <StatusPill color={PHASE_COLOR[p.phase] ?? SLATE}>{p.phase}</StatusPill>
+                <span className="grid size-8 shrink-0 place-items-center text-navy/40">
+                  <ChevronIcon />
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {opened && (
+        <Modal eyebrow={opened.phase} title={opened.title} onClose={() => setOpened(null)}>
+          <div className="flex flex-col gap-6">
+            <p className="font-sans text-[15px] leading-[1.6] text-navy/75">{opened.description}</p>
+            {opened.tools && (
+              <div className="flex flex-wrap gap-1.5">
+                {opened.tools
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean)
+                  .map((t) => (
+                    <span key={t} className="vt-pill">
+                      {t}
+                    </span>
+                  ))}
+              </div>
+            )}
+          </div>
+          <div className="mt-8 flex items-center justify-end gap-3">
+            <button
+              onClick={() => setOpened(null)}
+              className="rounded-[10px] px-3 py-2 font-sans text-sm text-navy/65 transition-colors hover:text-navy"
+            >
+              Fechar
+            </button>
+            {opened.link && (
+              <a href={opened.link} target="_blank" rel="noreferrer" className="vt-btn vt-btn-primary">
+                Abrir link <ArrowIcon />
+              </a>
+            )}
+          </div>
+        </Modal>
+      )}
 
       {isAdding && (
-        <div
-          className="p-8 mb-10 transition-all"
-          style={{ background: OFFWHITE, border: `1px solid ${NAVY}30`, borderRadius: "16px", boxShadow: "0 4px 24px rgba(0,0,0,0.04)" }}
-        >
-          <h3 className="text-xl mb-6" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-            Novo Projeto ou Pesquisa
-          </h3>
+        <Modal eyebrow="Cadastro" title="Novo projeto." onClose={close}>
           <div className="flex flex-col gap-5">
             <Input
-              label="Título do projeto"
-              placeholder="Ex: App de Gestão de Tempo"
+              label="Título"
+              placeholder="Nome do projeto"
               value={form.title || ""}
               onChange={(v) => setForm({ ...form, title: v })}
+              {...field("title")}
             />
-            <Input
-              label="Descrição curta"
-              placeholder="Descreva o objetivo e as tecnologias principais..."
-              textarea
-              rows={3}
-              value={form.description || ""}
-              onChange={(v) => setForm({ ...form, description: v })}
-            />
-            <div className="grid md:grid-cols-2 gap-5">
+            <div className="grid gap-5 sm:grid-cols-2">
               <Select
-                label="Fase atual"
+                {...field("phase")}
+                label="Etapa"
                 options={PHASES}
                 value={form.phase || ""}
                 onChange={(v) => setForm({ ...form, phase: v })}
               />
               <Input
-                label="Link (Opcional)"
+                label="Link (opcional)"
                 placeholder="https://github.com/..."
                 value={form.link || ""}
                 onChange={(v) => setForm({ ...form, link: v })}
                 mono
               />
-              <div className="md:col-span-2">
-                <Input
-                  label="Ferramentas utilizadas (separadas por vírgula)"
-                  placeholder="Ex: React, Python, TensorFlow"
-                  value={form.tools || ""}
-                  onChange={(v) => setForm({ ...form, tools: v })}
-                />
-              </div>
             </div>
+            <Input
+              label="Descrição"
+              placeholder="O que o projeto resolve e como"
+              textarea
+              rows={4}
+              value={form.description || ""}
+              onChange={(v) => setForm({ ...form, description: v })}
+              {...field("description")}
+            />
+            <Input
+              label="Tecnologias"
+              placeholder="React, Python..."
+              value={form.tools || ""}
+              onChange={(v) => setForm({ ...form, tools: v })}
+            />
           </div>
-          <div className="flex items-center gap-4 mt-8 pt-6" style={{ borderTop: `1px solid ${NAVY}15` }}>
-            <button
-              onClick={saveProject}
-              className="px-8 py-3 text-[10px] tracking-[0.16em] uppercase font-semibold transition-all"
-              style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif", borderRadius: "8px" }}
-            >
-              Publicar
-            </button>
-            <button
-              onClick={() => { setIsAdding(false); setForm({}); }}
-              className="px-6 py-3 text-[10px] tracking-[0.16em] uppercase transition-opacity hover:opacity-100 opacity-60"
-              style={{ color: NAVY, fontFamily: "Geist Mono, ui-monospace, monospace" }}
-            >
+          <div className="mt-8 flex items-center justify-end gap-3">
+            <button onClick={close} className="rounded-[10px] px-3 py-2 font-sans text-sm text-navy/65 transition-colors hover:text-navy">
               Cancelar
             </button>
-          </div>
-        </div>
-      )}
-
-      {projects.length === 0 && !isAdding ? (
-        <div
-          className="flex flex-col items-center justify-center p-12 text-center"
-          style={{ border: `1px dashed ${NAVY}30`, borderRadius: "16px" }}
-        >
-          <p className="text-[14px] mb-4" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.5 }}>
-            Você ainda não publicou nenhum projeto.
-          </p>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-6">
-          {projects.map((p) => (
-            <div
-              key={p.id}
-              className="p-6 flex flex-col md:flex-row gap-6 md:items-center justify-between"
-              style={{ background: "transparent", border: `1px solid ${NAVY}20`, borderRadius: "16px" }}
+            <button
+              onClick={saveProject}
+              className="vt-btn vt-btn-primary"
             >
-              <div className="flex-1">
-                <div className="flex items-center gap-4 mb-2">
-                  <h4 className="text-xl font-medium" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-                    {p.title}
-                  </h4>
-                  <span
-                    className="px-2.5 py-1 text-[9px] tracking-[0.1em] uppercase"
-                    style={{
-                      fontFamily: "Geist Mono, ui-monospace, monospace",
-                      color: NAVY,
-                      background: p.phase === "Publicado" ? `${NAVY}10` : "transparent",
-                      border: `1px solid ${NAVY}30`,
-                      borderRadius: "6px"
-                    }}
-                  >
-                    {p.phase}
-                  </span>
-                </div>
-                <p
-                  className="text-[13px] leading-relaxed max-w-2xl"
-                  style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.65 }}
-                >
-                  {p.description}
-                </p>
-              </div>
-              {p.link && (
-                <a
-                  href={p.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 text-[10px] tracking-[0.12em] uppercase font-medium transition-all"
-                  style={{ border: `1px solid ${NAVY}30`, color: NAVY, borderRadius: "8px", textDecoration: "none" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = `${NAVY}08`; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
-                >
-                  Acessar
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                    <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              )}
-            </div>
-          ))}
-        </div>
+              Enviar para curadoria <ArrowIcon />
+            </button>
+          </div>
+        </Modal>
       )}
-    </div>
+    </main>
   );
 }

@@ -1,127 +1,101 @@
 import { Label, Mono, SkillTag } from "./ui";
-import { STUDENTS } from "@/data/students";
 import { scoreStudent } from "@/lib/match";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
-import type { Demand } from "@/types";
+import { Avatar } from "@/components/app/Avatar";
+import { ArrowIcon, CheckIcon } from "@/components/app/Icons";
+import { Eyebrow } from "@/components/public/Eyebrow";
+import { PAGE } from "@/components/public/layout";
+import { useVitrine } from "@/lib/store";
+import type { Demand, Interest, Student } from "@/types";
 
 export function MatchConfirmed({
   demand,
   student,
+  suggestion,
   onBack,
 }: {
   demand: Demand;
-  student: typeof STUDENTS[0];
+  student: Student;
+  suggestion: Interest;
   onBack: () => void;
 }) {
+  const { interests } = useVitrine();
   const score = scoreStudent(student, demand);
-  const protocol = `MCH-${Date.now().toString().slice(-6)}`;
+  // Lê da base para refletir o andamento se alguém responder durante a sessão.
+  const current = interests.find((i) => i.id === suggestion.id) ?? suggestion;
+  const passed = (s: Interest["status"][]) => s.includes(current.status);
 
   return (
-    <div className="px-8 md:px-16 py-16 max-w-screen-lg mx-auto">
-      <div className="mb-12">
-        <p className="text-[9px] tracking-[0.25em] uppercase mb-5 flex items-center gap-3"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: RED, opacity: 0.85 }}>
-          <span className="inline-block w-6" style={{ height: "1px", background: RED }} />
-          Recomendação Registrada
-        </p>
-        <h1 className="text-7xl md:text-8xl leading-none tracking-tight mb-6"
-          style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-          Recomendação<br />
-          <em className="not-italic" style={{ color: RED }}>enviada.</em>
-        </h1>
-        <div className="inline-flex items-center gap-4 px-5 py-3" style={{ border: `1px solid ${NAVY}22`, background: `${NAVY}04` }}>
-          <span className="text-[9px] tracking-[0.18em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-            Protocolo
-          </span>
-          <span className="text-xl font-bold" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}>
-            {protocol}
-          </span>
-        </div>
+    <main className={`${PAGE} flex flex-col items-center py-14 md:py-20`}>
+      <span className="grid size-14 place-items-center rounded-2xl bg-moss/10 text-moss">
+        <CheckIcon />
+      </span>
+      <div className="mt-8">
+        <Eyebrow>Sugestão · {current.id}</Eyebrow>
       </div>
+      <h1 className="mt-5 text-center font-display text-[40px] font-medium leading-none tracking-[-0.035em] text-navy md:text-page">
+        Sugestão <span className="text-red">enviada</span>.
+      </h1>
 
-      {/* Matched pair */}
-      <div className="grid md:grid-cols-2 gap-0 mb-10" style={{ border: `1px solid ${NAVY}18` }}>
-        <div className="px-8 py-7" style={{ borderRight: `1px solid ${NAVY}15` }}>
+      <section className="vt-card mt-10 grid w-full max-w-[880px] overflow-hidden md:grid-cols-2">
+        <div className="border-b border-navy/8 p-6 md:border-r md:border-b-0 md:p-8">
           <Label>Demanda</Label>
-          <h3 className="text-xl mb-1" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-            {demand.title}
-          </h3>
-          <Mono dim>{demand.id} · {demand.company}</Mono>
-          <div className="flex flex-wrap gap-1 mt-4">
-            {demand.skills.map((s) => <SkillTag key={s} small>{s}</SkillTag>)}
+          <h3 className="font-display text-xl font-medium tracking-[-0.01em] text-navy">{demand.title}</h3>
+          <Mono dim>
+            {demand.id} · {demand.company}
+          </Mono>
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {demand.skills.map((s) => <SkillTag key={s}>{s}</SkillTag>)}
           </div>
         </div>
-        <div className="px-8 py-7">
-          <Label>Estudante alocado</Label>
-          <div className="flex items-center gap-4 mb-3">
-            <div className="w-12 h-12 flex items-center justify-center" style={{ background: NAVY }}>
-              <span className="text-sm" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: OFFWHITE }}>
-                {student.initials}
-              </span>
-            </div>
-            <div>
-              <h3 className="text-xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}>
-                {student.name}
-              </h3>
-              <Mono dim>{student.course} · {student.semester}</Mono>
-            </div>
-          </div>
+        <div className="p-6 md:p-8">
+          <Label>Estudante sugerido</Label>
           <div className="flex items-center gap-3">
-            <span className="text-2xl" style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: RED }}>
-              {score}%
-            </span>
-            <span className="text-[9px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-              compatibilidade técnica
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Next steps checklist */}
-      <div className="mb-10">
-        <Label>Próximas ações automáticas</Label>
-        {[
-          { done: true,  text: "E-mail enviado ao solicitante com dados do estudante" },
-          { done: true,  text: "E-mail enviado ao estudante com dados de contato do solicitante" },
-          { done: false, text: "Aguardando aceite do estudante (prazo: 48h)" },
-          { done: false, text: "Formalização do projeto após aceite" },
-        ].map((item, i) => (
-          <div key={i} className="flex items-start gap-3 py-3" style={{ borderBottom: `1px solid ${NAVY}08` }}>
-            <div
-              className="w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5"
-              style={{ border: `1px solid ${item.done ? NAVY : `${NAVY}25`}`, background: item.done ? NAVY : "transparent" }}
-            >
-              {item.done && (
-                <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                  <path d="M1.5 4l2 2 3-3.5" stroke={OFFWHITE} strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              )}
+            <Avatar name={student.name} size="lg" />
+            <div>
+              <h3 className="font-display text-xl font-medium tracking-[-0.01em] text-navy">{student.name}</h3>
+              <Mono dim>
+                {student.course} · {student.semester}
+              </Mono>
             </div>
-            <span className="text-[12px]" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: item.done ? 0.6 : 0.35, fontWeight: 300 }}>
-              {item.text}
-            </span>
           </div>
-        ))}
-      </div>
+          <p className="mt-5 flex items-baseline gap-2">
+            <span className="font-display text-[28px] font-medium text-navy">{score}%</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-navy/55">compatibilidade técnica</span>
+          </p>
+        </div>
+      </section>
 
-      <div className="flex gap-3 flex-wrap">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-3 px-8 py-3.5 text-[10px] tracking-[0.2em] uppercase font-semibold transition-opacity hover:opacity-85"
-          style={{ background: NAVY, color: OFFWHITE, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-        >
-          Voltar à Fila
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6h8M6 3l3 3-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-          </svg>
-        </button>
-        <button
-          className="px-8 py-3.5 text-[10px] tracking-[0.2em] uppercase font-medium transition-opacity hover:opacity-70"
-          style={{ border: `1px solid ${NAVY}35`, color: NAVY, fontFamily: "Geist, Inter, system-ui, sans-serif" }}
-        >
-          Exportar relatório
+      <section className="vt-card mt-6 w-full max-w-[880px] p-6 md:p-8">
+        <Eyebrow>Próximos passos</Eyebrow>
+        <ul className="mt-4 divide-y divide-navy/8">
+          {[
+            { done: true, text: "Sugestão enviada ao estudante com a sua justificativa" },
+            {
+              done: passed(["aguardando_solicitante", "contato_liberado", "recusado_solicitante"]),
+              text: "Estudante aceita a sugestão",
+            },
+            { done: passed(["contato_liberado"]), text: "Solicitante aceita o estudante" },
+            { done: passed(["contato_liberado"]), text: "Contato liberado para os dois; a curadoria só vê que foi liberado" },
+          ].map((item) => (
+            <li key={item.text} className="flex items-center gap-3 py-3">
+              <span
+                className={`grid size-5 shrink-0 place-items-center rounded-full border ${
+                  item.done ? "border-moss bg-moss text-white" : "border-navy/20"
+                }`}
+              >
+                {item.done && <CheckIcon />}
+              </span>
+              <span className={`font-sans text-sm ${item.done ? "text-navy/75" : "text-navy/45"}`}>{item.text}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <button onClick={onBack} className="vt-btn vt-btn-primary">
+          Voltar à fila <ArrowIcon />
         </button>
       </div>
-    </div>
+    </main>
   );
 }

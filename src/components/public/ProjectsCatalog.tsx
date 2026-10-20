@@ -1,168 +1,60 @@
 import { useState } from "react";
-import { ALL_PROJECTS } from "@/data/students";
-import { STATUS_CONFIG } from "@/data/projects";
-import { NAVY, RED } from "@/styles/tokens";
+import { allProjects, useVitrine } from "@/lib/store";
+import { isProfileVisible } from "@/lib/profile";
+import { INSTITUTION } from "@/data/institution";
+import { PageHead } from "./PageHead";
+import { ProjectCard } from "./ProjectCard";
+import { PAGE } from "./layout";
 
-const MONO = "Geist Mono, ui-monospace, monospace";
-const SANS = "Geist, Inter, system-ui, sans-serif";
-const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
+const ALL = "Todas";
 
-const AREAS = ["Todas", ...Array.from(new Set(ALL_PROJECTS.map((p) => p.area)))];
+/** Dois dígitos, como no contador do Figma ("06 de 12 projetos"). */
+const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
  * Catálogo público de projetos — a vitrine que o visitante vê sem login.
  *
- * Monta-se a partir de `ALL_PROJECTS`, derivado de `@/data/students`, para não
- * criar outra base de projetos.
+ * Monta-se a partir de `allProjects`, derivado dos estudantes do store, para
+ * não criar outra base de projetos. Estudante sem perfil visível fica de fora.
  */
 export function ProjectsCatalog({ onOpenProject }: { onOpenProject: (id: string) => void }) {
-  const [area, setArea] = useState("Todas");
-  const shown = area === "Todas" ? ALL_PROJECTS : ALL_PROJECTS.filter((p) => p.area === area);
+  const [area, setArea] = useState(ALL);
+  const { students } = useVitrine();
+  const projects = allProjects(students.filter(isProfileVisible));
+  const areas = [ALL, ...Array.from(new Set(projects.map((p) => p.area)))];
+  const shown = area === ALL ? projects : projects.filter((p) => p.area === area);
 
   return (
-    <div className="px-8 md:px-16 py-14 max-w-screen-xl mx-auto">
-      <div className="mb-10">
-        <p
-          className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-        >
-          <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
-          Vitrine pública
-        </p>
-        <h1
-          className="text-5xl md:text-6xl leading-none mb-5"
-          style={{ fontFamily: SERIF, color: NAVY, letterSpacing: "-0.01em" }}
-        >
-          Projetos do <em className="not-italic" style={{ color: RED }}>IC</em>.
-        </h1>
-        <p
-          className="text-base leading-[1.7] max-w-xl"
-          style={{ fontFamily: SANS, color: NAVY, opacity: 0.65, fontWeight: 300 }}
-        >
-          O que estudantes do Instituto de Computação estão construindo. Explore
-          por área, conheça quem está por trás e proponha uma parceria.
-        </p>
-      </div>
+    <main className={`${PAGE} pb-20 md:pb-28`}>
+      <PageHead
+        eyebrow="Catálogo"
+        title={`Projetos da ${INSTITUTION.universityShort}.`}
+        lead="Trabalhos reais de estudantes, revisados pela curadoria antes da publicação."
+      />
 
-      <div className="flex flex-wrap items-center gap-2 mb-1">
-        {AREAS.map((a) => (
-          <button
-            key={a}
-            onClick={() => setArea(a)}
-            className="px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase transition-all"
-            style={{
-              fontFamily: MONO,
-              border: `1px solid ${area === a ? NAVY : `${NAVY}30`}`,
-              background: area === a ? NAVY : "transparent",
-              color: area === a ? "#f3f1ec" : NAVY,
-              opacity: area === a ? 1 : 0.6,
-            }}
-          >
-            {a}
-          </button>
-        ))}
-        <span
-          className="ml-auto text-[10px] tracking-[0.16em] uppercase"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-        >
-          {shown.length} {shown.length === 1 ? "projeto" : "projetos"}
-        </span>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
-        {shown.map((project, i) => {
-          const status = STATUS_CONFIG[project.status];
-          return (
+      <div className="flex flex-col gap-4 border-b border-navy/13 pb-5 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-wrap gap-2">
+          {areas.map((a) => (
             <button
-              key={project.id}
-              onClick={() => onOpenProject(project.id)}
-              className="group text-left p-6 transition-all"
-              style={{
-                border: `1px solid ${NAVY}14`,
-                borderRadius: "16px",
-                background: "#ffffff",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#ffffff";
-                e.currentTarget.style.borderColor = `${NAVY}33`;
-                e.currentTarget.style.boxShadow = `0 18px 40px -20px ${NAVY}55`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#ffffff";
-                e.currentTarget.style.borderColor = `${NAVY}14`;
-                e.currentTarget.style.boxShadow = "";
-              }}
+              key={a}
+              onClick={() => setArea(a)}
+              aria-pressed={area === a}
+              className={`vt-pill ${area === a ? "vt-pill-selected" : ""}`}
             >
-              <div className="flex items-start justify-between mb-4">
-                <span
-                  className="text-[9px] tracking-[0.16em] uppercase px-2 py-1"
-                  style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}25`, opacity: 0.6 }}
-                >
-                  {project.area}
-                </span>
-                <span
-                  className="text-[9px] tracking-[0.14em] uppercase"
-                  style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-                >
-                  {project.year}
-                </span>
-              </div>
-
-              <h2
-                className="text-base font-semibold mb-3 leading-snug"
-                style={{ fontFamily: SANS, color: NAVY }}
-              >
-                {project.title}
-              </h2>
-
-              <p
-                className="text-[12px] leading-relaxed mb-4"
-                style={{ fontFamily: SANS, color: NAVY, opacity: 0.55 }}
-              >
-                {project.description.length > 110
-                  ? `${project.description.slice(0, 110)}…`
-                  : project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 mb-4">
-                {project.stack.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[9px] tracking-[0.12em] uppercase px-2 py-1"
-                    style={{ fontFamily: MONO, color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.55 }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              <div
-                className="flex items-center justify-between pt-3"
-                style={{ borderTop: `1px solid ${NAVY}10` }}
-              >
-                <span
-                  className="text-[10px]"
-                  style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
-                >
-                  {project.student.name}
-                </span>
-                {status && (
-                  <span
-                    className="text-[9px] tracking-[0.14em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-                  >
-                    {status.label}
-                  </span>
-                )}
-              </div>
+              {a}
             </button>
-          );
-        })}
-        <div
-          className="col-span-1 md:col-span-2 lg:col-span-3"
-          style={{ borderTop: `1px solid ${NAVY}18` }}
-        />
+          ))}
+        </div>
+        <p className="shrink-0 font-mono text-[10px] uppercase tracking-[0.08em] text-navy/65">
+          {pad(shown.length)} de {pad(projects.length)} projetos
+        </p>
       </div>
-    </div>
+
+      <div className="grid gap-5 pt-8 md:grid-cols-2 lg:grid-cols-3">
+        {shown.map((project) => (
+          <ProjectCard key={project.id} project={project} onOpen={() => onOpenProject(project.id)} />
+        ))}
+      </div>
+    </main>
   );
 }

@@ -1,31 +1,34 @@
 import { Impact } from "./Impact";
 import { ProjectDetail } from "./ProjectDetail";
 import { ProjectsCatalog } from "./ProjectsCatalog";
+import { PublicFooter } from "./PublicFooter";
 import { PublicNav } from "./PublicNav";
 import { PublicProfile } from "./PublicProfile";
 import { StudentsDirectory } from "./StudentsDirectory";
 import { navSection, type PublicRoute } from "./routes";
-import { OFFWHITE } from "@/styles/tokens";
 
-/** Casca das páginas públicas: nav fixa mais a tela da rota atual. */
+/** Casca das páginas públicas: nav fixa, a tela da rota atual e o rodapé. */
 export default function PublicArea({
   route,
   onNavigate,
   onHome,
   onSignIn,
+  onAdmin,
 }: {
   route: PublicRoute;
   onNavigate: (r: PublicRoute) => void;
   onHome: () => void;
   onSignIn: () => void;
+  onAdmin: () => void;
 }) {
   return (
-    <div style={{ background: OFFWHITE, minHeight: "100vh" }}>
+    <div className="min-h-screen bg-offwhite">
       <PublicNav
         view={navSection(route)}
         onNavigate={(view) => onNavigate({ view })}
         onHome={onHome}
         onSignIn={onSignIn}
+        onAdmin={onAdmin}
       />
 
       {route.view === "projects" && (
@@ -54,8 +57,10 @@ export default function PublicArea({
       )}
 
       {route.view === "impact" && (
-        <Impact onOpenProjects={() => onNavigate({ view: "projects" })} />
+        <Impact />
       )}
+
+      <PublicFooter onNavigate={(view) => onNavigate({ view })} onSignIn={onSignIn} onAdmin={onAdmin} />
     </div>
   );
 }

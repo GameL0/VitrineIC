@@ -7,17 +7,17 @@ export const DEMAND_STATUS: Record<DemandStatus, { label: string; color: string;
   em_analise: { label: "Em Análise",   color: OCHRE,      shape: "circle"  },
   aprovada:   { label: "Aprovada",     color: MOSS,       shape: "square"  },
   rejeitada:  { label: "Rejeitada",    color: TERRACOTTA, shape: "diamond" },
-  matched:    { label: "Matched",      color: NAVY,       shape: "square"  },
+  contato_liberado: { label: "Contato liberado", color: NAVY, shape: "square" },
 };
 
-export const KANBAN_COLS: DemandStatus[] = ["nova", "em_analise", "aprovada", "rejeitada", "matched"];
+export const KANBAN_COLS: DemandStatus[] = ["nova", "em_analise", "aprovada", "rejeitada", "contato_liberado"];
 
-/** Pílula de status do guia: fundo tingido a 10%; "Matched" é sólida. */
+/** Pílula de status do guia: fundo tingido a 10%; "Contato liberado" é sólida. */
 export function StatusBadge({ status }: { status: DemandStatus; size?: number }) {
   const cfg = DEMAND_STATUS[status];
   return (
     <span
-      className={status === "matched" ? "vt-status vt-status-solid" : "vt-status"}
+      className={status === "contato_liberado" ? "vt-status vt-status-solid" : "vt-status"}
       style={{ "--vt-status": cfg.color } as React.CSSProperties}
     >
       {cfg.label}

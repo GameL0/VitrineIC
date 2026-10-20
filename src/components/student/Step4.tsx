@@ -1,127 +1,70 @@
-import { useRef } from "react";
+import { FileDrop } from "./FileDrop";
+import { StatusPill } from "@/components/app/StatusPill";
+import { MOSS } from "@/styles/tokens";
 import { Input, Label } from "./ui";
-import { NAVY } from "@/styles/tokens";
+import type { ProfileDraft } from "@/lib/profile";
 
-export function Step4({ data, setData }: { data: any; setData: (d: any) => void }) {
-  const fileRef = useRef<HTMLInputElement>(null);
+export function Step4({
+  data,
+  setData,
+  onGoToSkills,
+}: {
+  data: ProfileDraft;
+  setData: (d: Partial<ProfileDraft>) => void;
+  onGoToSkills: () => void;
+}) {
+  const docs = data.docs;
+  const count = data.skills.length;
 
   return (
-    <div>
-        <h2
-        className="text-3xl mb-2"
-        style={{ fontFamily: "Inter Tight, Geist, system-ui, sans-serif", color: NAVY }}
-      >
-        Portfólio
-      </h2>
-      <p className="text-sm mb-10" style={{ fontFamily: "Geist, Inter, system-ui, sans-serif", color: NAVY, opacity: 0.8, fontWeight: 300 }}>
-        Vincule seus repositórios e trabalhos anteriores.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="flex flex-col gap-5">
-          <Input
-            label="GitHub"
-            placeholder="github.com/usuario"
-            mono
-            value={data.github || ""}
-            onChange={(v) => setData({ ...data, github: v })}
-          />
-          <Input
-            label="LinkedIn"
-            placeholder="linkedin.com/in/usuario"
-            mono
-            value={data.linkedin || ""}
-            onChange={(v) => setData({ ...data, linkedin: v })}
-          />
-          <Input
-            label="Site / Portfólio"
-            placeholder="seusite.dev"
-            mono
-            value={data.site || ""}
-            onChange={(v) => setData({ ...data, site: v })}
-          />
-          <Input
-            label="Lattes"
-            placeholder="lattes.cnpq.br/xxxxxxxx"
-            mono
-            value={data.lattes || ""}
-            onChange={(v) => setData({ ...data, lattes: v })}
-          />
-        </div>
-
-        <div>
-          <Label>Trabalhos anteriores</Label>
-          <div className="flex flex-col gap-2 mb-4">
-            {(data.docs || []).map((d: string, i: number) => (
-              <div
-                key={i}
-                className="flex items-center justify-between px-4 py-3"
-                style={{ border: `1px solid ${NAVY}40`, borderRadius: "8px" }}
-              >
-                <div className="flex items-center gap-3">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: NAVY, opacity: 0.8 }}>
-                    <rect x="1.5" y="1" width="9" height="12" rx="0.5" stroke="currentColor" strokeWidth="1.1" />
-                    <path d="M4 4.5h5M4 7h5M4 9.5h3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
-                  </svg>
-                  <span
-                    className="text-[11px]"
-                    style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
-                  >
-                    {d}
-                  </span>
-                </div>
-                <button
-                  onClick={() =>
-                    setData({ ...data, docs: (data.docs || []).filter((_: any, j: number) => j !== i) })
-                  }
-                  style={{ color: NAVY, opacity: 0.6 }}
-                  className="hover:opacity-100 transition-opacity"
-                >
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-                  </svg>
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <button
-            onClick={() => fileRef.current?.click()}
-            className="w-full py-8 flex flex-col items-center gap-3 transition-all"
-            style={{ border: `2px dashed ${NAVY}50`, borderRadius: "8px" }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = NAVY)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = `${NAVY}50`)}
-          >
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style={{ color: NAVY, opacity: 0.6 }}>
-              <path d="M11 14V4M7 8l4-4 4 4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-              <path d="M4 17h14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
-            <span
-              className="text-[10px] tracking-[0.14em] uppercase font-semibold"
-              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.8 }}
-            >
-              Adicionar documento
-            </span>
-            <span
-              className="text-[10px]"
-              style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.6 }}
-            >
-              PDF, DOCX, ZIP · máx. 20 MB
-            </span>
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept=".pdf,.docx,.zip"
-            multiple
-            className="hidden"
-            onChange={(e) => {
-              const files = Array.from(e.target.files || []).map((f) => f.name);
-              setData({ ...data, docs: [...(data.docs || []), ...files] });
-            }}
-          />
-        </div>
+    <div className="flex flex-col gap-8">
+      <div className="grid gap-x-4 gap-y-5 md:grid-cols-2">
+        <Input label="GitHub" placeholder="github.com/usuario" value={data.github} onChange={(v) => setData({ github: v })} />
+        <Input
+          label="LinkedIn"
+          placeholder="linkedin.com/in/usuario"
+          value={data.linkedin}
+          onChange={(v) => setData({ linkedin: v })}
+        />
+        <Input label="Site / Portfólio" placeholder="seusite.dev" value={data.site} onChange={(v) => setData({ site: v })} />
+        <Input
+          label="Lattes"
+          placeholder="lattes.cnpq.br/xxxxxxxx"
+          value={data.lattes}
+          onChange={(v) => setData({ lattes: v })}
+        />
       </div>
+
+      <div>
+        <Label>Trabalhos anteriores</Label>
+        <FileDrop
+          title="Anexar currículo e trabalhos"
+          hint="PDF, DOCX, ZIP · máx. 20 MB"
+          accept=".pdf,.docx,.zip"
+          files={docs}
+          onAdd={(names) => setData({ docs: [...docs, ...names] })}
+          onRemove={(idx) => setData({ docs: docs.filter((_, i) => i !== idx) })}
+        />
+      </div>
+
+      {count > 0 ? (
+        <div
+          role="status"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-moss/25 bg-moss/8 px-4 py-3"
+        >
+          <p className="font-sans text-sm text-moss">
+            Perfil pronto para a vitrine: {count} {count === 1 ? "competência adicionada" : "competências adicionadas"}.
+          </p>
+          <StatusPill color={MOSS}>Visível</StatusPill>
+        </div>
+      ) : (
+        <div role="status" className="rounded-xl border border-ochre/30 bg-ochre/8 px-4 py-3 font-sans text-sm text-ochre">
+          Seu perfil ainda não aparece na vitrine: falta adicionar uma competência.{" "}
+          <button type="button" onClick={onGoToSkills} className="underline underline-offset-4 hover:text-navy">
+            Voltar ao passo 02
+          </button>
+        </div>
+      )}
     </div>
   );
 }

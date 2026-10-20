@@ -1,15 +1,10 @@
+import { FieldError, FieldHint, invalidProps } from "@/components/app/FieldError";
 import type * as React from "react";
-import { NAVY, OFFWHITE } from "@/styles/tokens";
 
 export function Label({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
     <span
-      className="block text-[9px] tracking-[0.22em] uppercase mb-1.5"
-      style={{
-        fontFamily: "Geist Mono, ui-monospace, monospace",
-        color: light ? OFFWHITE : NAVY,
-        opacity: light ? 0.45 : 0.45,
-      }}
+      className={`mb-2 block font-mono text-[10px] uppercase tracking-[0.08em] ${light ? "text-offwhite/60" : "text-navy/65"}`}
     >
       {children}
     </span>
@@ -25,7 +20,18 @@ export function Input({
   rows = 3,
   value,
   onChange,
+  id,
+  error,
+  hint,
+  maxLength,
+  inputMode,
 }: {
+  id?: string;
+  /** Mensagem de erro; liga `aria-invalid` e `aria-describedby`. */
+  error?: string;
+  hint?: React.ReactNode;
+  maxLength?: number;
+  inputMode?: "numeric" | "text" | "email" | "url";
   label?: string;
   type?: string;
   placeholder?: string;
@@ -38,9 +44,12 @@ export function Input({
   const cls = mono ? "vt-input vt-input-mono" : "vt-input";
   return (
     <div>
-      {label && <Label>{label}</Label>}
+      {label && (id ? <label htmlFor={id}><Label>{label}</Label></label> : <Label>{label}</Label>)}
       {textarea ? (
         <textarea
+          id={id}
+          maxLength={maxLength}
+          {...invalidProps(id, error)}
           rows={rows}
           placeholder={placeholder}
           className={cls}
@@ -49,6 +58,10 @@ export function Input({
         />
       ) : (
         <input
+          id={id}
+          maxLength={maxLength}
+          inputMode={inputMode}
+          {...invalidProps(id, error)}
           type={type}
           placeholder={placeholder}
           className={cls}
@@ -56,6 +69,7 @@ export function Input({
           onChange={(e) => onChange?.(e.target.value)}
         />
       )}
+      {id && error ? <FieldError id={id}>{error}</FieldError> : hint ? <FieldHint>{hint}</FieldHint> : null}
     </div>
   );
 }
@@ -65,36 +79,51 @@ export function SelectField({
   options,
   value,
   onChange,
+  id,
+  error,
 }: {
   label?: string;
   options: string[];
   value: string;
   onChange: (v: string) => void;
+  id?: string;
+  error?: string;
 }) {
   return (
     <div>
-      {label && <Label>{label}</Label>}
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-
-        className="vt-input"
-        style={{
-          appearance: "none",
-          cursor: "pointer",
-        }}
-      >
-        <option value="">Selecione...</option>
-        {options.map((o) => (
-          <option key={o} value={o}>
-            {o}
-          </option>
-        ))}
-      </select>
+      {label && (id ? <label htmlFor={id}><Label>{label}</Label></label> : <Label>{label}</Label>)}
+      <div className="relative">
+        <select
+          id={id}
+          {...invalidProps(id, error)}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="vt-input"
+          style={{ appearance: "none", cursor: "pointer", paddingRight: 40 }}
+        >
+          <option value="">Selecione...</option>
+          {options.map((o) => (
+            <option key={o} value={o}>
+              {o}
+            </option>
+          ))}
+        </select>
+        <svg
+          width="10"
+          height="6"
+          viewBox="0 0 10 6"
+          fill="none"
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-navy/55"
+        >
+          <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
+      {id && <FieldError id={id}>{error}</FieldError>}
     </div>
   );
 }
 
 export function Rule() {
-  return <div style={{ height: "1px", background: `${NAVY}15`, margin: "24px 0" }} />;
+  return <div className="my-6 h-px bg-navy/8" />;
 }

@@ -1,12 +1,31 @@
-import { ALL_PROJECTS, STUDENTS } from "@/data/students";
-import { DEMANDS } from "@/data/demands";
-import { INVITATIONS } from "@/data/invitations";
-import { IMPACT_PERIOD, TARGETS, TESTIMONIALS } from "@/data/impact";
-import { NAVY, OFFWHITE, RED } from "@/styles/tokens";
+import { courseShort } from "@/data/institution";
+import { IMPACT_PERIOD, TESTIMONIALS } from "@/data/impact";
+import { allProjects, useVitrine } from "@/lib/store";
+import { isProfileVisible } from "@/lib/profile";
+import { Eyebrow } from "./Eyebrow";
+import { PageHead } from "./PageHead";
+import { PAGE } from "./layout";
 
-const MONO = "Geist Mono, ui-monospace, monospace";
-const SANS = "Geist, Inter, system-ui, sans-serif";
-const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
+/** Aspas vermelhas do topo do depoimento. */
+function QuoteMark() {
+  return (
+    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true" className="text-red">
+      <path
+        d="M0 16V9.6C0 4.4 2.6 1.2 7.4 0l1 2.2C5.6 3.2 4.4 5 4.3 7.6H8.6V16H0Zm12.6 0V9.6c0-5.2 2.6-8.4 7.4-9.6l1 2.2c-2.8 1-4 2.8-4.1 5.4h4.3V16h-8.6Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+/** Conta itens por chave e ordena do maior para o menor. */
+function countBy<T>(items: T[], key: (item: T) => string) {
+  const counts = items.reduce<Record<string, number>>((acc, item) => {
+    acc[key(item)] = (acc[key(item)] || 0) + 1;
+    return acc;
+  }, {});
+  return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+}
 
 /**
  * Painel de indicadores da atividade de extensão (ACE1).
@@ -15,233 +34,116 @@ const SERIF = "Inter Tight, Geist, system-ui, sans-serif";
  * é digitado aqui. Assim o painel não pode divergir do que a plataforma mostra
  * nas outras telas.
  */
-export function Impact({ onOpenProjects }: { onOpenProjects: () => void }) {
-  const students = STUDENTS.length;
-  const projects = ALL_PROJECTS.length;
-  const demands = DEMANDS.length;
-  const triaged = DEMANDS.filter((d) => d.status !== "nova").length;
-  const approved = DEMANDS.filter((d) => d.status === "aprovada" || d.status === "matched").length;
-  const matched = DEMANDS.filter((d) => d.status === "matched").length;
-  const accepted = INVITATIONS.filter((i) => i.status === "aceito").length;
+export function Impact() {
+  const { demands, interests, students: all } = useVitrine();
+  const students = all.filter(isProfileVisible);
+  const projects = allProjects(students);
+  const released = interests.filter((i) => i.status === "contato_liberado").length;
 
   const headline = [
-    { value: students, target: TARGETS.students, label: "Estudantes cadastrados" },
-    { value: projects, target: TARGETS.projects, label: "Projetos na vitrine" },
-    { value: demands, target: TARGETS.demands, label: "Demandas recebidas" },
-    { value: matched, target: TARGETS.matches, label: "Matches confirmados" },
+    { value: released, label: "contatos liberados" },
+    { value: projects.length, label: "projetos na vitrine" },
+    { value: demands.length, label: "demandas recebidas" },
+    { value: students.length, label: "estudantes com perfil público" },
   ];
 
-  const funnel = [
-    { label: "Demandas recebidas", value: demands },
-    { label: "Passaram pela triagem", value: triaged },
-    { label: "Aprovadas pela curadoria", value: approved },
-    { label: "Match confirmado", value: matched },
-    { label: "Aceitos pelo estudante", value: accepted },
-  ];
-
-  const byArea = Object.entries(
-    ALL_PROJECTS.reduce<Record<string, number>>((acc, p) => {
-      acc[p.area] = (acc[p.area] || 0) + 1;
-      return acc;
-    }, {}),
-  ).sort((a, b) => b[1] - a[1]);
-
+  const byArea = countBy(demands, (d) => d.area);
   const maxArea = Math.max(...byArea.map(([, n]) => n), 1);
 
+  // Só os cursos que têm estudante visível: com a UFAL inteira, listar todos
+  // os cursos encheria o painel de barras zeradas.
+  const byCourse = countBy(students, (s) => s.course).map(([course, n]) => ({
+    course,
+    pct: Math.round((n / students.length) * 100),
+  }));
+
   return (
-    <div className="px-8 md:px-16 py-14 max-w-screen-xl mx-auto">
-      <div className="mb-12">
-        <p
-          className="text-[10px] tracking-[0.25em] uppercase mb-3 flex items-center gap-3"
-          style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-        >
-          <span className="inline-block w-8" style={{ height: "1px", background: RED }} />
-          Atividade Curricular de Extensão · ACE 1
-        </p>
-        <h1
-          className="text-5xl md:text-6xl leading-none mb-5"
-          style={{ fontFamily: SERIF, color: NAVY, letterSpacing: "-0.01em" }}
-        >
-          Indicadores de <em className="not-italic" style={{ color: RED }}>impacto</em>.
-        </h1>
-        <p
-          className="text-base leading-[1.7] max-w-2xl"
-          style={{ fontFamily: SANS, color: NAVY, opacity: 0.65, fontWeight: 300 }}
-        >
-          Números da plataforma no período de {IMPACT_PERIOD}. Todos os
-          indicadores são apurados diretamente da base da plataforma.
-        </p>
-      </div>
+    <main className={`${PAGE} pb-20 md:pb-28`}>
+      <PageHead
+        eyebrow="Extensão"
+        title={
+          <>
+            <span className="text-red">Impacto</span> em números.
+          </>
+        }
+        lead={`Indicadores do projeto de extensão em ${IMPACT_PERIOD}, apurados direto da base da plataforma.`}
+      />
 
-      {/* Indicadores principais */}
-      <div
-        className="grid grid-cols-1 md:grid-cols-4 gap-0 mb-16"
-        style={{ borderTop: `1px solid ${NAVY}15`, borderBottom: `1px solid ${NAVY}15` }}
-      >
-        {headline.map((m, i) => {
-          const pct = Math.min(100, Math.round((m.value / m.target) * 100));
-          return (
-            <div
-              key={m.label}
-              className="py-8 md:px-8 first:pl-0 last:pr-0"
-              style={{ borderLeft: i > 0 ? `1px solid ${NAVY}18` : "none" }}
-            >
-              <p
-                className="text-5xl leading-none mb-3"
-                style={{ fontFamily: SERIF, color: NAVY }}
-              >
-                {m.value}
-              </p>
-              <p
-                className="text-[10px] tracking-[0.14em] uppercase mb-4"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-              >
-                {m.label}
-              </p>
-              <div style={{ height: "3px", background: `${NAVY}12` }}>
-                <div style={{ width: `${pct}%`, height: "3px", background: RED }} />
-              </div>
-              <p
-                className="text-[9px] tracking-[0.14em] uppercase mt-2"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-              >
-                {pct}% da meta ({m.target})
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-12 mb-16">
-        {/* Funil de curadoria */}
-        <div>
-          <p
-            className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-          >
-            <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
-            Funil da curadoria
-          </p>
-          <div className="flex flex-col">
-            {funnel.map((step, i) => {
-              const pct = demands > 0 ? Math.round((step.value / demands) * 100) : 0;
-              return (
-                <div
-                  key={step.label}
-                  className="py-4"
-                  style={{ borderTop: i > 0 ? `1px solid ${NAVY}12` : "none" }}
-                >
-                  <div className="flex items-baseline justify-between mb-2">
-                    <span
-                      className="text-[11px] tracking-[0.12em] uppercase"
-                      style={{ fontFamily: MONO, color: NAVY, opacity: 0.55 }}
-                    >
-                      {step.label}
-                    </span>
-                    <span
-                      className="text-xl"
-                      style={{ fontFamily: SERIF, color: i === funnel.length - 1 ? RED : NAVY }}
-                    >
-                      {step.value}
-                    </span>
-                  </div>
-                  <div style={{ height: "2px", background: `${NAVY}10` }}>
-                    <div
-                      style={{
-                        width: `${pct}%`,
-                        height: "2px",
-                        background: i === funnel.length - 1 ? RED : `${NAVY}55`,
-                      }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+      {/* ── Indicadores ── */}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {headline.map((item, i) => (
+          <div key={item.label} className="vt-card flex flex-col p-6">
+            <p className="font-display text-[15px] font-medium text-red">{String(i + 1).padStart(2, "0")}</p>
+            <p className="mt-8 font-display text-[48px] font-medium leading-none tracking-[-0.04em] text-navy">
+              {item.value}
+            </p>
+            <p className="mt-3 font-sans text-sm text-navy/65">{item.label}</p>
           </div>
-          <p
-            className="text-[10px] leading-relaxed mt-5"
-            style={{ fontFamily: SANS, color: NAVY, opacity: 0.5 }}
-          >
-            Cada demanda passa por revisão humana antes de virar contato. O funil
-            mede quanto do que entra chega a uma conexão efetivada.
-          </p>
-        </div>
-
-        {/* Distribuição por área */}
-        <div>
-          <p
-            className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-          >
-            <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
-            Projetos por área
-          </p>
-          <div className="flex flex-col gap-4">
-            {byArea.map(([area, n]) => (
-              <div key={area}>
-                <div className="flex items-baseline justify-between mb-1.5">
-                  <span
-                    className="text-[11px] tracking-[0.12em] uppercase"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.55 }}
-                  >
-                    {area}
-                  </span>
-                  <span
-                    className="text-[11px]"
-                    style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-                  >
-                    {n}
-                  </span>
-                </div>
-                <div style={{ height: "6px", background: `${NAVY}10` }}>
-                  <div
-                    style={{ width: `${(n / maxArea) * 100}%`, height: "6px", background: NAVY }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={onOpenProjects}
-            className="text-[10px] tracking-[0.18em] uppercase transition-opacity hover:opacity-100 opacity-50 mt-6"
-            style={{ fontFamily: MONO, color: NAVY, borderBottom: `1px solid ${NAVY}` }}
-          >
-            Ver catálogo completo
-          </button>
-        </div>
-      </div>
-
-      {/* Depoimentos */}
-      <p
-        className="text-[9px] tracking-[0.2em] uppercase mb-6 flex items-center gap-2"
-        style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-      >
-        <span className="inline-block w-4" style={{ height: "1px", background: RED }} />
-        Depoimentos
-      </p>
-      <div className="grid md:grid-cols-2 gap-px" style={{ background: `${NAVY}18` }}>
-        {TESTIMONIALS.map((t) => (
-          <figure key={t.author} className="p-8 m-0" style={{ background: OFFWHITE }}>
-            <blockquote
-              className="text-lg leading-[1.55] mb-5"
-              style={{ fontFamily: SERIF, color: NAVY }}
-            >
-              “{t.quote}”
-            </blockquote>
-            <figcaption>
-              <p className="text-[12px] font-semibold" style={{ fontFamily: SANS, color: NAVY }}>
-                {t.author}
-              </p>
-              <p
-                className="text-[10px] tracking-[0.14em] uppercase mt-0.5"
-                style={{ fontFamily: MONO, color: NAVY, opacity: 0.5 }}
-              >
-                {t.role}
-              </p>
-            </figcaption>
-          </figure>
         ))}
       </div>
-    </div>
+
+      {/* ── Distribuições ── */}
+      <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <section className="vt-card p-6 md:p-8">
+          <Eyebrow>Demandas por área</Eyebrow>
+          <ul className="mt-6 flex flex-col gap-5">
+            {byArea.map(([area, n]) => (
+              <li key={area} className="grid grid-cols-[minmax(0,9rem)_1fr_1.5rem] items-center gap-4 md:gap-6">
+                <span className="truncate font-sans text-sm text-navy">{area}</span>
+                <span className="h-1 rounded-full bg-navy/10">
+                  <span className="block h-1 rounded-full bg-navy" style={{ width: `${(n / maxArea) * 100}%` }} />
+                </span>
+                <span className="text-right font-mono text-[10px] text-navy/65">{n}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="vt-stone rounded-2xl p-6 md:p-8">
+          <Eyebrow onDark>Distribuição por curso</Eyebrow>
+          <ul className="mt-6 flex flex-col gap-6">
+            {byCourse.map(({ course, pct }) => (
+              <li key={course}>
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="font-sans text-sm text-offwhite" title={course}>{courseShort(course)}</span>
+                  <span className="font-mono text-[10px] text-offwhite/65">{pct}%</span>
+                </div>
+                <span className="mt-2.5 block h-1 rounded-full bg-offwhite/15">
+                  <span className="block h-1 rounded-full bg-sky" style={{ width: `${pct}%` }} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      {/* ── Depoimentos ── */}
+      <section className="pt-20 md:pt-24">
+        <Eyebrow>Depoimentos</Eyebrow>
+        <h2 className="mt-5 font-display text-[28px] font-medium leading-[1.05] tracking-[-0.03em] text-navy md:text-[36px]">
+          Quem passou pela vitrine.
+        </h2>
+
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.author} className="vt-card m-0 flex flex-col gap-6 p-6">
+              <QuoteMark />
+              <blockquote className="font-display text-lg leading-[1.35] tracking-[-0.01em] text-navy">
+                {t.quote}
+              </blockquote>
+              <figcaption className="mt-auto flex items-center gap-3">
+                <span className="grid size-8 shrink-0 place-items-center rounded-[9px] bg-navy font-display text-[13px] font-medium text-offwhite">
+                  {t.author[0]}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate font-sans text-[13px] text-navy">{t.author}</p>
+                  <p className="truncate font-sans text-xs text-navy/65">{t.role}</p>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }

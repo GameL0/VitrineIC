@@ -24,9 +24,10 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 |---|---|
 | Landing: nav, hero, stats, destaques, CTA, rodapé | `src/components/landing/LandingPage.tsx` |
 | Modal de acesso e abas | `src/components/landing/AuthModal.tsx` |
-| Formulários de login | `src/components/landing/StudentForm.tsx`, `CompanyForm.tsx` |
-| Campo, divisor, botão SSO | `src/components/landing/ui.tsx` |
-| Roteamento entre áreas | `src/App.tsx` |
+| Formulários de login | `src/components/landing/SignInForm.tsx` (usado por `StudentForm.tsx`, `CompanyForm.tsx`) |
+| Cadastro de estudante e de solicitante | `src/components/landing/StudentSignUp.tsx`, `RequesterSignUp.tsx` |
+| Campo, seleção, divisor, faixa de erro | `src/components/landing/ui.tsx` |
+| Roteamento entre áreas (pela sessão) | `src/App.tsx` |
 
 ### Páginas públicas — `src/components/public/`
 
@@ -46,12 +47,13 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 |---|---|
 | Shell e troca de telas | `StudentArea.tsx` |
 | Onboarding (fluxo) | `Onboarding.tsx`, `StepIndicator.tsx` |
-| Onboarding: perfil / skills / portfólio | `Step1.tsx`, `Step2.tsx`, `Step3.tsx` |
+| Onboarding: perfil / skills / idiomas / portfólio | `Step1.tsx` a `Step4.tsx` |
 | Seleção de competências (busca + catálogo) | `SkillPicker.tsx` |
 | Seletor de nível de proficiência | `LevelPicker.tsx` |
 | Dashboard e notificações | `Dashboard.tsx` |
-| Convites recebidos (aceitar/recusar) | `Invitations.tsx` |
-| Conexão estabelecida | `ConnectionEstablished.tsx` |
+| Oportunidades (demandas abertas e candidatura) | `Opportunities.tsx` |
+| Interesses: candidaturas, convites e sugestões | `Interests.tsx` |
+| Meus projetos e selo "em projeto" | `Projects.tsx` |
 | Laboratório (vitrine de projetos) | `Lab.tsx`, `StatusBadge.tsx` |
 | Barra de navegação da área | `NavBar.tsx` |
 | Label, Input, Rule, Tag | `ui.tsx` |
@@ -64,7 +66,8 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Mural de demandas | `Dashboard.tsx` |
 | Wizard de nova demanda (4 passos) | `NewDemandWizard.tsx` |
 | Tela de sucesso e protocolo | `SuccessScreen.tsx` |
-| Matches recebidos | `MatchScreen.tsx` |
+| Interessados (aceitar/recusar) | `MatchScreen.tsx` |
+| Vitrine de estudantes e convite | `AvailableStudents.tsx` |
 | Status das demandas | `StatusBadge.tsx` |
 | Barra de navegação da área | `NavBar.tsx` |
 | Label, Input, SelectField, Rule | `ui.tsx` |
@@ -74,10 +77,12 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Tarefa | Arquivo |
 |---|---|
 | Shell e troca de telas | `CuratorArea.tsx` |
+| Login da curadoria (sem cadastro aberto) | `CuratorSignIn.tsx` |
 | Triagem (kanban) | `Triage.tsx` |
 | Matchmaking e ranking | `Matchmaking.tsx` |
-| Confirmação do match | `ConfirmModal.tsx` |
-| Match efetivado | `MatchConfirmed.tsx` |
+| Sugestão com justificativa | `ConfirmModal.tsx` |
+| Sugestão enviada | `MatchConfirmed.tsx` |
+| Acompanhamento de todos os interesses | `InterestsOverview.tsx` |
 | Status e colunas do kanban | `StatusBadge.tsx` |
 | Barra de navegação da área | `NavBar.tsx` |
 | Label, Mono, Rule, SkillTag | `ui.tsx` |
@@ -87,7 +92,14 @@ Cada componente tem seu arquivo. **Abra só o que a tarefa pede** — não leia
 | Tarefa | Arquivo |
 |---|---|
 | Algoritmo de match | `src/lib/match.ts` |
-| Convites gerados pela curadoria | `src/data/invitations.ts` |
+| Regras do fluxo de interesse | `src/lib/interest.ts` |
+| Estado compartilhado (estudantes, solicitantes, contas, sessão, demandas, interesses) | `src/lib/store.ts` |
+| Login, cadastro, sessão (simulados) | `src/lib/auth.ts` |
+| Contas de demonstração | `src/data/accounts.ts` |
+| Leitura e escrita no `localStorage` | `src/lib/persist.ts` |
+| Regra "perfil aparece na vitrine" e rascunho do perfil | `src/lib/profile.ts` |
+| Regras de validação de formulário | `src/lib/validate.ts`, `src/components/app/FieldError.tsx` |
+| Base de demandas e de interesses | `src/data/demands.ts`, `src/data/interests.ts` |
 | Base de estudantes e projetos | `src/data/students.ts` |
 | Insumos do painel de impacto | `src/data/impact.ts` |
 | Universidade, domínios e cursos | `src/data/institution.ts` |
@@ -138,19 +150,33 @@ texturizadas com a classe `.vt-stone`. Detalhes em `context/04-design-system.md`
 ## Cuidados
 
 - Tudo em `src/data/` é **fictício** — métricas, pessoas e demandas inventadas.
-- `data/demands.ts` (curadoria) e `data/requester-demands.ts` (solicitante) são
-  **bases paralelas** que não se comunicam, assim como os dois vocabulários de
-  status em `src/types/index.ts`. Unificá-las é a prioridade estrutural.
+- Demandas e interesses têm **base única** (`data/demands.ts`,
+  `data/interests.ts`) e um só vocabulário de status. As telas leem pelo
+  `useVitrine` de `src/lib/store.ts` e alteram pelas funções dele; não crie
+  outra base. O fluxo de match (candidatura, convite, sugestão, aceite duplo)
+  está em `context/03-dominio.md`.
 - Cada área tem seu próprio `ui.tsx` e `NavBar.tsx`, com implementações
   parecidas mas não idênticas. Ao mexer em uma, verifique as irmãs.
-- O alvo é o **IC/UFAL**, com três cursos: Ciência da Computação, Engenharia
-  da Computação e Inteligência Artificial. Nome da universidade, domínios e a
-  lista de cursos vivem em `src/data/institution.ts`; o tipo `Course` restringe
-  o campo. Não escreva "UFAL" nem nome de curso direto no componente.
-- `src/data/students.ts` é a **fonte única** de estudante e projeto: alimenta o
-  matchmaking, o catálogo público e os perfis. Enriqueça esse arquivo em vez de
-  criar outra base.
+- O site atende **todos os institutos da UFAL** (o projeto é do IC). E-mail de
+  estudante aceita qualquer `*.ufal.br`; unidades e cursos de cada uma vivem em
+  `UNITS`, em `src/data/institution.ts` (os cursos fora do IC são exemplo).
+  Não escreva "UFAL" nem nome de curso direto no componente.
+- `src/data/students.ts` e `src/data/companies.ts` são só a **semente**. As
+  telas leem estudantes e solicitantes do store (`useVitrine().students`,
+  `findStudent`, `findCompany`), senão contas recém-criadas não aparecem.
+- Perfil sem nenhuma competência **não aparece na vitrine** (diretório,
+  catálogo, matchmaking, estudantes disponíveis) e não pode se candidatar. A
+  regra é `isProfileVisible`, em `src/lib/profile.ts`; não a repita.
+- Usuário logado vem de `useSession()` (`src/lib/auth.ts`). Não há mais ids
+  fixos de estudante ou solicitante.
+- Formulários seguem `useValidation` (`src/lib/validate.ts`): erro aparece ao
+  enviar, some conforme a pessoa corrige, `aria-invalid` + mensagem ligada por
+  `aria-describedby`, foco no primeiro campo inválido.
 - Os números do painel de impacto são **derivados** das bases em tempo de
   render. Não digite indicadores em `data/impact.ts` — só o que não dá para
   derivar (depoimentos, metas) mora lá.
-- Não há roteamento por URL, persistência, backend nem testes.
+- **Simulação**: contas, sessão e mudanças ficam no `localStorage` deste
+  navegador (chave `vitrineic:v1`), com senha em texto puro. Contas de exemplo
+  (senha `demo1234`): `estudante@ic.ufal.br`, `contato@techbr.com.br`,
+  `curadoria@ic.ufal.br`. "Restaurar dados de exemplo", no rodapé, apaga tudo.
+- Não há roteamento por URL, backend nem testes.

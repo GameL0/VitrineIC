@@ -1,8 +1,40 @@
-/** DADOS FICTÍCIOS — fila de demandas vista pela curadoria. */
+/**
+ * DADOS FICTÍCIOS — base única de demandas.
+ *
+ * Alimenta as três áreas: o estudante vê as aprovadas em Oportunidades, o
+ * solicitante acompanha as suas em Minhas demandas e a curadoria faz a
+ * triagem. Os interesses de cada demanda ficam em `@/data/interests`.
+ */
 
 import type { Demand } from "@/types";
 
 export const DEMANDS: Demand[] = [
+  {
+    id: "VIC-2026-0046",
+    title: "Painel de Consumo de Energia por Linha",
+    company: "TechBr Soluções",
+    area: "Sistemas Web",
+    scope: "Pequeno (< 3 meses)",
+    deadline: "15 dez 2026",
+    skills: ["React", "Python", "AWS"],
+    description: "Painel que cruza a medição dos quadros elétricos com a produção de cada linha, para achar onde o consumo foge do normal.",
+    submitted: "18 out 2026",
+    status: "nova",
+    priority: "normal",
+  },
+  {
+    id: "VIC-2026-0044",
+    title: "Manutenção Preditiva de Compressores",
+    company: "TechBr Soluções",
+    area: "IA / Dados",
+    scope: "Médio (3–6 meses)",
+    deadline: "28 fev 2027",
+    skills: ["Python", "Pandas", "scikit-learn", "SQL"],
+    description: "Modelo que antecipa falhas em compressores industriais a partir do histórico de vibração, temperatura e paradas.",
+    submitted: "10 out 2026",
+    status: "em_analise",
+    priority: "normal",
+  },
   {
     id: "VIC-2026-0041",
     title: "Sistema de Monitoramento IoT para Fábricas",
@@ -13,7 +45,7 @@ export const DEMANDS: Demand[] = [
     skills: ["Python", "MQTT", "PostgreSQL", "Docker", "React"],
     description: "Desenvolvimento de plataforma de coleta e visualização de dados de sensores industriais em tempo real. Pipeline de ingestão com tolerância a falhas e dashboard de monitoramento.",
     submitted: "12 set 2026",
-    status: "nova",
+    status: "aprovada",
     priority: "alta",
   },
   {
@@ -22,12 +54,25 @@ export const DEMANDS: Demand[] = [
     company: "Fintech Labs",
     area: "IA / Dados",
     scope: "Pequeno (< 3 meses)",
-    deadline: "15 out 2026",
+    deadline: "15 dez 2026",
     skills: ["Python", "scikit-learn", "SQL", "Pandas"],
     description: "Modelo preditivo para identificação antecipada de cancelamento de clientes em plataforma SaaS B2B. Feature engineering, treinamento e API de inferência.",
     submitted: "05 set 2026",
-    status: "em_analise",
+    status: "aprovada",
     priority: "alta",
+  },
+  {
+    id: "VIC-2026-0033",
+    title: "Aplicativo de Inspeção de Linha",
+    company: "TechBr Soluções",
+    area: "Sistemas Web",
+    scope: "Médio (3–6 meses)",
+    deadline: "31 jan 2027",
+    skills: ["React", "TypeScript", "FastAPI", "PostgreSQL"],
+    description: "Aplicativo para o inspetor registrar não conformidades no chão de fábrica, com fotos, checklist por máquina e relatório por turno.",
+    submitted: "28 ago 2026",
+    status: "contato_liberado",
+    priority: "normal",
   },
   {
     id: "VIC-2026-0029",
@@ -35,7 +80,7 @@ export const DEMANDS: Demand[] = [
     company: "Consultoria GX",
     area: "IA / ML",
     scope: "Pequeno (< 3 meses)",
-    deadline: "20 out 2026",
+    deadline: "20 dez 2026",
     skills: ["Python", "LangChain", "OpenAI API", "FastAPI"],
     description: "Integração de LLM para geração automática de relatórios financeiros a partir de dados estruturados e templates.",
     submitted: "20 ago 2026",
@@ -52,7 +97,7 @@ export const DEMANDS: Demand[] = [
     skills: ["React", "Node.js", "PostgreSQL", "AWS"],
     description: "LMS customizado para treinamento técnico industrial com gamificação, trilhas adaptativas e relatórios gerenciais.",
     submitted: "08 ago 2026",
-    status: "matched",
+    status: "contato_liberado",
     priority: "normal",
   },
   {

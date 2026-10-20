@@ -1,23 +1,15 @@
+import { useState } from "react";
 import { LevelPicker } from "./LevelPicker";
-import { Label } from "./ui";
 import { LANGUAGES, LANGUAGE_LEVELS } from "@/data/languages";
-import { NAVY, RED } from "@/styles/tokens";
 import type { SkillLevel, StudentLanguage } from "@/types";
 
-const MONO = "Geist Mono, ui-monospace, monospace";
-const SANS = "Geist, Inter, system-ui, sans-serif";
-
 const DEFAULT_LEVEL: SkillLevel = 2;
-
-/** "Fluente" no lugar de "Especialista" — especialista em idioma não diz nada. */
-const SHORT: Record<SkillLevel, string> = { 1: "Bás", 2: "Int", 3: "Avan", 4: "Flu" };
 
 /**
  * Seleção de idiomas.
  *
- * A lista é curta e fechada, então não precisa de busca: os idiomas
- * disponíveis aparecem como atalhos, no mesmo formato dos atalhos de
- * competências técnicas. Só o nível é configurável depois.
+ * Uma linha por idioma, com o nível de Básico a Fluente. A lista é curta e
+ * fechada, então não precisa de busca: "Adicionar idioma" abre os que faltam.
  */
 export function LanguagePicker({
   value,
@@ -26,102 +18,77 @@ export function LanguagePicker({
   value: StudentLanguage[];
   onChange: (languages: StudentLanguage[]) => void;
 }) {
+  const [adding, setAdding] = useState(false);
   const has = (name: string) => value.some((l) => l.name === name);
   const available = LANGUAGES.filter((l) => !has(l));
 
-  const add = (name: string) =>
-    has(name) ? undefined : onChange([...value, { name, conversacao: DEFAULT_LEVEL, leitura: DEFAULT_LEVEL, escuta: DEFAULT_LEVEL }]);
+  const add = (name: string) => {
+    setAdding(false);
+    if (!has(name)) onChange([...value, { name, level: DEFAULT_LEVEL }]);
+  };
 
   const remove = (name: string) => onChange(value.filter((l) => l.name !== name));
 
-  const setLevel = (name: string, type: "conversacao" | "leitura" | "escuta", level: SkillLevel) =>
-    onChange(value.map((l) => (l.name === name ? { ...l, [type]: level } : l)));
+  const setLevel = (name: string, level: SkillLevel) =>
+    onChange(value.map((l) => (l.name === name ? { ...l, level } : l)));
 
   return (
-    <div className="max-w-3xl">
-      <div className="flex items-baseline justify-between mb-1.5">
-        <Label>Idiomas</Label>
-        {value.length > 0 && (
-          <span
-            className="text-[10px] tracking-[0.14em] uppercase"
-            style={{ fontFamily: MONO, color: NAVY, opacity: 0.7 }}
-          >
-            {value.length} {value.length === 1 ? "idioma" : "idiomas"}
-          </span>
-        )}
-      </div>
-
+    <div>
       {value.length > 0 && (
-        <div className="mb-4" style={{ border: `1px solid ${NAVY}40` }}>
-          {value.map((l, i) => (
-            <div
+        <ul>
+          {value.map((l) => (
+            <li
               key={l.name}
-              className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-4 py-3"
-              style={{ borderTop: i > 0 ? `1px solid ${NAVY}10` : "none" }}
+              className="flex flex-col gap-3 border-b border-navy/8 py-4 sm:flex-row sm:items-center sm:justify-between"
             >
-              <span className="text-[12px] w-24 flex-shrink-0" style={{ fontFamily: MONO, color: NAVY }}>
-                {l.name}
+              <span className="font-sans text-[15px] text-navy">{l.name}</span>
+              <span className="flex items-center gap-1">
+                <LevelPicker
+                  name={l.name}
+                  value={l.level}
+                  onChange={(lvl) => setLevel(l.name, lvl)}
+                  labels={LANGUAGE_LEVELS}
+                />
+                <button
+                  type="button"
+                  onClick={() => remove(l.name)}
+                  aria-label={`Remover ${l.name}`}
+                  className="grid size-7 shrink-0 place-items-center rounded-md text-navy/40 transition-colors hover:bg-navy/5 hover:text-navy"
+                >
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                    <path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+                  </svg>
+                </button>
               </span>
-              <div className="flex-1 w-full flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-medium" style={{ fontFamily: MONO, color: NAVY, opacity: 0.7 }}>Conversação</span>
-                  <LevelPicker name={`${l.name}-conv`} value={l.conversacao} onChange={(lvl) => setLevel(l.name, "conversacao", lvl)} labels={LANGUAGE_LEVELS} short={SHORT} />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-medium" style={{ fontFamily: MONO, color: NAVY, opacity: 0.7 }}>Leitura</span>
-                  <LevelPicker name={`${l.name}-leit`} value={l.leitura} onChange={(lvl) => setLevel(l.name, "leitura", lvl)} labels={LANGUAGE_LEVELS} short={SHORT} />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-medium" style={{ fontFamily: MONO, color: NAVY, opacity: 0.7 }}>Escuta</span>
-                  <LevelPicker name={`${l.name}-esc`} value={l.escuta} onChange={(lvl) => setLevel(l.name, "escuta", lvl)} labels={LANGUAGE_LEVELS} short={SHORT} />
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => remove(l.name)}
-                aria-label={`Remover ${l.name}`}
-                className="w-8 h-8 flex items-center justify-center transition-opacity hover:opacity-100 opacity-50 ml-auto sm:ml-4"
-                style={{ color: NAVY }}
-              >
-                <svg width="12" height="12" viewBox="0 0 10 10" fill="none">
-                  <line x1="1" y1="1" x2="9" y2="9" stroke="currentColor" strokeWidth="1.4" />
-                  <line x1="9" y1="1" x2="1" y2="9" stroke="currentColor" strokeWidth="1.4" />
-                </svg>
-              </button>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
       {available.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {available.map((name) => (
-            <button
-              key={name}
-              type="button"
-              onClick={() => add(name)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] tracking-[0.1em] uppercase transition-all"
-              style={{ fontFamily: MONO, border: `1px solid ${NAVY}60`, color: NAVY, opacity: 0.7 }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = NAVY;
-                e.currentTarget.style.opacity = "1";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = `${NAVY}60`;
-                e.currentTarget.style.opacity = "0.7";
-              }}
-            >
-              <span style={{ color: RED }}>+</span>
-              {name}
-            </button>
-          ))}
+        <div className="mt-6">
+          <button
+            type="button"
+            onClick={() => setAdding(!adding)}
+            aria-expanded={adding}
+            className="flex items-center gap-2 rounded-[10px] px-3 py-2 font-sans text-sm text-navy/65 transition-colors hover:bg-navy/5 hover:text-navy"
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M6 1.5v9M1.5 6h9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            </svg>
+            Adicionar idioma
+          </button>
+          {(adding || value.length === 0) && (
+            <div className="mt-3 flex flex-wrap gap-1.5 px-3">
+              {available.map((name) => (
+                <button key={name} type="button" onClick={() => add(name)} className="vt-pill">
+                  {name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
-
-      <p className="text-[10px] mt-4" style={{ fontFamily: SANS, color: NAVY, opacity: 0.7 }}>
-        Conta para demandas com bibliografia estrangeira, colaboração
-        internacional e projetos de acessibilidade.
-      </p>
     </div>
   );
 }

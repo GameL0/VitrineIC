@@ -1,100 +1,65 @@
 import { useState } from "react";
 import { ConfirmModal } from "./ConfirmModal";
+import { InterestsOverview } from "./InterestsOverview";
 import { MatchConfirmed } from "./MatchConfirmed";
 import { Matchmaking } from "./Matchmaking";
 import { MatchmakingHub } from "./MatchmakingHub";
-import { NavBar } from "./NavBar";
+import { NavBar, type CuratorTab } from "./NavBar";
 import { Triage } from "./Triage";
-import { Mono } from "./ui";
-import { DEMANDS } from "@/data/demands";
-import { STUDENTS } from "@/data/students";
-import { NAVY, OFFWHITE } from "@/styles/tokens";
-import type { Demand } from "@/types";
+import { createInterest, useVitrine } from "@/lib/store";
+import type { Demand, Interest, Student } from "@/types";
 
 export default function CuratorArea({ onBack }: { onBack: () => void }) {
-  const [demands, setDemands] = useState<Demand[]>(DEMANDS);
-  const [view, setView] = useState<"triage" | "matchmaking_hub" | "matchmaking" | "confirm" | "confirmed">("triage");
-  const [selectedDemand, setSelectedDemand] = useState<Demand | null>(null);
-  const [selectedStudent, setSelectedStudent] = useState<typeof STUDENTS[0] | null>(null);
+  const { demands } = useVitrine();
+  const [view, setView] = useState<CuratorTab | "matchmaking" | "confirm" | "confirmed">("triage");
+  const [selectedDemandId, setSelectedDemandId] = useState<string | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [suggestion, setSuggestion] = useState<Interest | null>(null);
+  const selectedDemand = demands.find((d) => d.id === selectedDemandId) ?? null;
 
-  const goToMatch = (d: Demand) => {
-    setSelectedDemand(d);
-    setView("matchmaking");
+  const go = (v: typeof view) => {
+    setView(v);
+    window.scrollTo(0, 0);
   };
 
-  const goToConfirm = (s: typeof STUDENTS[0]) => {
+  const goToMatch = (d: Demand) => {
+    setSelectedDemandId(d.id);
+    go("matchmaking");
+  };
+
+  const goToConfirm = (s: Student) => {
     setSelectedStudent(s);
     setView("confirm");
   };
 
-  const doConfirm = () => {
-    if (selectedDemand) {
-      setDemands(demands.map((d) => d.id === selectedDemand.id ? { ...d, status: "matched" } : d));
+  /** A curadoria não fecha match: cria uma sugestão, que o estudante responde primeiro. */
+  const doSuggest = (justification: string) => {
+    if (selectedDemand && selectedStudent) {
+      setSuggestion(createInterest(selectedDemand.id, selectedStudent.id, "sugestao", justification));
     }
-    setView("confirmed");
+    go("confirmed");
   };
 
   return (
-    <div style={{ background: OFFWHITE, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <NavBar view={view} setView={setView} onBack={onBack} demands={demands} />
+    <div className="min-h-screen bg-offwhite">
+      <NavBar view={view} setView={go} onBack={onBack} demands={demands} />
 
-      {view === "triage" && (
-        <Triage
-          demands={demands}
-          setDemands={setDemands}
-        />
+      {view === "triage" && <Triage demands={demands} />}
+
+      {view === "matchmaking_hub" && <MatchmakingHub demands={demands} onSelect={goToMatch} />}
+
+      {view === "interests" && <InterestsOverview />}
+
+      {(view === "matchmaking" || view === "confirm") && selectedDemand && (
+        <Matchmaking demand={selectedDemand} onConfirm={goToConfirm} onBack={() => go("matchmaking_hub")} />
       )}
 
-      {view === "matchmaking_hub" && (
-        <MatchmakingHub
-          demands={demands}
-          onSelect={goToMatch}
-        />
-      )}
-
-      {view === "matchmaking" && selectedDemand && (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", height: "calc(100vh - 57px)" }}>
-          {/* Sub-header */}
-          <div
-            className="flex items-center justify-between px-8 py-3 flex-shrink-0"
-            style={{ borderBottom: `1px solid ${NAVY}12` }}
-          >
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setView("matchmaking_hub")}
-                className="flex items-center gap-2 text-[9px] tracking-[0.16em] uppercase transition-opacity hover:opacity-80 opacity-50"
-                style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY }}
-              >
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                  <path d="M8 5H2M4.5 2.5L2 5l2.5 2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
-                </svg>
-                Análise de Matches
-              </button>
-              <span style={{ color: NAVY, opacity: 0.5, fontSize: 12 }}>/</span>
-              <span className="text-[9px] tracking-[0.16em] uppercase" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.6 }}>
-                Matchmaking
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[9px]" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, opacity: 0.5 }}>
-                {selectedDemand.id}
-              </span>
-              <span className="text-[9px] px-2 py-0.5" style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: NAVY, border: `1px solid ${NAVY}20`, opacity: 0.5 }}>
-                {selectedDemand.skills.length} requisitos
-              </span>
-            </div>
-          </div>
-          <div style={{ flex: 1, overflow: "hidden" }}>
-            <Matchmaking demand={selectedDemand} onConfirm={goToConfirm} />
-          </div>
-        </div>
-      )}
-
-      {view === "confirmed" && selectedDemand && selectedStudent && (
+      {view === "confirmed" && selectedDemand && selectedStudent && suggestion && (
         <MatchConfirmed
           demand={selectedDemand}
           student={selectedStudent}
-          onBack={() => setView("matchmaking_hub")}
+          suggestion={suggestion}
+          onBack={() => go("matchmaking_hub")}
         />
       )}
 
@@ -103,7 +68,7 @@ export default function CuratorArea({ onBack }: { onBack: () => void }) {
           demand={selectedDemand}
           student={selectedStudent}
           onClose={() => setView("matchmaking")}
-          onConfirm={doConfirm}
+          onConfirm={doSuggest}
         />
       )}
     </div>
